@@ -167,16 +167,16 @@ DoGenerateAction()
 
     // Get the default include paths for each compiler
     auto const defaultIncludePaths = getCompilersDefaultIncludeDir(jsonCompilations);
-    for (auto const& [compiler, includePaths] : defaultIncludePaths) {
-        std::cout << "*** compiler: " << compiler << std::endl;
-        for (auto const& path : includePaths) {
-            std::cout << "*** path: " << path << std::endl;
-        }
-    }
+    // for (auto const& [compiler, includePaths] : defaultIncludePaths) {
+    //     std::cout << "*** compiler: " << compiler << std::endl;
+    //     for (auto const& path : includePaths) {
+    //         std::cout << "*** path: " << path << std::endl;
+    //     }
+    // }
 
     // Convert relative paths to absolute
     AbsoluteCompilationDatabase compilations(
-        workingDir, jsonCompilations, config);
+        workingDir, jsonCompilations, config, defaultIncludePaths);
 
     // Run the tool: this can take a while
     MRDOCS_TRY(
