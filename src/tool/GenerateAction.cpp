@@ -26,7 +26,6 @@
 namespace clang {
 namespace mrdocs {
 
-
 std::string 
 getCompilerInfo(std::string const& compiler) 
 {
@@ -58,7 +57,6 @@ parseIncludePaths(std::string const& compilerOutput)
 
     while (std::getline(stream, line)) 
     {
-        // std::cout << "line: " << line << std::endl;
         if (line.find("#include <...> search starts here:") != std::string::npos) 
         {
             capture = true;
@@ -78,7 +76,6 @@ parseIncludePaths(std::string const& compilerOutput)
     return includePaths;
 }
 
-
 std::unordered_map<std::string, std::vector<std::string>> 
 getCompilersDefaultIncludeDir(clang::tooling::CompilationDatabase const& compDb) 
 {
@@ -86,31 +83,15 @@ getCompilersDefaultIncludeDir(clang::tooling::CompilationDatabase const& compDb)
     auto const allCommands = compDb.getAllCompileCommands();
 
     for (auto const& cmd : allCommands) {
-        // for (auto const& cmd : cmd.CommandLine) {
-        //     std::cout << "*** cmd: " << cmd << "\n";
-        // }
-
         if ( ! cmd.CommandLine.empty()) {
-            auto const& compilerPath = cmd.CommandLine[0];
-            
-
             if (res.contains(compilerPath)) {
-                std::cout << "*** already processed: " << compilerPath << "\n";
                 continue;
             }
-            std::cout << "*** compilerPath: " << compilerPath << "\n";
 
             try {
                 std::string const compilerOutput = getCompilerInfo(compilerPath);
                 std::vector<std::string> includePaths = parseIncludePaths(compilerOutput);
-
-                std::cout << "Compiler Include paths:\n";
-                for (auto const& path : includePaths) {
-                    std::cout << path << std::endl;
-                }
-
-                res.emplace(compilerPath, includePaths);
-
+                res.emplace(compilerPath, std::move(includePaths));
             } catch (std::runtime_error const& e) {
                 std::cerr << e.what() << std::endl;     //TODO(fernando): what is the proper way to handle this in MrDocs?
             }            

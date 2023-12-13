@@ -53,14 +53,22 @@ static
 std::vector<std::string>
 adjustCommandLine(
     const std::vector<std::string>& cmdline,
-    const std::vector<std::string>& additional_defines)
+    const std::vector<std::string>& additional_defines,
+    std::unordered_map<std::string, std::vector<std::string>> const& includePathsByCompiler)
 {
     std::vector<std::string> new_cmdline;
     std::vector<std::string> discarded_cmdline;
     llvm::opt::InputArgList args;
     StringRef driver_mode;
-    if(! cmdline.empty())
+
+    std::vector<std::string> systemIncludePaths;
+
+    if( ! cmdline.empty())
     {
+        if (auto it = includePathsByCompiler.find(cmdline[0]); it != includePathsByCompiler.end()) {
+            systemIncludePaths = it->second;
+        }
+
         std::vector<const char*> raw_cmdline;
         raw_cmdline.reserve(cmdline.size());
         for(const auto& s : cmdline)
@@ -86,6 +94,9 @@ adjustCommandLine(
 
     for(const auto& def : additional_defines)
         new_cmdline.emplace_back(fmt::format("-D{}", def));
+
+    for (auto const& inc : systemIncludePaths)
+        new_cmdline.emplace_back(fmt::format("-I{}", inc));
 
     for(unsigned idx = 1; idx < cmdline.size();)
     {
@@ -170,7 +181,8 @@ AbsoluteCompilationDatabase::
 AbsoluteCompilationDatabase(
     llvm::StringRef workingDir,
     CompilationDatabase const& inner,
-    std::shared_ptr<const Config> config)
+    std::shared_ptr<const Config> config,
+    std::unordered_map<std::string, std::vector<std::string>> const& includePathsByCompiler)
 {
     namespace fs = llvm::sys::fs;
     namespace path = llvm::sys::path;
@@ -186,13 +198,13 @@ AbsoluteCompilationDatabase(
 
         cmd.CommandLine = cmd0.CommandLine;
 
-        for (auto const& cmd : cmd.CommandLine) {
-            std::cout << "*** cmd: " << cmd << "\n";
-        }
+        // for (auto const& cmd : cmd.CommandLine) {
+        //     std::cout << "*** cmd: " << cmd << "\n";
+        // }
 
-        for (auto const& def : (*config_impl)->defines) {
-            std::cout << "*** def: " << def << "\n";
-        }
+        // for (auto const& def : (*config_impl)->defines) {
+        //     std::cout << "*** def: " << def << "\n";
+        // }
 
         cmd.Heuristic = cmd0.Heuristic;
         cmd.Output = cmd0.Output;
