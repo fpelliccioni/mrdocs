@@ -197,26 +197,12 @@ AbsoluteCompilationDatabase(
         tooling::CompileCommand cmd;
 
         cmd.CommandLine = cmd0.CommandLine;
-
-        // for (auto const& cmd : cmd.CommandLine) {
-        //     std::cout << "*** cmd: " << cmd << "\n";
-        // }
-
-        // for (auto const& def : (*config_impl)->defines) {
-        //     std::cout << "*** def: " << def << "\n";
-        // }
-
         cmd.Heuristic = cmd0.Heuristic;
         cmd.Output = cmd0.Output;
         cmd.CommandLine = adjustCommandLine(
             cmd0.CommandLine,
             (*config_impl)->defines,
             includePathsByCompiler);
-
-        // std::cout << "*** Adjusted command line:\n";
-        // for (auto const& cmd : cmd.CommandLine) {
-        //     std::cout << "*** cmd: " << cmd << "\n";
-        // }
 
         if(path::is_absolute(cmd0.Directory))
         {
