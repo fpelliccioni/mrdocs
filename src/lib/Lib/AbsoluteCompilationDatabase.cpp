@@ -24,6 +24,8 @@
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/raw_ostream.h>
 
+#include <iostream>
+
 namespace clang {
 namespace mrdocs {
 
@@ -183,6 +185,15 @@ AbsoluteCompilationDatabase(
         tooling::CompileCommand cmd;
 
         cmd.CommandLine = cmd0.CommandLine;
+
+        for (auto const& cmd : cmd.CommandLine) {
+            std::cout << "*** cmd: " << cmd << "\n";
+        }
+
+        for (auto const& def : (*config_impl)->defines) {
+            std::cout << "*** def: " << def << "\n";
+        }
+
         cmd.Heuristic = cmd0.Heuristic;
         cmd.Output = cmd0.Output;
         cmd.CommandLine = adjustCommandLine(
