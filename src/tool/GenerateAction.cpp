@@ -9,8 +9,6 @@
 // Official repository: https://github.com/cppalliance/mrdocs
 //
 
-#include <unordered_map>
-
 #include "ToolArgs.hpp"
 #include "lib/Lib/AbsoluteCompilationDatabase.hpp"
 #include "lib/Lib/ConfigImpl.hpp"
@@ -21,7 +19,7 @@
 #include <clang/Tooling/JSONCompilationDatabase.h>
 #include <cstdlib>
 #include <iostream>
-
+#include <unordered_map>
 
 namespace clang {
 namespace mrdocs {
