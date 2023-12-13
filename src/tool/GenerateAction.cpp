@@ -86,8 +86,6 @@ getCompilersDefaultIncludeDir(clang::tooling::CompilationDatabase const& compDb)
     auto const allCommands = compDb.getAllCompileCommands();
 
     for (auto const& cmd : allCommands) {
-        cmd.CommandLine = cmd0.CommandLine;
-
         for (auto const& cmd : cmd.CommandLine) {
             std::cout << "*** cmd: " << cmd << "\n";
         }
