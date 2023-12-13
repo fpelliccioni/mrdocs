@@ -200,6 +200,11 @@ AbsoluteCompilationDatabase(
             cmd0.CommandLine,
             (*config_impl)->defines);
 
+        std::cout << "*** Adjusted command line:\n";
+        for (auto const& cmd : cmd.CommandLine) {
+            std::cout << "*** cmd: " << cmd << "\n";
+        }
+
         if(path::is_absolute(cmd0.Directory))
         {
             path::native(cmd0.Directory, temp);
