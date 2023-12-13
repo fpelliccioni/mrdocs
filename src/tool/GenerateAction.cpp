@@ -64,7 +64,7 @@ DoGenerateAction()
             "got {} input paths where 1 was expected",
             toolArgs.inputPaths.size()));
     auto compilationsPath = files::normalizePath(toolArgs.inputPaths.front());
-    os << "*** compilationsPath: " << compilationsPath << "\n";
+    std::cout << "*** compilationsPath: " << compilationsPath << "\n";
     std::string errorMessage;
     MRDOCS_TRY_MSG( 
         auto& jsonCompilations,
@@ -77,7 +77,7 @@ DoGenerateAction()
     // Calculate the working directory
     MRDOCS_TRY(auto absPath, files::makeAbsolute(compilationsPath));
     auto workingDir = files::getParentDir(absPath);
-    os << "*** workingDir: " << workingDir << "\n";
+    std::cout << "*** workingDir: " << workingDir << "\n";
 
     // Normalize outputPath
     MRDOCS_CHECK(toolArgs.outputPath, "The output path argument is missing");
