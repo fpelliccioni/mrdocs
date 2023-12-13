@@ -58,7 +58,7 @@ parseIncludePaths(std::string const& compilerOutput)
 
     while (std::getline(stream, line)) 
     {
-        std::cout << "line: " << line << std::endl;
+        // std::cout << "line: " << line << std::endl;
         if (line.find("#include <...> search starts here:") != std::string::npos) 
         {
             capture = true;
@@ -86,18 +86,19 @@ getCompilersDefaultIncludeDir(clang::tooling::CompilationDatabase const& compDb)
     auto const allCommands = compDb.getAllCompileCommands();
 
     for (auto const& cmd : allCommands) {
-        for (auto const& cmd : cmd.CommandLine) {
-            std::cout << "*** cmd: " << cmd << "\n";
-        }
+        // for (auto const& cmd : cmd.CommandLine) {
+        //     std::cout << "*** cmd: " << cmd << "\n";
+        // }
 
         if ( ! cmd.CommandLine.empty()) {
             auto const& compilerPath = cmd.CommandLine[0];
-            std::cout << "*** compilerPath: " << compilerPath << "\n";
-            auto const& args = cmd.CommandLine;
+            
 
             if (res.contains(compilerPath)) {
+                std::cout << "*** already processed: " << compilerPath << "\n";
                 continue;
             }
+            std::cout << "*** compilerPath: " << compilerPath << "\n";
 
             try {
                 std::string const compilerOutput = getCompilerInfo(compilerPath);
@@ -110,7 +111,7 @@ getCompilersDefaultIncludeDir(clang::tooling::CompilationDatabase const& compDb)
 
                 res.emplace(compilerPath, includePaths);
 
-            } catch (const std::runtime_error &e) {
+            } catch (std::runtime_error const& e) {
                 std::cerr << e.what() << std::endl;     //TODO(fernando): what is the proper way to handle this in MrDocs?
             }            
         }
