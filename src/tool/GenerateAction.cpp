@@ -9,6 +9,8 @@
 // Official repository: https://github.com/cppalliance/mrdocs
 //
 
+#include <unordered_map>
+
 #include "ToolArgs.hpp"
 #include "lib/Lib/AbsoluteCompilationDatabase.hpp"
 #include "lib/Lib/ConfigImpl.hpp"
@@ -20,8 +22,104 @@
 #include <cstdlib>
 #include <iostream>
 
+
 namespace clang {
 namespace mrdocs {
+
+
+std::string 
+getCompilerInfo(std::string const& compiler) 
+{
+    std::string const command = compiler + " -v -E -x c++ - < /dev/null 2>&1";
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.c_str(), "r"), pclose);
+    
+    if ( ! pipe) 
+    {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) 
+    {
+        result += buffer.data();
+    }
+
+    return result;
+}
+
+std::vector<std::string> 
+parseIncludePaths(std::string const& compilerOutput) 
+{
+    std::vector<std::string> includePaths;
+    std::istringstream stream(compilerOutput);
+    std::string line;
+    bool capture = false;
+
+    while (std::getline(stream, line)) 
+    {
+        std::cout << "line: " << line << std::endl;
+        if (line.find("#include <...> search starts here:") != std::string::npos) 
+        {
+            capture = true;
+            continue;
+        }
+        if (line.find("End of search list.") != std::string::npos) 
+        {
+            break;
+        }
+        if (capture) 
+        {
+            line.erase(0, line.find_first_not_of(" "));
+            includePaths.push_back(line);
+        }
+    }
+
+    return includePaths;
+}
+
+
+std::unordered_map<std::string, std::vector<std::string>> 
+getCompilersDefaultIncludeDir(CompilationDatabase const& compDb) 
+{
+    std::unordered_map<std::string, std::vector<std::string>> res;
+    auto const allCommands = compDb.getAllCompileCommands();
+
+    for (auto const& cmd : allCommands) {
+        cmd.CommandLine = cmd0.CommandLine;
+
+        for (auto const& cmd : cmd.CommandLine) {
+            std::cout << "*** cmd: " << cmd << "\n";
+        }
+
+        if ( ! cmd.CommandLine.empty()) {
+            auto const& compilerPath = cmd.CommandLine[0];
+            std::cout << "*** compilerPath: " << compilerPath << "\n";
+            auto const& args = cmd.CommandLine;
+
+            if (res.contains(compilerPath)) {
+                continue;
+            }
+
+            try {
+                std::string const compilerOutput = getCompilerInfo(compilerPath);
+                std::vector<std::string> includePaths = parseIncludePaths(compilerOutput);
+
+                std::cout << "Compiler Include paths:\n";
+                for (auto const& path : includePaths) {
+                    std::cout << path << std::endl;
+                }
+
+                res.emplace(compilerPath, includePaths);
+
+            } catch (const std::runtime_error &e) {
+                std::cerr << e.what() << std::endl;     //TODO(fernando): what is the proper way to handle this in MrDocs?
+            }            
+        }
+    }
+
+    return res;
+}
 
 Expected<void>
 DoGenerateAction()
@@ -85,6 +183,15 @@ DoGenerateAction()
     toolArgs.outputPath = files::normalizePath(
         files::makeAbsolute(toolArgs.outputPath,
             (*config)->workingDir));
+
+    // Get the default include paths for each compiler
+    auto const defaultIncludePaths = getCompilersDefaultIncludeDir(jsonCompilations);
+    for (auto const& [compiler, includePaths] : defaultIncludePaths) {
+        std::cout << "*** compiler: " << compiler << std::endl;
+        for (auto const& path : includePaths) {
+            std::cout << "*** path: " << path << std::endl;
+        }
+    }
 
     // Convert relative paths to absolute
     AbsoluteCompilationDatabase compilations(
