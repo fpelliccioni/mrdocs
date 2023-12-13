@@ -20,11 +20,12 @@
 #include <cstdlib>
 #include <unordered_map>
 
-#include "llvm/Support/Program.h"
-#include "llvm/Support/Process.h"
-#include "llvm/Support/FileSystem.h"
-#include "llvm/Support/Errc.h"
-#include "llvm/Support/Error.h"
+// #include "llvm/Support/Program.h"
+// #include "llvm/Support/Process.h"
+// #include "llvm/Support/FileSystem.h"
+// #include "llvm/Support/Errc.h"
+// #include "llvm/Support/Error.h"
+
 namespace clang {
 namespace mrdocs {
 
