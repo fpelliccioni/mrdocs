@@ -24,7 +24,7 @@
 namespace clang {
 namespace mrdocs {
 
-std::string 
+Expected<std::string>
 getCompilerInfo(std::string const& compiler) 
 {
     std::string const command = compiler + " -v -E -x c++ - < /dev/null 2>&1";
@@ -34,7 +34,7 @@ getCompilerInfo(std::string const& compiler)
     
     if ( ! pipe) 
     {
-        throw std::runtime_error("popen() failed!");
+        return Unexpected(formatError("popen() failed for command \"{}\"", command));
     }
 
     while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) 
@@ -87,13 +87,13 @@ getCompilersDefaultIncludeDir(clang::tooling::CompilationDatabase const& compDb)
                 continue;
             }
 
-            try {
-                std::string const compilerOutput = getCompilerInfo(compilerPath);
-                std::vector<std::string> includePaths = parseIncludePaths(compilerOutput);
-                res.emplace(compilerPath, std::move(includePaths));
-            } catch (std::runtime_error const& e) {
-                std::cerr << e.what() << std::endl;     //TODO(fernando): what is the proper way to handle this in MrDocs?
-            }            
+            auto const compilerOutput = getCompilerInfo(compilerPath);
+            if ( ! compilerOutput) {
+                report::warn("Warning: ", compilerOutput.error());
+                continue;
+            }
+            std::vector<std::string> includePaths = parseIncludePaths(*compilerOutput);
+            res.emplace(compilerPath, std::move(includePaths));                      
         }
     }
 
