@@ -24,8 +24,6 @@
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/raw_ostream.h>
 
-#include <iostream>
-
 namespace clang {
 namespace mrdocs {
 
