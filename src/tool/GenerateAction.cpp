@@ -82,7 +82,9 @@ std::optional<std::string> getCompilerInfo(llvm::StringRef compiler) {
         return std::nullopt;
     }
 
-    std::optional<llvm::StringRef> redirects[] = {llvm::StringRef(), outputPath.str(), llvm::StringRef()};
+    // " -v -E -x c++ - < /dev/null 2>&1";
+    // std::optional<llvm::StringRef> redirects[] = {llvm::StringRef(), outputPath.str(), llvm::StringRef()};
+    std::optional<llvm::StringRef> redirects[] = {llvm::StringRef(), llvm::StringRef(), outputPath.str()};
     std::vector<llvm::StringRef> args = {compiler, "-v", "-E", "-x", "c++", "-"};
 
     llvm::ErrorOr<std::string> compilerPath = llvm::sys::findProgramByName(compiler);
