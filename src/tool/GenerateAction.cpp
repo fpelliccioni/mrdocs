@@ -17,10 +17,11 @@
 #include <mrdocs/Support/Error.hpp>
 #include <mrdocs/Support/Path.hpp>
 #include <clang/Tooling/JSONCompilationDatabase.h>
+
 #include <cstdlib>
 #include <unordered_map>
 
-// #include "llvm/Support/Program.h"
+#include "llvm/Support/Program.h"
 // #include "llvm/Support/Process.h"
 // #include "llvm/Support/FileSystem.h"
 // #include "llvm/Support/Errc.h"
