@@ -28,79 +28,35 @@
 namespace clang {
 namespace mrdocs {
 
-// Expected<std::string>
-// getCompilerInfo(std::string const& compiler) 
-// {
-//     std::string const command = compiler + " -v -E -x c++ - < /dev/null 2>&1";
-//     std::array<char, 128> buffer;
-//     std::string result;
-//     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.c_str(), "r"), pclose);
-    
-//     if ( ! pipe) 
-//     {
-//         return Unexpected(formatError("popen() failed for command \"{}\"", command));
-//     }
-
-//     while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) 
-//     {
-//         result += buffer.data();
-//     }
-
-//     return result;
-// }
-
-// Expected<std::string> 
-// getCompilerInfo(const std::string& compiler) 
-// {
-//     std::vector<llvm::StringRef> args;
-//     args.push_back(compiler);
-//     args.push_back("-v");
-//     args.push_back("-E");
-//     args.push_back("-x");
-//     args.push_back("c++");
-//     args.push_back("-");
-
-//     llvm::SmallString<128> output;
-//     llvm::raw_svector_ostream os(output);
-
-//     llvm::Optional<llvm::StringRef> redirectStdErr = llvm::StringRef("/dev/null");
-//     llvm::sys::ProcessInfo info = llvm::sys::ExecuteAndWait(
-//         compiler, args, llvm::None, redirectStdErr, 0, 0, &os);
-//     if ( ! info) 
-//     {
-//         return llvm::make_error<llvm::StringError>(
-//             llvm::errc::io_error, "Failed to execute compiler command");
-//     }
-
-//     return std::string(output.str());
-// }
-
-
-std::optional<std::string> getCompilerInfo(llvm::StringRef compiler) {
+std::optional<std::string> 
+getCompilerInfo(llvm::StringRef compiler) 
+{
     llvm::SmallString<128> outputPath;
-    if (auto EC = llvm::sys::fs::createTemporaryFile("compiler-info", "txt", outputPath)) {
+    if (auto EC = llvm::sys::fs::createTemporaryFile("compiler-info", "txt", outputPath)) 
+    {
         return std::nullopt;
     }
 
-    // " -v -E -x c++ - < /dev/null 2>&1";
-    // std::optional<llvm::StringRef> redirects[] = {llvm::StringRef(), outputPath.str(), llvm::StringRef()};
     std::optional<llvm::StringRef> redirects[] = {llvm::StringRef(), llvm::StringRef(), outputPath.str()};
     std::vector<llvm::StringRef> args = {compiler, "-v", "-E", "-x", "c++", "-"};
 
     llvm::ErrorOr<std::string> compilerPath = llvm::sys::findProgramByName(compiler);
-    if (!compilerPath) {
+    if ( ! compilerPath) 
+    {
         return std::nullopt;
     }
 
     int result = llvm::sys::ExecuteAndWait(*compilerPath, args, std::nullopt, redirects);
-    if (result != 0) {
+    if (result != 0) 
+    {
         llvm::sys::fs::remove(outputPath);
         return std::nullopt;
     }
 
     auto bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
     llvm::sys::fs::remove(outputPath);
-    if (!bufferOrError) {
+    if ( ! bufferOrError) 
+    {
         return std::nullopt;
     }
 
@@ -151,7 +107,6 @@ getCompilersDefaultIncludeDir(clang::tooling::CompilationDatabase const& compDb)
 
             auto const compilerOutput = getCompilerInfo(compilerPath);
             if ( ! compilerOutput) {
-                // report::warn("Warning: ", compilerOutput.error());
                 report::warn("Warning: could not get compiler info for \"{}\"", compilerPath);
                 continue;
             }
