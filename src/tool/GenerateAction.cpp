@@ -90,7 +90,7 @@ std::optional<std::string> getCompilerInfo(llvm::StringRef compiler) {
         return std::nullopt;
     }
 
-    int result = llvm::sys::ExecuteAndWait(*compilerPath, args, llvm::None, redirects);
+    int result = llvm::sys::ExecuteAndWait(*compilerPath, args, std::nullopt, redirects);
     if (result != 0) {
         llvm::sys::fs::remove(outputPath);
         return std::nullopt;
