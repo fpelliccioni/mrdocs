@@ -84,6 +84,7 @@ getCompilersDefaultIncludeDir(clang::tooling::CompilationDatabase const& compDb)
 
     for (auto const& cmd : allCommands) {
         if ( ! cmd.CommandLine.empty()) {
+            auto const& compilerPath = cmd.CommandLine[0];
             if (res.contains(compilerPath)) {
                 continue;
             }
