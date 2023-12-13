@@ -18,7 +18,6 @@
 #include <mrdocs/Support/Path.hpp>
 #include <clang/Tooling/JSONCompilationDatabase.h>
 #include <cstdlib>
-#include <iostream>
 #include <unordered_map>
 
 namespace clang {
