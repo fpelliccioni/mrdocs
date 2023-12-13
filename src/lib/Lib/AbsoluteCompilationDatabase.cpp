@@ -210,7 +210,8 @@ AbsoluteCompilationDatabase(
         cmd.Output = cmd0.Output;
         cmd.CommandLine = adjustCommandLine(
             cmd0.CommandLine,
-            (*config_impl)->defines);
+            (*config_impl)->defines,
+            includePathsByCompiler);
 
         std::cout << "*** Adjusted command line:\n";
         for (auto const& cmd : cmd.CommandLine) {
