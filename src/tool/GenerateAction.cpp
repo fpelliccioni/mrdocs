@@ -13,6 +13,7 @@
 #include "lib/Lib/AbsoluteCompilationDatabase.hpp"
 #include "lib/Lib/ConfigImpl.hpp"
 #include "lib/Lib/CorpusImpl.hpp"
+#include "llvm/Support/Program.h"
 #include <mrdocs/Generators.hpp>
 #include <mrdocs/Support/Error.hpp>
 #include <mrdocs/Support/Path.hpp>
@@ -20,12 +21,6 @@
 
 #include <cstdlib>
 #include <unordered_map>
-
-#include "llvm/Support/Program.h"
-// #include "llvm/Support/Process.h"
-// #include "llvm/Support/FileSystem.h"
-// #include "llvm/Support/Errc.h"
-// #include "llvm/Support/Error.h"
 
 namespace clang {
 namespace mrdocs {
