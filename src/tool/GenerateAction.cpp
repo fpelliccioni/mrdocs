@@ -18,6 +18,7 @@
 #include <mrdocs/Support/Path.hpp>
 #include <clang/Tooling/JSONCompilationDatabase.h>
 #include <cstdlib>
+#include <iostream>
 
 namespace clang {
 namespace mrdocs {
