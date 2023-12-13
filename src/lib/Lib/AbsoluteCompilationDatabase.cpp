@@ -213,10 +213,10 @@ AbsoluteCompilationDatabase(
             (*config_impl)->defines,
             includePathsByCompiler);
 
-        std::cout << "*** Adjusted command line:\n";
-        for (auto const& cmd : cmd.CommandLine) {
-            std::cout << "*** cmd: " << cmd << "\n";
-        }
+        // std::cout << "*** Adjusted command line:\n";
+        // for (auto const& cmd : cmd.CommandLine) {
+        //     std::cout << "*** cmd: " << cmd << "\n";
+        // }
 
         if(path::is_absolute(cmd0.Directory))
         {
