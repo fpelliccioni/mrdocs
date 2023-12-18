@@ -26,7 +26,7 @@ namespace clang {
 namespace mrdocs {
 
 std::optional<std::string> 
-getCompilerInfo(llvm::StringRef compilerPath) 
+getCompilerVerboseOutput(llvm::StringRef compilerPath) 
 {
     if ( ! llvm::sys::fs::exists(compilerPath)) {
         return std::nullopt;
@@ -100,7 +100,7 @@ getCompilersDefaultIncludeDir(clang::tooling::CompilationDatabase const& compDb)
                 continue;
             }
 
-            auto const compilerOutput = getCompilerInfo(compilerPath);
+            auto const compilerOutput = getCompilerVerboseOutput(compilerPath);
             if ( ! compilerOutput) {
                 report::warn("Warning: could not get compiler info for \"{}\"", compilerPath);
                 continue;
