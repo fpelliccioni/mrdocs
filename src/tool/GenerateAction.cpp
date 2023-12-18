@@ -41,7 +41,8 @@ getCompilerInfo(llvm::StringRef compilerPath)
     }
 
     std::optional<llvm::StringRef> redirects[] = {llvm::StringRef(), llvm::StringRef(), outputPath.str()};
-    std::vector<llvm::StringRef> args = {compilerPath, "-v", "-E", "-x", "c++", "-"};
+    // std::vector<llvm::StringRef> args = {compilerPath, "-v", "-E", "-x", "c++", "-"};
+    llvm::ArrayRef<llvm::StringRef> const args = {compilerPath, "-v", "-E", "-x", "c++", "-"};
 
     // llvm::ErrorOr<std::string> compilerPath = llvm::sys::findProgramByName(compiler);
     // if ( ! compilerPath) 
