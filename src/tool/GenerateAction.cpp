@@ -39,15 +39,16 @@ getCompilerInfo(llvm::StringRef compiler)
     std::optional<llvm::StringRef> redirects[] = {llvm::StringRef(), llvm::StringRef(), outputPath.str()};
     std::vector<llvm::StringRef> args = {compiler, "-v", "-E", "-x", "c++", "-"};
 
-    llvm::ErrorOr<std::string> compilerPath = llvm::sys::findProgramByName(compiler);
-    if ( ! compilerPath) 
-    {
-        return std::nullopt;
-    }
+    // llvm::ErrorOr<std::string> compilerPath = llvm::sys::findProgramByName(compiler);
+    // if ( ! compilerPath) 
+    // {
+    //     return std::nullopt;
+    // }
     std::cout << "compiler: " << compiler.str() << std::endl;
     std::cout << "compilerPath: " << *compilerPath << std::endl;
 
-    int result = llvm::sys::ExecuteAndWait(*compilerPath, args, std::nullopt, redirects);
+    // int result = llvm::sys::ExecuteAndWait(*compilerPath, args, std::nullopt, redirects);
+    int result = llvm::sys::ExecuteAndWait(compiler, args, std::nullopt, redirects);
     if (result != 0) 
     {
         llvm::sys::fs::remove(outputPath);
