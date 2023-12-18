@@ -39,7 +39,7 @@ getCompilerInfo(llvm::StringRef compilerPath)
     }
 
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), outputPath.str()};
-    llvm::ArrayRef<llvm::StringRef> const args = {compilerPath, "-v", "-E", "-x", "c++", "-"};
+    std::vector<llvm::StringRef> const args = {compilerPath, "-v", "-E", "-x", "c++", "-"};
     llvm::ArrayRef<llvm::StringRef> emptyEnv;
     int const result = llvm::sys::ExecuteAndWait(compilerPath, args, emptyEnv, redirects);
     if (result != 0) 
