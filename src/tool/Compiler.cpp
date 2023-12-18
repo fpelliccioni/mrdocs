@@ -11,8 +11,6 @@
 
 #include "Compiler.hpp"
 
-#include <clang/Tooling/CompilationDatabase.h>
-
 namespace clang {
 namespace mrdocs {
 
