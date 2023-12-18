@@ -45,7 +45,7 @@ getCompilerInfo(llvm::StringRef compiler)
     //     return std::nullopt;
     // }
     std::cout << "compiler: " << compiler.str() << std::endl;
-    std::cout << "compilerPath: " << *compilerPath << std::endl;
+    // std::cout << "compilerPath: " << *compilerPath << std::endl;
 
     // int result = llvm::sys::ExecuteAndWait(*compilerPath, args, std::nullopt, redirects);
     int result = llvm::sys::ExecuteAndWait(compiler, args, std::nullopt, redirects);
