@@ -11,6 +11,8 @@
 
 #include "Compiler.hpp"
 
+#include <llvm/Support/Program.h>
+
 namespace clang {
 namespace mrdocs {
 
