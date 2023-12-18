@@ -33,7 +33,7 @@ getCompilerVerboseOutput(llvm::StringRef compilerPath)
     }
 
     llvm::SmallString<128> outputPath;
-    if (auto EC = llvm::sys::fs::createTemporaryFile("compiler-info", "txt", outputPath)) 
+    if (auto ec = llvm::sys::fs::createTemporaryFile("compiler-info", "txt", outputPath)) 
     {
         return std::nullopt;
     }
