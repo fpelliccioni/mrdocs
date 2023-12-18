@@ -11,6 +11,8 @@
 
 #include "Compiler.hpp"
 
+#include <mrdocs/Support/Error.hpp>
+
 #include <llvm/Support/Program.h>
 
 namespace clang {
