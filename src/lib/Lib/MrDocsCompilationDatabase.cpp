@@ -169,15 +169,16 @@ adjustCommandLine(
 }
 
 
-// #include <iostream> //TODO: remove it
-
-// CMAKE_EXPORT_COMPILE_COMMANDS
 std::optional<std::string> 
 executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cmakeListsPath) 
 {
 
-    printf("****** cmakeListsPath: %s\n", cmakeListsPath.str().c_str());
+    // printf("****** cmakeListsPath: %s\n", cmakeListsPath.str().c_str());
 
+
+    if ( ! llvm::sys::fs::exists(cmakePath)) {
+        return std::nullopt;
+    }    
     if ( ! llvm::sys::fs::exists(cmakeListsPath)) {
         return std::nullopt;
     }
@@ -194,27 +195,25 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cma
         return std::nullopt;
     }
 
-    llvm::SmallString<128> databasePath;
-    // int fd;
-    // if (auto ec = llvm::sys::fs::createTemporaryFile("", "", fd, databasePath, llvm::sys::fs::FS_Dir)) 
+    // llvm::SmallString<128> databasePath;
+    // // int fd;
+    // // if (auto ec = llvm::sys::fs::createTemporaryFile("", "", fd, databasePath, llvm::sys::fs::FS_Dir)) 
+    // // {
+    // //     return std::nullopt;
+    // // }
+
+    // if (auto ec = llvm::sys::fs::createUniqueDirectory("cmake-db", databasePath)) 
     // {
     //     return std::nullopt;
-    // }
+    // }    
 
-    if (auto ec = llvm::sys::fs::createUniqueDirectory("cmake-db", databasePath)) 
-    {
-        return std::nullopt;
-    }    
-
-    // std::cout << "****** databasePath: " << databasePath << std:endl;
-    printf("****** databasePath: %s\n", databasePath.c_str());
+    // // std::cout << "****** databasePath: " << databasePath << std:endl;
+    // printf("****** databasePath: %s\n", databasePath.c_str());
 
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), stdOutPath.str(), stdErrPath.str()};
 
-    // std::vector<llvm::StringRef> const args = {compilerPath, "-v", "-E", "-x", "c++", "-"};
     // cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     std::vector<llvm::StringRef> const args = {cmakePath, cmakeListsPath, "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
-    // std::vector<llvm::StringRef> const args = {cmakePath, cmakeListsPath};
 
     llvm::ArrayRef<llvm::StringRef> emptyEnv;
     // int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
@@ -234,16 +233,9 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cma
 
     // llvm::sys::fs::remove(stdOutPath);
     // llvm::sys::fs::remove(stdErrPath);    
-    return databasePath.str().str();
+    // return databasePath.str().str();
 
-    // auto bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
-    // llvm::sys::fs::remove(outputPath);
-    // if ( ! bufferOrError) 
-    // {
-    //     return std::nullopt;
-    // }
-
-    // return bufferOrError.get()->getBuffer().str();
+    return "./compile_commands.json";
 }
 
 

@@ -41,6 +41,8 @@ public:
     llvm::cl::list<std::string> inputPaths;
 
     llvm::cl::opt<bool>         generateCompilationDatabase;
+    llvm::cl::opt<std::string>  cmakePath;
+    llvm::cl::opt<std::string>  cmakeListsPath;
 
     // Hide all options which don't belong to us
     void hideForeignOptions();

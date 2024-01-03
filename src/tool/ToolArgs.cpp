@@ -88,7 +88,16 @@ EXAMPLES:
 , generateCompilationDatabase(
     "generate-compilation-database",
     llvm::cl::desc("Generate the compilation database."),
-    llvm::cl::init(false))    
+    llvm::cl::init(false))
+
+, cmakePath(
+    "cmake"
+    llvm::cl::desc(R"(The path to the cmake executable.)"))
+
+, cmakeListsPath(
+    "cmake-lists"
+    llvm::cl::desc(R"(The path to the CMakeLists.txt file.)"))
+
 {
 }
 

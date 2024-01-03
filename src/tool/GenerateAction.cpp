@@ -87,14 +87,18 @@ DoGenerateAction()
     std::string inputPath;
     if (toolArgs.generateCompilationDatabase)
     {
-        auto const res = executeCmakeExportCompileCommands("/usr/bin/cmake", "..");    //TODO: make this configurable
+
+        // MRDOCS_CHECK(toolArgs.configPath, "The config path argument is missing");
+        MRDOCS_CHECK(toolArgs.cmakePath, "The cmake path argument is missing");
+        MRDOCS_CHECK(toolArgs.cmakeListsPath, "The cmake-lists path argument is missing");
+
+        auto const res = executeCmakeExportCompileCommands(toolArgs.cmakePath, toolArgs.cmakeListsPath);
         if ( ! res)
         {
             report::error("Failed to generate compilation database");
             return {};
         } 
-        // inputPath = *res;
-        inputPath = "./compile_commands.json";
+        inputPath = *res;
     }
     else 
     {
