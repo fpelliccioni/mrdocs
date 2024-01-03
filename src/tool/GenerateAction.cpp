@@ -78,7 +78,7 @@ DoGenerateAction()
     // MRDOCS_CHECK(toolArgs.inputPaths || toolArgs.generateCompilationDatabase,
     //     "The compilation database path argument is missing or you can use --generate-compilation-database");
 
-    if (detail::failed(toolArgs.inputPaths) || detail::failed(toolArgs.generateCompilationDatabase))
+    if (detail::failed(toolArgs.inputPaths) && detail::failed(toolArgs.generateCompilationDatabase))
     {
         report::error("The compilation database path argument is missing or you can use --generate-compilation-database");
         return {};
