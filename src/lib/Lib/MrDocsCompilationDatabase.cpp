@@ -181,7 +181,7 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath)
     }
 
     llvm::SmallString<128> stdErrPath;    
-    if (auto ec = llvm::sys::fs::createTemporaryFile("stderr", "txt", outputPath)) 
+    if (auto ec = llvm::sys::fs::createTemporaryFile("stderr", "txt", stdErrPath)) 
     {
         return std::nullopt;
     }
