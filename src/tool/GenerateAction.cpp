@@ -93,7 +93,8 @@ DoGenerateAction()
             report::error("Failed to generate compilation database");
             return {};
         } 
-        inputPath = *res;
+        // inputPath = *res;
+        inputPath = "./compile_commands.json";
     }
     else 
     {
