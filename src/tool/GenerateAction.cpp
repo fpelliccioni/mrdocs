@@ -74,10 +74,6 @@ DoGenerateAction()
     // Load the compilation database file
     //
     // --------------------------------------------------------------
-
-    // MRDOCS_CHECK(toolArgs.inputPaths || toolArgs.generateCompilationDatabase,
-    //     "The compilation database path argument is missing or you can use --generate-compilation-database");
-
     if (detail::failed(toolArgs.inputPaths) && detail::failed(toolArgs.generateCompilationDatabase))
     {
         report::error("The compilation database path argument is missing or you can use --generate-compilation-database");
@@ -87,8 +83,6 @@ DoGenerateAction()
     std::string inputPath;
     if (toolArgs.generateCompilationDatabase)
     {
-
-        // MRDOCS_CHECK(toolArgs.configPath, "The config path argument is missing");
         MRDOCS_CHECK(toolArgs.cmakePath, "The cmake path argument is missing");
         MRDOCS_CHECK(toolArgs.cmakeListsPath, "The cmake-lists path argument is missing");
 
