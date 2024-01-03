@@ -23,7 +23,7 @@ namespace mrdocs {
  * Execute cmake to export compile_commands.json.
 */
 std::optional<std::string> 
-executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath);
+executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cmakeListsPath);
 
 /** A compilation database where all paths are absolute.
 

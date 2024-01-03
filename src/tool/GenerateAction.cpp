@@ -87,7 +87,7 @@ DoGenerateAction()
     std::string inputPath;
     if (toolArgs.generateCompilationDatabase)
     {
-        auto const res = executeCmakeExportCompileCommands("..");    //TODO: make this configurable
+        auto const res = executeCmakeExportCompileCommands("/usr/bin/cmake", "..");    //TODO: make this configurable
         if ( ! res)
         {
             report::error("Failed to generate compilation database");

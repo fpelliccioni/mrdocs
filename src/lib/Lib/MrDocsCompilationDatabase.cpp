@@ -173,7 +173,7 @@ adjustCommandLine(
 
 // CMAKE_EXPORT_COMPILE_COMMANDS
 std::optional<std::string> 
-executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath) 
+executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cmakeListsPath) 
 {
 
     printf("****** cmakeListsPath: %s\n", cmakeListsPath.str().c_str());
@@ -213,18 +213,18 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath)
 
     // std::vector<llvm::StringRef> const args = {compilerPath, "-v", "-E", "-x", "c++", "-"};
     // cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-    // std::vector<llvm::StringRef> const args = {"cmake", cmakeListsPath, "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
-    std::vector<llvm::StringRef> const args = {"/usr/bin/cmake", cmakeListsPath};
+    std::vector<llvm::StringRef> const args = {cmakePath, cmakeListsPath, "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
+    // std::vector<llvm::StringRef> const args = {cmakePath, cmakeListsPath};
 
     llvm::ArrayRef<llvm::StringRef> emptyEnv;
-    int const result = llvm::sys::ExecuteAndWait("/usr/bin/cmake", args, emptyEnv, redirects);
+    int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
+
+    printf("****** result: %d\n", result);
+    printf("****** stdOutPath: %s\n", stdOutPath.c_str());
+    printf("****** stdErrPath: %s\n", stdErrPath.c_str());
+
     if (result != 0) 
     {
-        printf("****** result: %d\n", result);
-        printf("****** stdOutPath: %s\n", stdOutPath.c_str());
-        printf("****** stdErrPath: %s\n", stdErrPath.c_str());
-
-
         // llvm::sys::fs::remove(stdOutPath);
         // llvm::sys::fs::remove(stdErrPath);
         // llvm::sys::fs::remove(databasePath);
