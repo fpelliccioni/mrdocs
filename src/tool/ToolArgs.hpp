@@ -40,6 +40,8 @@ public:
     llvm::cl::opt<bool>         ignoreMappingFailures;
     llvm::cl::list<std::string> inputPaths;
 
+    llvm::cl::opt<bool>         generateCompilationDatabase;
+
     // Hide all options which don't belong to us
     void hideForeignOptions();
 };

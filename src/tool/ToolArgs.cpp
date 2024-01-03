@@ -84,6 +84,11 @@ EXAMPLES:
     "inputs",
     llvm::cl::Sink,
     llvm::cl::desc("The path to the compilation database."))
+
+, generateCompilationDatabase(
+    "generate-compilation-database",
+    llvm::cl::desc("Generate the compilation database."),
+    llvm::cl::init(false))    
 {
 }
 

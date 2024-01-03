@@ -165,6 +165,67 @@ adjustCommandLine(
     return new_cmdline;
 }
 
+
+// CMAKE_EXPORT_COMPILE_COMMANDS
+std::optional<std::string> 
+executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath) 
+{
+    if ( ! llvm::sys::fs::exists(cmakeListsPath)) {
+        return std::nullopt;
+    }
+
+    llvm::SmallString<128> stdOutPath;
+    if (auto ec = llvm::sys::fs::createTemporaryFile("stdout", "txt", stdOutPath)) 
+    {
+        return std::nullopt;
+    }
+
+    llvm::SmallString<128> stdErrPath;    
+    if (auto ec = llvm::sys::fs::createTemporaryFile("stderr", "txt", outputPath)) 
+    {
+        return std::nullopt;
+    }
+
+    llvm::SmallString<128> databasePath;
+    int fd;
+    if (auto ec = llvm::sys::fs::createTemporaryFile("", "", fd, databasePath, llvm::sys::fs::FS_Dir)) 
+    {
+        return std::nullopt;
+    }
+
+    std::cout << "****** databasePath: " << databasePath << std:endl;
+
+    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), stdOutPath.str(), stdErrPath.str()};
+
+    // std::vector<llvm::StringRef> const args = {compilerPath, "-v", "-E", "-x", "c++", "-"};
+    // cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    std::vector<llvm::StringRef> const args = {"cmake", cmakeListsPath, "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
+
+    llvm::ArrayRef<llvm::StringRef> emptyEnv;
+    int const result = llvm::sys::ExecuteAndWait("cmake", args, emptyEnv, redirects);
+    if (result != 0) 
+    {
+        llvm::sys::fs::remove(stdOutPath);
+        llvm::sys::fs::remove(stdErrPath);
+        llvm::sys::fs::remove(databasePath);
+        return std::nullopt;
+    }
+
+    llvm::sys::fs::remove(stdOutPath);
+    llvm::sys::fs::remove(stdErrPath);    
+    return databasePath.str();
+
+    // auto bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
+    // llvm::sys::fs::remove(outputPath);
+    // if ( ! bufferOrError) 
+    // {
+    //     return std::nullopt;
+    // }
+
+    // return bufferOrError.get()->getBuffer().str();
+}
+
+
 MrDocsCompilationDatabase::
 MrDocsCompilationDatabase(
     llvm::StringRef workingDir,
