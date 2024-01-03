@@ -91,11 +91,11 @@ EXAMPLES:
     llvm::cl::init(false))
 
 , cmakePath(
-    "cmake"
+    "cmake",
     llvm::cl::desc(R"(The path to the cmake executable.)"))
 
 , cmakeListsPath(
-    "cmake-lists"
+    "cmake-lists",
     llvm::cl::desc(R"(The path to the CMakeLists.txt file.)"))
 
 {
