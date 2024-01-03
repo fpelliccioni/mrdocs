@@ -216,14 +216,19 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath)
     int const result = llvm::sys::ExecuteAndWait("cmake", args, emptyEnv, redirects);
     if (result != 0) 
     {
-        llvm::sys::fs::remove(stdOutPath);
-        llvm::sys::fs::remove(stdErrPath);
-        llvm::sys::fs::remove(databasePath);
+        printf("****** result: %d\n", result);
+        printf("****** stdOutPath: %s\n", stdOutPath.c_str());
+        printf("****** stdErrPath: %s\n", stdErrPath.c_str());
+
+
+        // llvm::sys::fs::remove(stdOutPath);
+        // llvm::sys::fs::remove(stdErrPath);
+        // llvm::sys::fs::remove(databasePath);
         return std::nullopt;
     }
 
-    llvm::sys::fs::remove(stdOutPath);
-    llvm::sys::fs::remove(stdErrPath);    
+    // llvm::sys::fs::remove(stdOutPath);
+    // llvm::sys::fs::remove(stdErrPath);    
     return databasePath.str().str();
 
     // auto bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
