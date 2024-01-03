@@ -166,7 +166,7 @@ adjustCommandLine(
 }
 
 
-#include <iostream> //TODO: remove it
+// #include <iostream> //TODO: remove it
 
 // CMAKE_EXPORT_COMPILE_COMMANDS
 std::optional<std::string> 
@@ -200,7 +200,8 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath)
         return std::nullopt;
     }    
 
-    std::cout << "****** databasePath: " << databasePath << std:endl;
+    // std::cout << "****** databasePath: " << databasePath << std:endl;
+    printf("****** databasePath: %s\n", databasePath.c_str());
 
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), stdOutPath.str(), stdErrPath.str()};
 
