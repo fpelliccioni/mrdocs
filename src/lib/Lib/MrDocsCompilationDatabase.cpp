@@ -172,10 +172,6 @@ adjustCommandLine(
 std::optional<std::string> 
 executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cmakeListsPath) 
 {
-
-    // printf("****** cmakeListsPath: %s\n", cmakeListsPath.str().c_str());
-
-
     if ( ! llvm::sys::fs::exists(cmakePath)) {
         return std::nullopt;
     }    
@@ -195,49 +191,17 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cma
         return std::nullopt;
     }
 
-    // llvm::SmallString<128> databasePath;
-    // // int fd;
-    // // if (auto ec = llvm::sys::fs::createTemporaryFile("", "", fd, databasePath, llvm::sys::fs::FS_Dir)) 
-    // // {
-    // //     return std::nullopt;
-    // // }
-
-    // if (auto ec = llvm::sys::fs::createUniqueDirectory("cmake-db", databasePath)) 
-    // {
-    //     return std::nullopt;
-    // }    
-
-    // // std::cout << "****** databasePath: " << databasePath << std:endl;
-    // printf("****** databasePath: %s\n", databasePath.c_str());
-
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), stdOutPath.str(), stdErrPath.str()};
-
-    // cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     std::vector<llvm::StringRef> const args = {cmakePath, cmakeListsPath, "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
-
-    llvm::ArrayRef<llvm::StringRef> emptyEnv;
-    // int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
-
-    printf("****** result: %d\n", result);
-    printf("****** stdOutPath: %s\n", stdOutPath.c_str());
-    printf("****** stdErrPath: %s\n", stdErrPath.c_str());
 
     if (result != 0) 
     {
-        // llvm::sys::fs::remove(stdOutPath);
-        // llvm::sys::fs::remove(stdErrPath);
-        // llvm::sys::fs::remove(databasePath);
         return std::nullopt;
     }
 
-    // llvm::sys::fs::remove(stdOutPath);
-    // llvm::sys::fs::remove(stdErrPath);    
-    // return databasePath.str().str();
-
     return "./compile_commands.json";
 }
-
 
 MrDocsCompilationDatabase::
 MrDocsCompilationDatabase(
