@@ -224,7 +224,7 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath)
 
     llvm::sys::fs::remove(stdOutPath);
     llvm::sys::fs::remove(stdErrPath);    
-    return databasePath.str();
+    return databasePath.str().str();
 
     // auto bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
     // llvm::sys::fs::remove(outputPath);
