@@ -26,7 +26,6 @@
 
 #include <llvm/Support/raw_ostream.h>
 
-
 namespace clang {
 namespace mrdocs {
 
