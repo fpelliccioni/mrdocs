@@ -214,10 +214,10 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath)
     // std::vector<llvm::StringRef> const args = {compilerPath, "-v", "-E", "-x", "c++", "-"};
     // cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     // std::vector<llvm::StringRef> const args = {"cmake", cmakeListsPath, "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
-    std::vector<llvm::StringRef> const args = {"cmake", cmakeListsPath};
+    std::vector<llvm::StringRef> const args = {"/usr/bin/cmake", cmakeListsPath};
 
     llvm::ArrayRef<llvm::StringRef> emptyEnv;
-    int const result = llvm::sys::ExecuteAndWait("cmake", args, emptyEnv, redirects);
+    int const result = llvm::sys::ExecuteAndWait("/usr/bin/cmake", args, emptyEnv, redirects);
     if (result != 0) 
     {
         printf("****** result: %d\n", result);
