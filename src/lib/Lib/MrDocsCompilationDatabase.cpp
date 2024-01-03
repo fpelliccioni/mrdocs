@@ -175,6 +175,9 @@ adjustCommandLine(
 std::optional<std::string> 
 executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath) 
 {
+
+    printf("****** cmakeListsPath: %s\n", cmakeListsPath.str().c_str());
+
     if ( ! llvm::sys::fs::exists(cmakeListsPath)) {
         return std::nullopt;
     }
