@@ -166,6 +166,8 @@ adjustCommandLine(
 }
 
 
+#include <iostream> //TODO: remove it
+
 // CMAKE_EXPORT_COMPILE_COMMANDS
 std::optional<std::string> 
 executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath) 
@@ -187,11 +189,16 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath)
     }
 
     llvm::SmallString<128> databasePath;
-    int fd;
-    if (auto ec = llvm::sys::fs::createTemporaryFile("", "", fd, databasePath, llvm::sys::fs::FS_Dir)) 
+    // int fd;
+    // if (auto ec = llvm::sys::fs::createTemporaryFile("", "", fd, databasePath, llvm::sys::fs::FS_Dir)) 
+    // {
+    //     return std::nullopt;
+    // }
+
+    if (auto ec = llvm::sys::fs::createUniqueDirectory("cmake-db", databasePath)) 
     {
         return std::nullopt;
-    }
+    }    
 
     std::cout << "****** databasePath: " << databasePath << std:endl;
 
