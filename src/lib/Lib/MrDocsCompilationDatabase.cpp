@@ -217,7 +217,8 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cma
     // std::vector<llvm::StringRef> const args = {cmakePath, cmakeListsPath};
 
     llvm::ArrayRef<llvm::StringRef> emptyEnv;
-    int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
+    // int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
+    int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
 
     printf("****** result: %d\n", result);
     printf("****** stdOutPath: %s\n", stdOutPath.c_str());
