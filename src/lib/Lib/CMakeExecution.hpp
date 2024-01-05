@@ -13,6 +13,7 @@
 
 #include <string>
 
+#include <llvm/ADT/StringRef.h>
 #include <mrdocs/Support/Error.hpp>
 
 namespace clang {
