@@ -54,14 +54,14 @@ generateCompilationDatabaseIfNeeded(llvm::StringRef projectPath)
     }
     else if (fs::is_regular_file(fileStatus))
     {
-        auto const filePath = path::filename(projectPath);
-        if (filePath == "compile_commands.json")
+        auto const fileName = getFileName(projectPath);
+        if (fileName == "compile_commands.json")
         {
             return projectPath.str();
         }
-        else if (filePath == "CMakeLists.txt")
+        else if (fileName == "CMakeLists.txt")
         {
-            return executeCmakeExportCompileCommands(filePath.parent_path().string());
+            return executeCmakeExportCompileCommands(getParentDir(projectPath));
         }
     }
     return projectPath.str();
