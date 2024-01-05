@@ -11,6 +11,7 @@
 
 #include "CompilerInfo.hpp"
 #include "ToolArgs.hpp"
+#include <lib/Lib/CMakeExecution.hpp>
 #include "lib/Lib/ConfigImpl.hpp"
 #include "lib/Lib/CorpusImpl.hpp"
 #include "lib/Lib/MrDocsCompilationDatabase.hpp"
