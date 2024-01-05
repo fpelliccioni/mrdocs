@@ -20,6 +20,7 @@
 #include <mrdocs/Support/Path.hpp>
 #include <clang/Tooling/JSONCompilationDatabase.h>
 
+
 #include <cstdlib>
 
 namespace clang {
@@ -54,14 +55,14 @@ generateCompilationDatabaseIfNeeded(llvm::StringRef projectPath)
     }
     else if (fs::is_regular_file(fileStatus))
     {
-        auto const fileName = getFileName(projectPath);
+        auto const fileName = files::getFileName(projectPath);
         if (fileName == "compile_commands.json")
         {
             return projectPath.str();
         }
         else if (fileName == "CMakeLists.txt")
         {
-            return executeCmakeExportCompileCommands(getParentDir(projectPath));
+            return executeCmakeExportCompileCommands(files::getParentDir(projectPath));
         }
     }
     return projectPath.str();
