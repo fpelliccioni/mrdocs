@@ -28,12 +28,12 @@ namespace mrdocs {
 std::string getCurrentWorkingDirectory()
 {
     namespace fs = llvm::sys::fs;
-    if (auto ec = fs::current_path())
+    auto result = llvm::SmallVector<char, 256>();
+    if (fs::current_path(result))
     {
-        report::error("Failed to get current working directory");
-        return {};
+        return std::string(result.begin(), result.end());
     }
-    return *ec;
+    return {};
 }
 
 Expected<std::string>
