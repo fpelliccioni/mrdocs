@@ -57,14 +57,14 @@ generateCompilationDatabaseIfNeeded(llvm::StringRef projectPath)
         auto const filePath = path::filename(projectPath);
         if (filePath == "compile_commands.json")
         {
-            return projectPath;
+            return projectPath.str();
         }
         else if (filePath == "CMakeLists.txt")
         {
             return executeCmakeExportCompileCommands(filePath.parent_path().string());
         }
     }
-    return projectPath;
+    return projectPath.str();
 }
 
 Expected<void>
