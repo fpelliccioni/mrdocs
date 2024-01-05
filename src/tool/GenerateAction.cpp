@@ -30,12 +30,19 @@ generateCompilationDatabaseIfNeeded(llvm::StringRef path)
 {
     namespace fs = llvm::sys::fs;
 
-    auto const status = fs::status(path);
-    if (fs::is_directory(status))
+    fs::file_status fileStatus;
+    if (auto ec = fs::status(path, fileStatus))
+    {
+        if (ec == std::errc::no_such_file_or_directory)
+            return FileType::not_found;
+        return Unexpected(Error(ec));
+    }
+
+    if (fs::is_directory(fileStatus))
     {
         return executeCmakeExportCompileCommands(path);
     }
-    else if (fs::is_regular_file(status))
+    else if (fs::is_regular_file(fileStatus))
     {
         fs::path filePath(path);
         if (filePath.filename() == "compile_commands.json")
