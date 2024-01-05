@@ -170,23 +170,25 @@ adjustCommandLine(
 Expected<std::string>
 executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cmakeListsPath) 
 {
-    if ( ! llvm::sys::fs::exists(cmakePath)) {
-        return std::nullopt;
+    if ( ! llvm::sys::fs::exists(cmakePath)) 
+    {
+        return Unexpected(Error("cmake executable not found"));
     }    
-    if ( ! llvm::sys::fs::exists(cmakeListsPath)) {
-        return std::nullopt;
+    if ( ! llvm::sys::fs::exists(cmakeListsPath)) 
+    {
+        return Unexpected(Error("CMakeLists.txt not found"));
     }
 
     llvm::SmallString<128> stdOutPath;
     if (auto ec = llvm::sys::fs::createTemporaryFile("stdout", "txt", stdOutPath)) 
     {
-        return std::nullopt;
+        return Unexpected(Error("failed to create temporary file"));
     }
 
     llvm::SmallString<128> stdErrPath;    
     if (auto ec = llvm::sys::fs::createTemporaryFile("stderr", "txt", stdErrPath)) 
     {
-        return std::nullopt;
+        return Unexpected(Error("failed to create temporary file"));
     }
 
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), stdOutPath.str(), stdErrPath.str()};
@@ -195,7 +197,7 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cma
 
     if (result != 0) 
     {
-        return std::nullopt;
+        return Unexpected(Error("cmake execution failed"));
     }
 
     return "./compile_commands.json";
