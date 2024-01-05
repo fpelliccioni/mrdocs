@@ -26,6 +26,9 @@
 
 // #include <llvm/Support/raw_ostream.h>
 
+#include <llvm/Support/FileSystem.h>
+#include <llvm/Support/Path.h>
+
 namespace clang {
 namespace mrdocs {
 
