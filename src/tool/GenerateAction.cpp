@@ -28,7 +28,7 @@ namespace mrdocs {
 Expected<std::string>
 generateCompilationDatabaseIfNeeded(llvm::StringRef path)
 {
-    namespace fs = std::filesystem;
+    namespace fs = llvm::sys::fs;
 
     auto const status = fs::status(path);
     if (fs::is_directory(status))
