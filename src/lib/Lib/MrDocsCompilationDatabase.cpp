@@ -168,12 +168,44 @@ adjustCommandLine(
 }
 
 Expected<std::string>
-executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cmakeListsPath) 
+getCmakePath() {
+    std::vector<std::string> paths = {
+        "/usr/bin/cmake",
+        "/usr/local/bin/cmake",
+        "/opt/homebrew/bin/cmake",
+        "/opt/homebrew/opt/cmake/bin/cmake",
+        "/usr/local/opt/cmake/bin/cmake",
+        "/usr/local/Cellar/cmake/*/bin/cmake",
+        "/usr/local/Cellar/cmake@*/*/bin/cmake",
+        "C:/Program Files/CMake/bin/cmake.exe",
+        "C:/Program Files (x86)/CMake/bin/cmake.exe"
+    };
+
+    for (auto const& path : paths) {
+        if (llvm::sys::fs::exists(path)) {
+            std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
+            std::vector<llvm::StringRef> const args = {path, "--version"};
+            int const result = llvm::sys::ExecuteAndWait(path, args, std::nullopt, redirects);
+            if (result != 0) 
+            {
+                return Unexpected(Error("cmake execution failed"));
+            }
+            return path;
+        }
+    }
+    return Unexpected(Error("cmake executable not found"));
+}
+
+Expected<std::string>
+executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath) 
 {
-    if ( ! llvm::sys::fs::exists(cmakePath)) 
+    auto cmakePathRes = getCmakePath();
+    if (! cmakePathRes) 
     {
-        return Unexpected(Error("cmake executable not found"));
-    }    
+        return cmakePathRes;
+    }
+    auto cmakePath = *cmakePathRes;
+
     if ( ! llvm::sys::fs::exists(cmakeListsPath)) 
     {
         return Unexpected(Error("CMakeLists.txt not found"));

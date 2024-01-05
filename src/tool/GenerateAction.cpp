@@ -25,6 +25,31 @@
 namespace clang {
 namespace mrdocs {
 
+Expected<std::string>
+generateCompilationDatabaseIfNeeded(llvm::StringRef path)
+{
+    namespace fs = std::filesystem;
+
+    auto const status = fs::status(path);
+    if (fs::is_directory(status))
+    {
+        return executeCmakeExportCompileCommands(path);
+    }
+    else if (fs::is_regular_file(status))
+    {
+        fs::path filePath(path);
+        if (filePath.filename() == "compile_commands.json")
+        {
+            return path;
+        }
+        else if (filePath.filename() == "CMakeLists.txt")
+        {
+            return executeCmakeExportCompileCommands(filePath.parent_path().string());
+        }
+    }
+    return path;
+}
+
 Expected<void>
 DoGenerateAction()
 {
@@ -74,29 +99,13 @@ DoGenerateAction()
     // Load the compilation database file
     //
     // --------------------------------------------------------------
-    if (detail::failed(toolArgs.inputPaths) && detail::failed(toolArgs.generateCompilationDatabase))
-    {
-        report::error("The compilation database path argument is missing or you can use --generate-compilation-database");
-        return {};
-    }
-
     std::string inputPath;
-    if (toolArgs.generateCompilationDatabase)
+    if (toolArgs.inputPaths.empty())
     {
-        MRDOCS_CHECK(toolArgs.cmakePath, "The cmake path argument is missing");
-        MRDOCS_CHECK(toolArgs.cmakeListsPath, "The cmake-lists path argument is missing");
-
-        auto const res = executeCmakeExportCompileCommands(toolArgs.cmakePath, toolArgs.cmakeListsPath);
-        if ( ! res)
-        {
-            report::error("Failed to generate compilation database");
-            return {};
-        } 
-        inputPath = *res;
+        inputPath = getCurrentWorkingDirectory();       
     }
-    else 
+    else
     {
-        MRDOCS_CHECK(toolArgs.inputPaths, "The compilation database path argument is missing");
         MRDOCS_CHECK(toolArgs.inputPaths.size() == 1,
             formatError(
                 "got {} input paths where 1 was expected",
@@ -104,6 +113,13 @@ DoGenerateAction()
 
         inputPath = toolArgs.inputPaths.front();
     }
+    auto const res = generateCompilationDatabaseIfNeeded(inputPath);
+    if ( ! res)
+    {
+        report::error("Failed to generate compilation database");
+        return {};
+    } 
+    inputPath = *res;  
 
     auto compilationsPath = files::normalizePath(inputPath);
     MRDOCS_TRY(compilationsPath, files::makeAbsolute(compilationsPath));
