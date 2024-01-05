@@ -37,34 +37,34 @@ std::string getCurrentWorkingDirectory()
 }
 
 Expected<std::string>
-generateCompilationDatabaseIfNeeded(llvm::StringRef path)
+generateCompilationDatabaseIfNeeded(llvm::StringRef projectPath)
 {
     namespace fs = llvm::sys::fs;
     namespace path = llvm::sys::path;
 
     fs::file_status fileStatus;
-    if (auto ec = fs::status(path, fileStatus))
+    if (auto ec = fs::status(projectPath, fileStatus))
     {
         return Unexpected(Error(ec));
     }
 
     if (fs::is_directory(fileStatus))
     {
-        return executeCmakeExportCompileCommands(path);
+        return executeCmakeExportCompileCommands(projectPath);
     }
     else if (fs::is_regular_file(fileStatus))
     {
-        auto const filePath = path::filename(path)
+        auto const filePath = path::filename(projectPath)
         if (filePath == "compile_commands.json")
         {
-            return path;
+            return projectPath;
         }
         else if (filePath == "CMakeLists.txt")
         {
             return executeCmakeExportCompileCommands(filePath.parent_path().string());
         }
     }
-    return path;
+    return projectPath;
 }
 
 Expected<void>
