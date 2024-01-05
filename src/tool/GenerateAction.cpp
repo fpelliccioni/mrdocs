@@ -54,7 +54,7 @@ generateCompilationDatabaseIfNeeded(llvm::StringRef projectPath)
     }
     else if (fs::is_regular_file(fileStatus))
     {
-        auto const filePath = path::filename(projectPath)
+        auto const filePath = path::filename(projectPath);
         if (filePath == "compile_commands.json")
         {
             return projectPath;
