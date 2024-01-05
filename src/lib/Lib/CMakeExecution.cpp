@@ -9,22 +9,7 @@
 // Official repository: https://github.com/cppalliance/mrdocs
 //
 
-// #include "lib/Support/Debug.hpp"
-// #include "lib/Support/Path.hpp"
-// #include "lib/Lib/ConfigImpl.hpp"
 #include "lib/Lib/CMakeExecution.hpp"
-// #include <fmt/format.h>
-// #include <clang/Basic/LangStandard.h>
-// #include <clang/Driver/Driver.h>
-// #include <clang/Driver/Options.h>
-// #include <clang/Driver/Types.h>
-// #include <llvm/Option/ArgList.h>
-// #include <llvm/Option/OptSpecifier.h>
-// #include <llvm/Option/OptTable.h>
-// #include <llvm/Support/FileSystem.h>
-
-
-// #include <llvm/Support/raw_ostream.h>
 
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/Path.h>
