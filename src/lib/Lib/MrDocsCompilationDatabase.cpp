@@ -167,7 +167,7 @@ adjustCommandLine(
     return new_cmdline;
 }
 
-std::optional<std::string> 
+Expected<std::string>
 executeCmakeExportCompileCommands(llvm::StringRef cmakePath, llvm::StringRef cmakeListsPath) 
 {
     if ( ! llvm::sys::fs::exists(cmakePath)) {
