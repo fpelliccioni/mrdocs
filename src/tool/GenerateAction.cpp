@@ -27,8 +27,13 @@ namespace mrdocs {
 
 std::string getCurrentWorkingDirectory()
 {
-    namespace fs = std::filesystem;
-    return fs::current_path().string();
+    namespace fs = llvm::sys::fs;
+    if (auto ec = fs::current_path())
+    {
+        report::error("Failed to get current working directory");
+        return {};
+    }
+    return *ec;
 }
 
 Expected<std::string>
