@@ -25,10 +25,17 @@
 namespace clang {
 namespace mrdocs {
 
+std::string getCurrentWorkingDirectory()
+{
+    namespace fs = std::filesystem;
+    return fs::current_path().string();
+}
+
 Expected<std::string>
 generateCompilationDatabaseIfNeeded(llvm::StringRef path)
 {
     namespace fs = llvm::sys::fs;
+    namespace path = llvm::sys::path;
 
     fs::file_status fileStatus;
     if (auto ec = fs::status(path, fileStatus))
@@ -42,12 +49,12 @@ generateCompilationDatabaseIfNeeded(llvm::StringRef path)
     }
     else if (fs::is_regular_file(fileStatus))
     {
-        llvm::sys::path filePath(path);
-        if (filePath.filename() == "compile_commands.json")
+        auto const filePath = path::filename(path)
+        if (filePath == "compile_commands.json")
         {
             return path;
         }
-        else if (filePath.filename() == "CMakeLists.txt")
+        else if (filePath == "CMakeLists.txt")
         {
             return executeCmakeExportCompileCommands(filePath.parent_path().string());
         }
