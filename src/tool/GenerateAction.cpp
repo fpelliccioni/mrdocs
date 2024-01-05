@@ -26,17 +26,6 @@
 namespace clang {
 namespace mrdocs {
 
-std::string getCurrentWorkingDirectory()
-{
-    namespace fs = llvm::sys::fs;
-    auto result = llvm::SmallVector<char, 256>();
-    if (fs::current_path(result))
-    {
-        return std::string(result.begin(), result.end());
-    }
-    return {};
-}
-
 Expected<std::string>
 generateCompilationDatabaseIfNeeded(llvm::StringRef projectPath)
 {
@@ -117,29 +106,21 @@ DoGenerateAction()
     // Load the compilation database file
     //
     // --------------------------------------------------------------
-    std::string inputPath;
-    if (toolArgs.inputPaths.empty())
-    {
-        inputPath = getCurrentWorkingDirectory();       
-    }
-    else
-    {
-        MRDOCS_CHECK(toolArgs.inputPaths.size() == 1,
-            formatError(
-                "got {} input paths where 1 was expected",
-                toolArgs.inputPaths.size()));
+    
+    MRDOCS_CHECK(toolArgs.inputPaths, "The compilation database path argument is missing");
+    MRDOCS_CHECK(toolArgs.inputPaths.size() == 1,
+        formatError(
+            "got {} input paths where 1 was expected",
+            toolArgs.inputPaths.size()));
 
-        inputPath = toolArgs.inputPaths.front();
-    }
-    auto const res = generateCompilationDatabaseIfNeeded(inputPath);
-    if ( ! res)
+    auto const inputPath = generateCompilationDatabaseIfNeeded(toolArgs.inputPaths.front());
+    if ( ! inputPath)
     {
         report::error("Failed to generate compilation database");
         return {};
     } 
-    inputPath = *res;  
 
-    auto compilationsPath = files::normalizePath(inputPath);
+    auto compilationsPath = files::normalizePath(*inputPath);
     MRDOCS_TRY(compilationsPath, files::makeAbsolute(compilationsPath));
     std::string errorMessage;
     MRDOCS_TRY_MSG(

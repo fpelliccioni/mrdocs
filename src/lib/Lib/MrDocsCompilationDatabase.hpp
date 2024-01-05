@@ -19,12 +19,6 @@
 namespace clang {
 namespace mrdocs {
 
-/**
- * Execute cmake to export compile_commands.json.
-*/
-Expected<std::string>
-executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath);
-
 /** A compilation database where all paths are absolute.
 
     All relative paths in the compilation database
