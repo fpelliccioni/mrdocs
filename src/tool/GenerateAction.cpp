@@ -33,8 +33,6 @@ generateCompilationDatabaseIfNeeded(llvm::StringRef path)
     fs::file_status fileStatus;
     if (auto ec = fs::status(path, fileStatus))
     {
-        if (ec == std::errc::no_such_file_or_directory)
-            return FileType::not_found;
         return Unexpected(Error(ec));
     }
 
@@ -44,7 +42,7 @@ generateCompilationDatabaseIfNeeded(llvm::StringRef path)
     }
     else if (fs::is_regular_file(fileStatus))
     {
-        fs::path filePath(path);
+        llvm::sys::path filePath(path);
         if (filePath.filename() == "compile_commands.json")
         {
             return path;
