@@ -38,7 +38,7 @@ getCmakePath() {
 Expected<std::string>
 executeCmakeExportCompileCommands(llvm::StringRef projectPath) 
 {
-    MRDOCS_TRY(cmakePath, getCmakePath());
+    MRDOCS_TRY(auto const cmakePath, getCmakePath());
 
     MRDOCS_CHECK(llvm::sys::fs::exists(projectPath), "CMakeLists.txt not found");
 
