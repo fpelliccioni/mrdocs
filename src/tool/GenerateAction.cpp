@@ -111,12 +111,12 @@ DoGenerateAction()
             toolArgs.inputPaths.size()));
 
     auto const inputPath = generateCompilationDatabase(toolArgs.inputPaths.front());
-    printf("inputPath: %s\n", inputPath.c_str());
     if ( ! inputPath)
     {
         report::error("Failed to generate compilation database");
         return {};
-    } 
+    }
+    printf("inputPath: %s\n", inputPath->c_str());
 
     auto compilationsPath = files::normalizePath(*inputPath);
     MRDOCS_TRY(compilationsPath, files::makeAbsolute(compilationsPath));
