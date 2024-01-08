@@ -74,9 +74,9 @@ getCmakePath() {
     }
 
     printf("getCmakePath - 3 \n");
-    // std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
+    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
     std::vector<llvm::StringRef> const args = {*path, "--version"};
-    int const result = llvm::sys::ExecuteAndWait(*path, args, std::nullopt); //, redirects);
+    int const result = llvm::sys::ExecuteAndWait(*path, args, std::nullopt, redirects);
     if (result != 0) 
     {
         printf("getCmakePath - 4 \n");
@@ -116,6 +116,8 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath)
     }
 
     printf("executeCmakeExportCompileCommands - 7 \n");
+
+    printf("cmakeListsPath: -- %s --\n", cmakeListsPath.str().c_str());
 
     std::vector<llvm::StringRef> const args = {cmakePath, "-S", cmakeListsPath.str(), "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args);
