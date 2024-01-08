@@ -111,6 +111,7 @@ DoGenerateAction()
             toolArgs.inputPaths.size()));
 
     auto const inputPath = generateCompilationDatabase(toolArgs.inputPaths.front());
+    printf("inputPath: %s\n", inputPath.str().c_str());
     if ( ! inputPath)
     {
         report::error("Failed to generate compilation database");
@@ -136,6 +137,8 @@ DoGenerateAction()
     MrDocsCompilationDatabase compilationDatabase(
             compileCommandsDir, compileCommands, config, defaultIncludePaths);
 
+
+    printf("toolArgs.outputPath: %s\n", toolArgs.outputPath.getValue().c_str());
     // Normalize outputPath path
     MRDOCS_CHECK(toolArgs.outputPath, "The output path argument is missing");
     toolArgs.outputPath = files::normalizePath(
