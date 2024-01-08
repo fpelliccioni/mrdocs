@@ -111,7 +111,7 @@ DoGenerateAction()
             toolArgs.inputPaths.size()));
 
     auto const inputPath = generateCompilationDatabase(toolArgs.inputPaths.front());
-    printf("inputPath: %s\n", inputPath.str().c_str());
+    printf("inputPath: %s\n", inputPath.c_str());
     if ( ! inputPath)
     {
         report::error("Failed to generate compilation database");
