@@ -51,10 +51,11 @@ executeCmakeHelp(llvm::StringRef cmakePath)
 Expected<std::string>
 getCmakeDefaultGenerator(llvm::StringRef cmakePath) 
 {
+    printf("getCmakeDefaultGenerator\n");
     MRDOCS_TRY(auto const cmakeHelp, executeCmakeHelp(cmakePath));
    
     printf("%s\n", cmakeHelp.c_str());
-    
+
     std::istringstream stream(cmakeHelp);
     std::string line;
     std::string defaultGenerator;
@@ -67,7 +68,7 @@ getCmakeDefaultGenerator(llvm::StringRef cmakePath)
             break;
         }
     }
-    MRDOCS_CHECK(!defaultGenerator.empty(), "Default CMake generator not found");
+    MRDOCS_CHECK(!defaultGenerator.empty(), "Default CMake generator not found *****");
 
     return defaultGenerator;
 }
