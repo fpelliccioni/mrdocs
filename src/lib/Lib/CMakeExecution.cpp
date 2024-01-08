@@ -56,15 +56,15 @@ getCmakePath() {
     printf("getCmakePath - 1 \n");
 
     std::vector<llvm::StringRef> paths = {
-        "/usr/bin/cmake",
-        "/usr/local/bin/cmake",
-        "/opt/homebrew/bin/cmake",
-        "/opt/homebrew/opt/cmake/bin/cmake",
-        "/usr/local/opt/cmake/bin/cmake",
-        "/usr/local/Cellar/cmake/*/bin/cmake",
-        "/usr/local/Cellar/cmake@*/*/bin/cmake",
-        "C:/Program Files/CMake/bin/cmake.exe",
-        "C:/Program Files (x86)/CMake/bin/cmake.exe"
+        "/usr/bin/",
+        "/usr/local/bin/",
+        "/opt/homebrew/bin/",
+        "/opt/homebrew/opt//bin/",
+        "/usr/local/opt/cmake/bin/",
+        "/usr/local/Cellar/cmake/*/bin/",
+        "/usr/local/Cellar/cmake@*/*/bin/",
+        "C:/Program Files/CMake/bin/",
+        "C:/Program Files (x86)/CMake/bin/"
     };
 
     auto const path = llvm::sys::findProgramByName("cmake", paths);
