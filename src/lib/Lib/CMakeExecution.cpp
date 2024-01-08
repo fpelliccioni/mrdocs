@@ -53,6 +53,8 @@ getCmakeDefaultGenerator(llvm::StringRef cmakePath)
 {
     MRDOCS_TRY(auto const cmakeHelp, executeCmakeHelp(cmakePath));
    
+    printf("%s\n", cmakeHelp.c_str());
+    
     std::istringstream stream(cmakeHelp);
     std::string line;
     std::string defaultGenerator;
