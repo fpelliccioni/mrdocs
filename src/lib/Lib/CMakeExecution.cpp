@@ -11,6 +11,7 @@
 #include "lib/Lib/CMakeExecution.hpp"
 
 #include <llvm/Support/FileSystem.h>
+#include <llvm/Support/MemoryBuffer.h>
 #include <llvm/Support/Path.h>
 #include <llvm/Support/Program.h>
 
@@ -41,12 +42,8 @@ executeCmakeHelp(llvm::StringRef cmakePath)
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
     MRDOCS_CHECK(result == 0, "CMake execution failed");
 
-    auto bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
-    llvm::sys::fs::remove(outputPath);
-    if ( ! bufferOrError) 
-    {
-        return std::nullopt;
-    }
+    auto const bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
+    MRDOCS_CHECK(bufferOrError, "Failed to read CMake help output");
 
     return bufferOrError.get()->getBuffer().str();
 }
