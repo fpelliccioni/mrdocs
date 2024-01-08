@@ -1,10 +1,9 @@
 //
-// This is a derivative work. originally part of the LLVM Project.
 // Licensed under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
-// Copyright (c) 2023 Vinnie Falco (vinnie.falco@gmail.com)
+// Copyright (c) 2024 Fernando Pelliccioni (fpelliccioni@gmail.com)
 //
 // Official repository: https://github.com/cppalliance/mrdocs
 //
@@ -45,8 +44,6 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath)
     llvm::SmallString<128> tempDir;
     MRDOCS_CHECK(!llvm::sys::fs::createUniqueDirectory("compile_commands", tempDir), "Failed to create temporary directory");
 
-    printf("tempDir: -- %s --\n", tempDir.str().str().c_str());
-
     std::vector<llvm::StringRef> const args = {cmakePath, "-S", projectPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
@@ -54,8 +51,6 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath)
 
     llvm::SmallString<128> compileCommandsPath(tempDir);
     llvm::sys::path::append(compileCommandsPath, "compile_commands.json");
-
-    printf("compileCommandsPath: %s\n", compileCommandsPath.str().str().c_str());
 
     return compileCommandsPath.str().str();
 }
