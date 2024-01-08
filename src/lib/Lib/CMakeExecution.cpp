@@ -35,8 +35,6 @@ executeCmakeHelp(llvm::StringRef cmakePath)
     llvm::SmallString<128> outputPath;
     MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-help", "txt", outputPath), 
         "Failed to create temporary file");
-    printf("outputPath: %s\n", outputPath.c_str());
-
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.str(), llvm::StringRef()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--help"};
     llvm::ArrayRef<llvm::StringRef> emptyEnv;
@@ -52,10 +50,7 @@ executeCmakeHelp(llvm::StringRef cmakePath)
 Expected<std::string>
 getCmakeDefaultGenerator(llvm::StringRef cmakePath) 
 {
-    printf("getCmakeDefaultGenerator\n");
     MRDOCS_TRY(auto const cmakeHelp, executeCmakeHelp(cmakePath));
-   
-    printf("%s\n", cmakeHelp.c_str());
 
     std::istringstream stream(cmakeHelp);
     std::string line;
@@ -69,7 +64,9 @@ getCmakeDefaultGenerator(llvm::StringRef cmakePath)
             break;
         }
     }
-    MRDOCS_CHECK(!defaultGenerator.empty(), "Default CMake generator not found *****");
+    MRDOCS_CHECK(!defaultGenerator.empty(), "Default CMake generator not found");
+
+    printf("Default CMake generator: %s\n", defaultGenerator.c_str());
 
     return defaultGenerator;
 }
