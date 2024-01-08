@@ -120,7 +120,8 @@ executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath)
     printf("cmakeListsPath: -- %s --\n", cmakeListsPath.str().c_str());
     printf("tempDir: -- %s --\n", tempDir.str().str().c_str());
 
-    std::vector<llvm::StringRef> const args = {cmakePath, "-S", cmakeListsPath.str(), "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
+    // std::vector<llvm::StringRef> const args = {cmakePath, "-S", cmakeListsPath.str(), "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
+    std::vector<llvm::StringRef> const args = {cmakePath, "-S", cmakeListsPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args);
     if (result != 0) 
     {
