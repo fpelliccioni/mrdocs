@@ -20,17 +20,11 @@ namespace mrdocs {
 Expected<std::string>
 getCmakePath() {
     auto const path = llvm::sys::findProgramByName("cmake");
-    if (! path) {
-        return Unexpected(Error("CMake executable not found"));
-    }
-
+    MRDOCS_CHECK(path, "CMake executable not found");
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
     std::vector<llvm::StringRef> const args = {*path, "--version"};
     int const result = llvm::sys::ExecuteAndWait(*path, args, std::nullopt, redirects);
-    if (result != 0) 
-    {
-        return Unexpected(Error("CMake execution failed"));
-    }
+    MRDOCS_CHECK(result == 0, "CMake execution failed");
     return *path;
 }
 
@@ -38,7 +32,6 @@ Expected<std::string>
 executeCmakeExportCompileCommands(llvm::StringRef projectPath) 
 {
     MRDOCS_TRY(auto const cmakePath, getCmakePath());
-
     MRDOCS_CHECK(llvm::sys::fs::exists(projectPath), "CMakeLists.txt not found");
 
     llvm::SmallString<128> tempDir;
