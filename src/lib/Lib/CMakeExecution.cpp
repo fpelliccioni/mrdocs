@@ -37,8 +37,8 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath)
     llvm::SmallString<128> tempDir;
     MRDOCS_CHECK(!llvm::sys::fs::createUniqueDirectory("compile_commands", tempDir), "Failed to create temporary directory");
 
-    std::vector<llvm::StringRef> const args = {cmakePath, "-S", projectPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
+    std::vector<llvm::StringRef> const args = {cmakePath, "-S", projectPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
     MRDOCS_CHECK(result == 0, "CMake execution failed");
 
