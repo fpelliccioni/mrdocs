@@ -84,28 +84,38 @@ getCmakePath() {
 Expected<std::string>
 executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath) 
 {
-    auto cmakePathRes = getCmakePath();
-    if (! cmakePathRes) 
+    printf("executeCmakeExportCompileCommands: %s\n", cmakeListsPath.str().str().c_str());
+    printf("executeCmakeExportCompileCommands - 1 \n");
+    auto const cmakePathRes = getCmakePath();
+    if ( ! cmakePathRes) 
     {
+        printf("executeCmakeExportCompileCommands - 2 \n");
         return cmakePathRes;
     }
-    auto cmakePath = *cmakePathRes;
+    auto const cmakePath = *cmakePathRes;
 
+    printf("executeCmakeExportCompileCommands - 3 \n");
     if ( ! llvm::sys::fs::exists(cmakeListsPath)) 
     {
+        printf("executeCmakeExportCompileCommands - 4 \n");
         return Unexpected(Error("CMakeLists.txt not found"));
     }
 
+    printf("executeCmakeExportCompileCommands - 5 \n");
     llvm::SmallString<128> tempDir;
-    if (auto ec = llvm::sys::fs::createUniqueDirectory("compile_commands", tempDir)) 
+    if (auto const ec = llvm::sys::fs::createUniqueDirectory("compile_commands", tempDir)) 
     {
+        printf("executeCmakeExportCompileCommands - 6 \n");
         return Unexpected(Error("Failed to create temporary directory"));
     }
+
+    printf("executeCmakeExportCompileCommands - 7 \n");
 
     std::vector<llvm::StringRef> const args = {cmakePath, "-S", cmakeListsPath.str(), "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args);
     if (result != 0) 
     {
+        printf("executeCmakeExportCompileCommands - 8 \n");
         return Unexpected(Error("CMake execution failed"));
     }
 
