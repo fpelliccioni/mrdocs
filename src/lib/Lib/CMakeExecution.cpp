@@ -53,6 +53,8 @@ getCmakePath() {
     // ErrorOr< std::string > llvm::sys::findProgramByName	(	StringRef 	Name,
     // ArrayRef< StringRef > 	Paths = {} )	
 
+    printf("getCmakePath - 1 \n");
+
     std::vector<llvm::StringRef> paths = {
         "/usr/bin/cmake",
         "/usr/local/bin/cmake",
@@ -67,16 +69,20 @@ getCmakePath() {
 
     auto const path = llvm::sys::findProgramByName("cmake", paths);
     if (! path) {
+        printf("getCmakePath - 2 \n");
         return Unexpected(Error("cmake executable not found"));
     }
 
+    printf("getCmakePath - 3 \n");
     // std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
     std::vector<llvm::StringRef> const args = {*path, "--version"};
     int const result = llvm::sys::ExecuteAndWait(*path, args, std::nullopt); //, redirects);
     if (result != 0) 
     {
+        printf("getCmakePath - 4 \n");
         return Unexpected(Error("cmake execution failed"));
     }
+    printf("getCmakePath - 5 \n");
     return *path;
 }
 
