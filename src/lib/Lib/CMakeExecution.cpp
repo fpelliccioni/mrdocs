@@ -35,8 +35,9 @@ executeCmakeHelp(llvm::StringRef cmakePath)
     llvm::SmallString<128> outputPath;
     MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-help", "txt", outputPath), 
         "Failed to create temporary file");
+    printf("outputPath: %s\n", outputPath.c_str());
 
-    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), outputPath.str()};
+    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.str(), llvm::StringRef()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--help"};
     llvm::ArrayRef<llvm::StringRef> emptyEnv;
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
