@@ -60,15 +60,13 @@ getCmakeDefaultGenerator(llvm::StringRef cmakePath)
         if (line[0] == '*' && line[1] == ' ') {
             size_t const start = 2;
             size_t const end = line.find("=", start);
-            defaultGenerator = line.substr(start, end - start);
-            break;
+            if (end == std::string::npos) {
+                continue;
+            }
+            return line.substr(start, end - start);
         }
     }
-    MRDOCS_CHECK(!defaultGenerator.empty(), "Default CMake generator not found");
-
-    printf("Default CMake generator: %s\n", defaultGenerator.c_str());
-
-    return defaultGenerator;
+    return Unexpected(Error("Default CMake generator not found"));
 }
 
 Expected<bool>
