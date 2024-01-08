@@ -77,7 +77,7 @@ getCmakePath() {
     {
         return Unexpected(Error("cmake execution failed"));
     }
-    return path;
+    return *path;
 }
 
 
