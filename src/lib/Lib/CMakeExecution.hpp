@@ -23,7 +23,7 @@ namespace mrdocs {
  * Execute cmake to export compile_commands.json.
 */
 Expected<std::string>
-executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath);
+executeCmakeExportCompileCommands(llvm::StringRef projectPath);
 
 } // mrdocs
 } // clang

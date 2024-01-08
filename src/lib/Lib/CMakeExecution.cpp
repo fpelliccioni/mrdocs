@@ -18,116 +18,39 @@
 namespace clang {
 namespace mrdocs {
 
-// Expected<std::string>
-// getCmakePath() {
-//     std::vector<std::string> paths = {
-//         "/usr/bin/cmake",
-//         "/usr/local/bin/cmake",
-//         "/opt/homebrew/bin/cmake",
-//         "/opt/homebrew/opt/cmake/bin/cmake",
-//         "/usr/local/opt/cmake/bin/cmake",
-//         "/usr/local/Cellar/cmake/*/bin/cmake",
-//         "/usr/local/Cellar/cmake@*/*/bin/cmake",
-//         "C:/Program Files/CMake/bin/cmake.exe",
-//         "C:/Program Files (x86)/CMake/bin/cmake.exe"
-//     };
-
-//     for (auto const& path : paths) {
-//         if (llvm::sys::fs::exists(path)) {
-//             std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
-//             std::vector<llvm::StringRef> const args = {path, "--version"};
-//             int const result = llvm::sys::ExecuteAndWait(path, args, std::nullopt, redirects);
-//             if (result != 0) 
-//             {
-//                 return Unexpected(Error("cmake execution failed"));
-//             }
-//             return path;
-//         }
-//     }
-//     return Unexpected(Error("cmake executable not found"));
-// }
-
 Expected<std::string>
 getCmakePath() {
-
-    // ErrorOr< std::string > llvm::sys::findProgramByName	(	StringRef 	Name,
-    // ArrayRef< StringRef > 	Paths = {} )	
-
-    printf("getCmakePath - 1 \n");
-
-    std::vector<llvm::StringRef> paths = {
-        "/usr/bin/",
-        "/usr/local/bin/",
-        "/opt/homebrew/bin/",
-        "/opt/homebrew/opt//bin/",
-        "/usr/local/opt/cmake/bin/",
-        "/usr/local/Cellar/cmake/*/bin/",
-        "/usr/local/Cellar/cmake@*/*/bin/",
-        "C:/Program Files/CMake/bin/",
-        "C:/Program Files (x86)/CMake/bin/"
-    };
-
-    auto const path = llvm::sys::findProgramByName("cmake", paths);
+    auto const path = llvm::sys::findProgramByName("cmake");
     if (! path) {
-        printf("getCmakePath - 2 \n");
-        return Unexpected(Error("cmake executable not found"));
+        return Unexpected(Error("CMake executable not found"));
     }
 
-    printf("getCmakePath - 3 \n");
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
     std::vector<llvm::StringRef> const args = {*path, "--version"};
     int const result = llvm::sys::ExecuteAndWait(*path, args, std::nullopt, redirects);
     if (result != 0) 
     {
-        printf("getCmakePath - 4 \n");
-        return Unexpected(Error("cmake execution failed"));
+        return Unexpected(Error("CMake execution failed"));
     }
-    printf("getCmakePath - 5 \n");
     return *path;
 }
 
-
 Expected<std::string>
-executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath) 
+executeCmakeExportCompileCommands(llvm::StringRef projectPath) 
 {
-    printf("executeCmakeExportCompileCommands: %s\n", cmakeListsPath.str().c_str());
-    printf("executeCmakeExportCompileCommands - 1 \n");
-    auto const cmakePathRes = getCmakePath();
-    if ( ! cmakePathRes) 
-    {
-        printf("executeCmakeExportCompileCommands - 2 \n");
-        return cmakePathRes;
-    }
-    auto const cmakePath = *cmakePathRes;
+    MRDOCS_TRY(cmakePath, getCmakePath());
 
-    printf("executeCmakeExportCompileCommands - 3 \n");
-    if ( ! llvm::sys::fs::exists(cmakeListsPath)) 
-    {
-        printf("executeCmakeExportCompileCommands - 4 \n");
-        return Unexpected(Error("CMakeLists.txt not found"));
-    }
+    MRDOCS_CHECK(llvm::sys::fs::exists(projectPath), "CMakeLists.txt not found");
 
-    printf("executeCmakeExportCompileCommands - 5 \n");
     llvm::SmallString<128> tempDir;
-    if (auto const ec = llvm::sys::fs::createUniqueDirectory("compile_commands", tempDir)) 
-    {
-        printf("executeCmakeExportCompileCommands - 6 \n");
-        return Unexpected(Error("Failed to create temporary directory"));
-    }
+    MRDOCS_CHECK(!llvm::sys::fs::createUniqueDirectory("compile_commands", tempDir), "Failed to create temporary directory");
 
-    printf("executeCmakeExportCompileCommands - 7 \n");
-
-    printf("cmakeListsPath: -- %s --\n", cmakeListsPath.str().c_str());
     printf("tempDir: -- %s --\n", tempDir.str().str().c_str());
 
-    // std::vector<llvm::StringRef> const args = {cmakePath, "-S", cmakeListsPath.str(), "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
-    std::vector<llvm::StringRef> const args = {cmakePath, "-S", cmakeListsPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
-    int const result = llvm::sys::ExecuteAndWait(cmakePath, args);
-    if (result != 0) 
-    {
-        printf("executeCmakeExportCompileCommands - 8 \n");
-        return Unexpected(Error("CMake execution failed"));
-    }
+    std::vector<llvm::StringRef> const args = {cmakePath, "-S", projectPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
+    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
+    int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
+    MRDOCS_CHECK(result == 0, "CMake execution failed");
 
     llvm::SmallString<128> compileCommandsPath(tempDir);
     llvm::sys::path::append(compileCommandsPath, "compile_commands.json");
