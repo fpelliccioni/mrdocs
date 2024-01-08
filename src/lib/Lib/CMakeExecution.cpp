@@ -84,7 +84,7 @@ getCmakePath() {
 Expected<std::string>
 executeCmakeExportCompileCommands(llvm::StringRef cmakeListsPath) 
 {
-    printf("executeCmakeExportCompileCommands: %s\n", cmakeListsPath.str().str().c_str());
+    printf("executeCmakeExportCompileCommands: %s\n", cmakeListsPath.str().c_str());
     printf("executeCmakeExportCompileCommands - 1 \n");
     auto const cmakePathRes = getCmakePath();
     if ( ! cmakePathRes) 
