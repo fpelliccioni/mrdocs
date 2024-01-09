@@ -73,7 +73,7 @@ Expected<bool>
 cmakeDefaultGeneratorIsVisualStudio(llvm::StringRef cmakePath) 
 {
     MRDOCS_TRY(auto const defaultGenerator, getCmakeDefaultGenerator(cmakePath));
-    return defaultGenerator.find("Visual Studio") != std::string::npos;
+    return defaultGenerator.starts_with("Visual Studio");
 }
 
 Expected<std::string>

@@ -105,6 +105,8 @@ struct llvm::yaml::MappingTraits<SettingsImpl>
         io.mapOptional("input",             cfg.input);
 
         io.mapOptional("filters",           cfg.filters);
+
+        io.mapOptional("cmake",             cfg.cmake);
     }
 };
 
@@ -225,6 +227,13 @@ ConfigImpl(
         parseSymbolFilter(settings_.symbolFilter, pattern, false);
     }
     settings_.symbolFilter.finalize(false, false, false);
+
+    settings_.cmake = "";
+    for(std::string_view arg : settings_.cmake.arguments)
+    {
+        settings_.cmake += ' ';
+        settings_.cmake += arg;
+    }
 }
 
 //------------------------------------------------
