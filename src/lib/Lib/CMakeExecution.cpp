@@ -147,7 +147,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
         }
     }
 
-    int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt); //, redirects);
+    int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
     MRDOCS_CHECK(result == 0, "CMake execution failed");
 
     llvm::SmallString<128> compileCommandsPath(tempDir);
