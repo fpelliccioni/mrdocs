@@ -228,12 +228,16 @@ ConfigImpl(
     }
     settings_.symbolFilter.finalize(false, false, false);
 
-    settings_.cmake = "";
-    for(std::string_view arg : settings_.cmake.arguments)
-    {
-        settings_.cmake += ' ';
-        settings_.cmake += arg;
-    }
+    printf("ConfigImpl::ConfigImpl() settings_.cmake = %s\n", settings_.cmake.c_str());
+
+
+
+    // settings_.cmake = "";
+    // for(std::string_view arg : settings_.cmake.arguments)
+    // {
+    //     settings_.cmake += ' ';
+    //     settings_.cmake += arg;
+    // }
 }
 
 //------------------------------------------------
