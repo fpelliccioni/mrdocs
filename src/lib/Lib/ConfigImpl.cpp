@@ -227,8 +227,6 @@ ConfigImpl(
         parseSymbolFilter(settings_.symbolFilter, pattern, false);
     }
     settings_.symbolFilter.finalize(false, false, false);
-
-    printf("ConfigImpl::ConfigImpl() settings_.cmake = %s\n", settings_.cmake.c_str());
 }
 
 //------------------------------------------------
