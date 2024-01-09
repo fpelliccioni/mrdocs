@@ -108,7 +108,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
         args.push_back("Ninja");
     }
 
-    auto const additionalArgs = parseCmakeArgs(cmakeArgsStr.str());
+    auto const additionalArgs = parseCmakeArgs(cmakeArgs.str());
     for (auto const& arg : additionalArgs) {
         args.push_back(arg);
     }    
