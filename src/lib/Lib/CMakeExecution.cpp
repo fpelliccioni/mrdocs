@@ -76,8 +76,23 @@ cmakeDefaultGeneratorIsVisualStudio(llvm::StringRef cmakePath)
     return defaultGenerator.starts_with("Visual Studio");
 }
 
+std::vector<std::string> 
+parseCmakeArgs(std::string const& cmakeArgsStr) {
+    std::vector<std::string> parsedArgs;
+    std::istringstream argStream(cmakeArgsStr);
+    std::string arg;
+
+    while (argStream >> std::quoted(arg)) {
+        printf("arg: **%s**\n", arg.c_str());
+        parsedArgs.push_back(arg);
+    }
+
+    return parsedArgs;
+}
+
+
 Expected<std::string>
-executeCmakeExportCompileCommands(llvm::StringRef projectPath) 
+executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef cmakeArgs) 
 {
     MRDOCS_TRY(auto const cmakePath, getCmakePath());
     MRDOCS_CHECK(llvm::sys::fs::exists(projectPath), "CMakeLists.txt not found");
@@ -92,6 +107,11 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath)
         args.push_back("-G");
         args.push_back("Ninja");
     }
+
+    auto const additionalArgs = parseCmakeArgs(cmakeArgsStr.str());
+    for (auto const& arg : additionalArgs) {
+        args.push_back(arg);
+    }    
         
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
     MRDOCS_CHECK(result == 0, "CMake execution failed");

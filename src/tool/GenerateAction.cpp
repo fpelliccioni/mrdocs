@@ -36,11 +36,12 @@ namespace mrdocs {
  * 3. If the project path is a `CMakeLists.txt` file, it generates the compilation database using the parent directory of the file.
  *
  * @param projectPath The path to the project, which can be a directory, a `compile_commands.json` file, or a `CMakeLists.txt` file.
+ * @param cmakeArgs The arguments to pass to CMake when generating the compilation database.
  * @return An `Expected` object containing the path to the `compile_commands.json` file if the database is generated, or the provided path if it is already the `compile_commands.json` file. 
  * Returns an `Unexpected` object in case of failure (e.g., file not found, CMake execution failure).
  */
 Expected<std::string>
-generateCompilationDatabase(llvm::StringRef projectPath)
+generateCompilationDatabase(llvm::StringRef projectPath, llvm::StringRef cmakeArgs)
 {
     namespace fs = llvm::sys::fs;
     namespace path = llvm::sys::path;
