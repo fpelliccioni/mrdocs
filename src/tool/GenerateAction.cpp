@@ -51,7 +51,7 @@ generateCompilationDatabase(llvm::StringRef projectPath, llvm::StringRef cmakeAr
 
     if (fs::is_directory(fileStatus))
     {
-        return executeCmakeExportCompileCommands(projectPath);
+        return executeCmakeExportCompileCommands(projectPath, cmakeArgs);
     }
     
     auto const fileName = files::getFileName(projectPath);
@@ -62,7 +62,7 @@ generateCompilationDatabase(llvm::StringRef projectPath, llvm::StringRef cmakeAr
     
     if (fileName == "CMakeLists.txt")
     {
-        return executeCmakeExportCompileCommands(files::getParentDir(projectPath));
+        return executeCmakeExportCompileCommands(files::getParentDir(projectPath), cmakeArgs);
     }    
     return projectPath.str();
 }
