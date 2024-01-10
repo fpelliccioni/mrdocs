@@ -84,41 +84,50 @@ parseCmakeArgs(std::string const& cmakeArgsStr)
     std::vector<std::string> parsedArgs;
     std::string arg;
     bool inQuotes = false;
-    bool escapeNextChar = false;
+    char quoteChar = '\0';
 
     for (char ch : cmakeArgsStr) 
     {
-        if (escapeNextChar) 
+        if (inQuotes) 
         {
-            arg += ch;
-            escapeNextChar = false;
-        } 
-        else if (ch == '\\') 
-        {
-            escapeNextChar = true;
-        } 
-        else if (ch == '"') 
-        {
-            inQuotes = !inQuotes;
-        } 
-        else if (std::isspace(ch) && !inQuotes) 
-        {
-            if ( ! arg.empty()) 
+            if (ch == quoteChar) 
             {
-                if (arg[0] == '-' && arg.size() == 2)
-                    continue;
-                parsedArgs.push_back(arg);
-                arg.clear();
+                inQuotes = false;
+            } 
+            else if (ch == '\\' && arg.back() == '\\') 
+            {
+                arg.pop_back();
+                arg += ch;
+            } 
+            else 
+            {
+                arg += ch;
             }
         } 
         else 
         {
-            arg += ch;
+            if (ch == '"' || ch == '\'') 
+            {
+                inQuotes = true;
+                quoteChar = ch;
+                arg += ch;  // TODO
+            } 
+            else if (std::isspace(ch)) 
+            {
+                if ( ! arg.empty()) 
+                {
+                    parsedArgs.push_back(arg);
+                    arg.clear();
+                }
+            } 
+            else 
+            {
+                arg += ch;
+            }
         }
     }
 
-    if ( ! arg.empty()) 
-    {
+    if ( ! arg.empty()) {
         parsedArgs.push_back(arg);
     }
 
@@ -143,6 +152,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
     bool visualStudioFound = false;
     for (auto const& arg : additionalArgs) 
     {
+        printf("arg: **%s**\n", arg.c_str());
         if (arg.starts_with("-G") && arg.find("Visual Studio", 2) != std::string::npos)
         {
             args.push_back("-GNinja");
