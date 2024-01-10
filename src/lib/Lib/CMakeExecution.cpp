@@ -133,10 +133,14 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
     bool visualStudioFound = false;
     for (auto const& arg : additionalArgs) 
     {
-        if (arg.starts_with("-G") && arg.find("Visual Studio", 2) != std::string::npos) 
+        if (arg.starts_with("-G") && arg.find("Visual Studio", 2) != std::string::npos)
         {
             args.push_back("-GNinja");
             visualStudioFound = true;
+            continue;
+        }        
+        if (arg.starts_with("-D") && arg.find("CMAKE_EXPORT_COMPILE_COMMANDS", 2) != std::string::npos)
+        {
             continue;
         }         
         args.push_back(arg);
