@@ -128,6 +128,7 @@ DoGenerateAction()
             toolArgs.inputPaths.size()));
 
     std::string_view cmakeArgs = config->object().get("cmake").getString();
+    printf("cmakeArgs: %s\n", cmakeArgs.data());
     auto const inputPath = generateCompilationDatabase(toolArgs.inputPaths.front(), cmakeArgs);
     if ( ! inputPath)
     {
