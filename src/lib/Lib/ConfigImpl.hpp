@@ -135,9 +135,9 @@ public:
          */
         std::string baseURL;
 
-        /** A string holding the complete CMake arguments.
-        */
-        std::string cmake;        
+        // /** A string holding the complete CMake arguments.
+        // */
+        // std::string cmake;        
     };
 
     /// @copydoc Config::settings()
