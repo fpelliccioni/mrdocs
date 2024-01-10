@@ -84,10 +84,20 @@ parseCmakeArgs(std::string const& cmakeArgsStr)
     std::vector<std::string> parsedArgs;
     std::string arg;
     bool inQuotes = false;
+    bool escapeNextChar = false;
 
     for (char ch : cmakeArgsStr) 
     {
-        if (ch == '"') 
+        if (escapeNextChar) 
+        {
+            arg += ch;
+            escapeNextChar = false;
+        } 
+        else if (ch == '\\') 
+        {
+            escapeNextChar = true;
+        } 
+        else if (ch == '"') 
         {
             inQuotes = !inQuotes;
         } 
@@ -95,10 +105,10 @@ parseCmakeArgs(std::string const& cmakeArgsStr)
         {
             if ( ! arg.empty()) 
             {
-                if (arg[0] == '-' && arg.size() == 2) 
+                if (arg[0] == '-' && arg.size() == 2)
                     continue;
                 parsedArgs.push_back(arg);
-                arg.clear();                
+                arg.clear();
             }
         } 
         else 
