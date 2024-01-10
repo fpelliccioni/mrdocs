@@ -43,9 +43,8 @@ executeCmakeHelp(llvm::StringRef cmakePath)
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
     MRDOCS_CHECK(result == 0, "CMake execution failed");
 
-    // auto const bufferOrError = ;
-    // MRDOCS_CHECK(bufferOrError, "Failed to read CMake help output");
-    MRDOCS_TRY(auto bufferOrError, llvm::MemoryBuffer::getFile(outputPath));
+    auto const bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
+    MRDOCS_CHECK(bufferOrError, "Failed to read CMake help output");
 
     return bufferOrError.get()->getBuffer().str();
 }
