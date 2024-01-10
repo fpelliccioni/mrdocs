@@ -45,7 +45,7 @@ executeCmakeHelp(llvm::StringRef cmakePath)
 
     // auto const bufferOrError = ;
     // MRDOCS_CHECK(bufferOrError, "Failed to read CMake help output");
-    MRDOCS_TRY(auto const bufferOrError, llvm::MemoryBuffer::getFile(outputPath));
+    MRDOCS_TRY(auto bufferOrError, llvm::MemoryBuffer::getFile(outputPath));
 
     return bufferOrError.get()->getBuffer().str();
 }
