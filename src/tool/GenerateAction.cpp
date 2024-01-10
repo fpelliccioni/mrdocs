@@ -127,7 +127,9 @@ DoGenerateAction()
             "got {} input paths where 1 was expected",
             toolArgs.inputPaths.size()));
 
-    std::string_view cmakeArgs = config->object().get("cmake").getString();
+
+    std::string_view cmakeArgs = config->object().exists("cmake") ?
+        config->object().get("cmake").getString() : "";
     auto const inputPath = generateCompilationDatabase(toolArgs.inputPaths.front(), cmakeArgs);
     if ( ! inputPath)
     {
