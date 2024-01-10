@@ -130,8 +130,8 @@ parseCmakeArgs(std::string const& cmakeArgsStr)
 Expected<std::string>
 executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef cmakeArgs) 
 {
+    MRDOCS_CHECK(llvm::sys::fs::exists(projectPath), "Project path does not exist");
     MRDOCS_TRY(auto const cmakePath, getCmakePath());
-    MRDOCS_CHECK(llvm::sys::fs::exists(projectPath), "CMakeLists.txt not found");
 
     llvm::SmallString<128> tempDir;
     MRDOCS_CHECK(!llvm::sys::fs::createUniqueDirectory("compile_commands", tempDir), "Failed to create temporary directory");
