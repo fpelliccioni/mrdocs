@@ -127,7 +127,8 @@ DoGenerateAction()
             "got {} input paths where 1 was expected",
             toolArgs.inputPaths.size()));
 
-    auto const inputPath = generateCompilationDatabase(toolArgs.inputPaths.front(), config->object().get("cmake").getString());
+    std::string_view cmakeArgs = config->object().get("cmake").getString();
+    auto const inputPath = generateCompilationDatabase(toolArgs.inputPaths.front(), cmakeArgs);
     if ( ! inputPath)
     {
         report::error("Failed to generate compilation database: {}", inputPath.error());
