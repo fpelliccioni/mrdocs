@@ -163,7 +163,7 @@ parseCmakeArgs(std::string const& cmakeArgsStr)
 
         if (token == "-") 
         {
-            MRDOCS_CHECK(prevWasHyphen, "Unexpected token: " + token);
+            MRDOCS_CHECK( ! prevWasHyphen, "Unexpected token: " + token);
 
             // if (prevWasHyphen) {
             //     printf("ERROR: Unexpected token: %s\n", token.c_str());
