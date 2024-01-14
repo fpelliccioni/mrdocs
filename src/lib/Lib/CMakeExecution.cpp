@@ -148,9 +148,9 @@ Expected<std::vector<std::string>>
 parseCmakeArgs(std::string const& cmakeArgsStr) 
 {
     auto const tokens = tokenizeCmakeArgs(cmakeArgsStr);
-    for (auto const& arg : tokens) {
-        printf("**%s**\n", arg.c_str());
-    }   
+    // for (auto const& arg : tokens) {
+    //     printf("**%s**\n", arg.c_str());
+    // }   
 
     std::vector<std::string> args;
     std::string currentArg;
