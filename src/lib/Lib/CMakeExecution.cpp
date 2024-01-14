@@ -180,8 +180,8 @@ parseCmakeArgs(std::string const& cmakeArgsStr)
         }
 
         if ( ! prevWasHyphen && token.size() >= 3 && 
-            (token[0] == '"' && token[token.size() - 1] == '"') ||
-            (token[0] == '\'' && token[token.size() - 1] == '\'')) 
+            ((token[0] == '"' && token[token.size() - 1] == '"') ||
+            (token[0] == '\'' && token[token.size() - 1] == '\''))) 
         {
             currentIsValue = false;
 
