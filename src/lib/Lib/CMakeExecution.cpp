@@ -246,7 +246,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
     MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-output", "txt", outputPath), 
         "Failed to create temporary file");
     llvm::SmallString<128> errorPath;
-    MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-error", "txt", outputPath), 
+    MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-error", "txt", errorPath), 
         "Failed to create temporary file");        
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.str(), errorPath.str()};
     printf("outputPath: **%s**\n", outputPath.str().str().c_str());
