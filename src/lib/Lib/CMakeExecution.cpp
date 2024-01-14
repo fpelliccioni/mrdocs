@@ -27,7 +27,7 @@ getCmakePath() {
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
     std::vector<llvm::StringRef> const args = {*path, "--version"};
     int const result = llvm::sys::ExecuteAndWait(*path, args, std::nullopt, redirects);
-    MRDOCS_CHECK(result == 0, "CMake execution failed (1)");
+    MRDOCS_CHECK(result == 0, "CMake execution failed when checking version");
     return *path;
 }
 
@@ -41,7 +41,7 @@ executeCmakeHelp(llvm::StringRef cmakePath)
     std::vector<llvm::StringRef> const args = {cmakePath, "--help"};
     llvm::ArrayRef<llvm::StringRef> emptyEnv;
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
-    MRDOCS_CHECK(result == 0, "CMake execution failed (2)");
+    MRDOCS_CHECK(result == 0, "CMake execution failed when trying to get help");
 
     auto const bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
     MRDOCS_CHECK(bufferOrError, "Failed to read CMake help output");
@@ -242,14 +242,15 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
 
     // std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
 
-    llvm::SmallString<128> outputPath;
-    MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-output", "txt", outputPath), 
-        "Failed to create temporary file");
+    // llvm::SmallString<128> outputPath;
+    // MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-output", "txt", outputPath), 
+    //     "Failed to create temporary file");
     llvm::SmallString<128> errorPath;
     MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-error", "txt", errorPath), 
         "Failed to create temporary file");        
-    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.str(), errorPath.str()};
-    printf("outputPath: **%s**\n", outputPath.str().str().c_str());
+    // std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.str(), errorPath.str()};
+    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), errorPath.str()};
+    // printf("outputPath: **%s**\n", outputPath.str().str().c_str());
     printf("errorPath: **%s**\n", errorPath.str().str().c_str());
 
     std::vector<llvm::StringRef> args = {cmakePath, "-S", projectPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
@@ -286,9 +287,12 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
         printf("arg: **%s**\n", arg.str().c_str());
     }
 
-
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
-    MRDOCS_CHECK(result == 0, "CMake execution failed (3)");
+    if (result != 0) {
+        auto bufferOrError = llvm::MemoryBuffer::getFile(errorPath);
+        MRDOCS_CHECK(bufferOrError, "CMake execution failed (no error output available)");
+        return Unexpected(Error("CMake execution failed: \n" + bufferOrError.get()->getBuffer().str()));
+    }
 
     llvm::SmallString<128> compileCommandsPath(tempDir);
     llvm::sys::path::append(compileCommandsPath, "compile_commands.json");
