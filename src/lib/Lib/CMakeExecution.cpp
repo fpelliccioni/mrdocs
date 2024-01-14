@@ -247,7 +247,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
     bool visualStudioFound = false;
     for (auto const& arg : additionalArgs) 
     {
-        printf("arg: **%s**\n", arg.c_str());
+        // printf("arg: **%s**\n", arg.c_str());
         if (arg.starts_with("-G") && arg.find("Visual Studio", 2) != std::string::npos)
         {
             args.push_back("-GNinja");
@@ -269,6 +269,12 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
             args.push_back("-GNinja");
         }
     }
+
+    for (auto const& arg : args) 
+    {
+        printf("arg: **%s**\n", arg.c_str());
+    }
+
 
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
     MRDOCS_CHECK(result == 0, "CMake execution failed");
