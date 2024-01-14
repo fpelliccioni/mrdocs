@@ -27,7 +27,7 @@ getCmakePath() {
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
     std::vector<llvm::StringRef> const args = {*path, "--version"};
     int const result = llvm::sys::ExecuteAndWait(*path, args, std::nullopt, redirects);
-    MRDOCS_CHECK(result == 0, "CMake execution failed");
+    MRDOCS_CHECK(result == 0, "CMake execution failed (1)");
     return *path;
 }
 
@@ -41,7 +41,7 @@ executeCmakeHelp(llvm::StringRef cmakePath)
     std::vector<llvm::StringRef> const args = {cmakePath, "--help"};
     llvm::ArrayRef<llvm::StringRef> emptyEnv;
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
-    MRDOCS_CHECK(result == 0, "CMake execution failed");
+    MRDOCS_CHECK(result == 0, "CMake execution failed (2)");
 
     auto const bufferOrError = llvm::MemoryBuffer::getFile(outputPath);
     MRDOCS_CHECK(bufferOrError, "Failed to read CMake help output");
@@ -277,7 +277,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
 
 
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
-    MRDOCS_CHECK(result == 0, "CMake execution failed");
+    MRDOCS_CHECK(result == 0, "CMake execution failed (3)");
 
     llvm::SmallString<128> compileCommandsPath(tempDir);
     llvm::sys::path::append(compileCommandsPath, "compile_commands.json");
