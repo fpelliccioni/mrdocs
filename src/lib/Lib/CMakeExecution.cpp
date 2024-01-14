@@ -240,7 +240,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
     std::vector<llvm::StringRef> args = {cmakePath, "-S", projectPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
 
-    auto const additionalArgs = parseCmakeArgs(cmakeArgs.str());
+    MRDOCS_TRY(auto const additionalArgs, parseCmakeArgs(cmakeArgs.str()));
     bool visualStudioFound = false;
     for (auto const& arg : additionalArgs) 
     {
