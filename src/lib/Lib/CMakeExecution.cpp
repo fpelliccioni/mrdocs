@@ -272,7 +272,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
 
     for (auto const& arg : args) 
     {
-        printf("arg: **%s**\n", arg.c_str());
+        printf("arg: **%s**\n", arg.str().c_str());
     }
 
 
