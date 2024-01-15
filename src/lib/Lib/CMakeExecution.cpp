@@ -78,158 +78,6 @@ cmakeDefaultGeneratorIsVisualStudio(llvm::StringRef cmakePath)
     return defaultGenerator.starts_with("Visual Studio");
 }
 
-// std::vector<std::string> 
-// tokenizeCmakeArgs(std::string const& cmakeArgsStr) 
-// {
-//     std::vector<std::string> tokens;
-//     std::string currentToken;
-//     bool inQuotes = false;
-//     char quoteChar = '\0';
-//     bool escapeNextChar = false;
-
-//     for (char ch : cmakeArgsStr) 
-//     {
-//         if (escapeNextChar) 
-//         {
-//             currentToken += ch;
-//             escapeNextChar = false;
-//         } 
-//         else if (ch == '\\') 
-//         {
-//             currentToken += ch;
-//             escapeNextChar = true;
-//         } 
-//         else if ((ch == '"' || ch == '\'')) 
-//         {
-//             currentToken += ch;
-//             if (inQuotes && ch == quoteChar) 
-//             {
-//                 inQuotes = false;
-//                 tokens.push_back(currentToken);
-//                 currentToken.clear();
-//             } 
-//             else if (!inQuotes) 
-//             {
-//                 inQuotes = true;
-//                 quoteChar = ch;
-//             }
-//         } 
-//         else if (std::isspace(ch) && !inQuotes) 
-//         {
-//             if ( ! currentToken.empty()) 
-//             {
-//                 tokens.push_back(currentToken);
-//                 currentToken.clear();
-//             }
-//         } 
-//         else if (ch == '-' && !inQuotes) 
-//         {
-//             if ( ! currentToken.empty()) 
-//             {
-//                 tokens.push_back(currentToken);
-//                 currentToken.clear();
-//             }
-//             tokens.push_back("-");
-//         } 
-//         else 
-//         {
-//             currentToken += ch;
-//         }
-//     }
-
-//     if ( ! currentToken.empty()) {
-//         tokens.push_back(currentToken);
-//     }
-
-//     return tokens;
-// }
-
-// Expected<std::vector<std::string>>
-// parseCmakeArgs(std::string const& cmakeArgsStr) 
-// {
-//     auto const tokens = tokenizeCmakeArgs(cmakeArgsStr);
-//     // for (auto const& arg : tokens) {
-//     //     printf("**%s**\n", arg.c_str());
-//     // }   
-
-//     std::vector<std::string> args;
-//     std::string currentArg;
-//     bool prevWasHyphen = false;
-//     bool currentIsValue = false;
-
-//     for (size_t i = 0; i < tokens.size(); ++i) 
-//     {
-//         std::string const& token = tokens[i];
-
-//         if (token == "-") 
-//         {
-//             MRDOCS_CHECK( ! prevWasHyphen, "Unexpected token: " + token);
-
-//             // if (prevWasHyphen) {
-//             //     printf("ERROR: Unexpected token: %s\n", token.c_str());
-//             //     return {};
-//             // } 
-//             currentIsValue = false;
-//             prevWasHyphen = true;
-
-//             if ( ! currentArg.empty()) 
-//             {
-//                 args.push_back(currentArg);
-//                 currentArg.clear();
-//             }
-
-//             currentArg += token;
-//             continue;
-//         }
-
-//         if ( ! prevWasHyphen && token.size() >= 3 && 
-//             ((token[0] == '"' && token[token.size() - 1] == '"') ||
-//             (token[0] == '\'' && token[token.size() - 1] == '\''))) 
-//         {
-//             currentIsValue = false;
-
-//             if ( ! currentArg.empty()) 
-//             {
-//                 args.push_back(currentArg);
-//                 currentArg.clear();
-//             }        
-//             args.push_back(token);
-//             continue;
-//         }
-
-//         if (prevWasHyphen) 
-//         {
-//             prevWasHyphen = false;
-//             currentIsValue = true;   
-//             if (token.size() == 1) 
-//             {
-//                 currentArg += token;
-//                 args.push_back(currentArg);
-//                 currentArg.clear();
-//             } 
-//             else 
-//             {
-//                 currentArg += token;                
-//             }
-//             continue;
-//         }
-
-//         if (currentIsValue) 
-//         {
-//             currentArg += token;
-//             continue;
-//         }
-//     }
-
-//     if ( ! currentArg.empty()) 
-//     {
-//         args.push_back(currentArg);
-//     }
-
-//     return args;
-// }
-
-
 std::vector<std::string> 
 parseCmakeArgs(std::string const& cmakeArgsStr) {
     std::vector<std::string> args;
@@ -301,19 +149,11 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
     llvm::SmallString<128> tempDir;
     MRDOCS_CHECK(!llvm::sys::fs::createUniqueDirectory("compile_commands", tempDir), "Failed to create temporary directory");
 
-    // std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), llvm::StringRef()};
-
-    // llvm::SmallString<128> outputPath;
-    // MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-output", "txt", outputPath), 
-    //     "Failed to create temporary file");
     llvm::SmallString<128> errorPath;
     MRDOCS_CHECK(!llvm::sys::fs::createTemporaryFile("cmake-error", "txt", errorPath), 
         "Failed to create temporary file");        
-    // std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.str(), errorPath.str()};
-    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), errorPath.str()};
-    // printf("outputPath: **%s**\n", outputPath.str().str().c_str());
-    printf("errorPath: **%s**\n", errorPath.str().str().c_str());
 
+    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), llvm::StringRef(), errorPath.str()};
     std::vector<llvm::StringRef> args = {cmakePath, "-S", projectPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
 
     auto const additionalArgs = parseCmakeArgs(cmakeArgs.str());
@@ -322,14 +162,10 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
     for (size_t i = 0; i < additionalArgs.size(); ++i) 
     {
         auto const& arg = additionalArgs[i];
-        printf("arg: **%s**\n", arg.c_str());
-
         if (arg.starts_with("-G"))
         {
-            printf("arg starts_with -G\n");
             if (arg.size() == 2) 
             {
-                printf("arg == '-G'\n");
                 if (i + 1 < additionalArgs.size()) 
                 {
                     auto const& generatorName = additionalArgs[i + 1];
@@ -350,13 +186,11 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
                 }
             }
         }
-        printf("arg does not start_with -G\n");
+
         if (arg.starts_with("-D"))
         {
-            printf("arg starts_with -D\n");
             if (arg.size() == 2) 
             {
-                printf("arg == '-D'\n");
                 if (i + 1 < additionalArgs.size()) 
                 {
                     auto const& optionName = additionalArgs[i + 1];
@@ -373,7 +207,6 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
                 }
             }
         }         
-        printf("arg does not start_with -D\n");
         args.push_back(arg);
     }
     
@@ -384,11 +217,6 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
         {
             args.push_back("-GNinja");
         }
-    }
-
-    for (auto const& arg : args) 
-    {
-        printf("arg: **%s**\n", arg.str().c_str());
     }
 
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
