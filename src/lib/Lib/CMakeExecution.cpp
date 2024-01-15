@@ -78,12 +78,162 @@ cmakeDefaultGeneratorIsVisualStudio(llvm::StringRef cmakePath)
     return defaultGenerator.starts_with("Visual Studio");
 }
 
+// std::vector<std::string> 
+// tokenizeCmakeArgs(std::string const& cmakeArgsStr) 
+// {
+//     std::vector<std::string> tokens;
+//     std::string currentToken;
+//     bool inQuotes = false;
+//     char quoteChar = '\0';
+//     bool escapeNextChar = false;
+
+//     for (char ch : cmakeArgsStr) 
+//     {
+//         if (escapeNextChar) 
+//         {
+//             currentToken += ch;
+//             escapeNextChar = false;
+//         } 
+//         else if (ch == '\\') 
+//         {
+//             currentToken += ch;
+//             escapeNextChar = true;
+//         } 
+//         else if ((ch == '"' || ch == '\'')) 
+//         {
+//             currentToken += ch;
+//             if (inQuotes && ch == quoteChar) 
+//             {
+//                 inQuotes = false;
+//                 tokens.push_back(currentToken);
+//                 currentToken.clear();
+//             } 
+//             else if (!inQuotes) 
+//             {
+//                 inQuotes = true;
+//                 quoteChar = ch;
+//             }
+//         } 
+//         else if (std::isspace(ch) && !inQuotes) 
+//         {
+//             if ( ! currentToken.empty()) 
+//             {
+//                 tokens.push_back(currentToken);
+//                 currentToken.clear();
+//             }
+//         } 
+//         else if (ch == '-' && !inQuotes) 
+//         {
+//             if ( ! currentToken.empty()) 
+//             {
+//                 tokens.push_back(currentToken);
+//                 currentToken.clear();
+//             }
+//             tokens.push_back("-");
+//         } 
+//         else 
+//         {
+//             currentToken += ch;
+//         }
+//     }
+
+//     if ( ! currentToken.empty()) {
+//         tokens.push_back(currentToken);
+//     }
+
+//     return tokens;
+// }
+
+// Expected<std::vector<std::string>>
+// parseCmakeArgs(std::string const& cmakeArgsStr) 
+// {
+//     auto const tokens = tokenizeCmakeArgs(cmakeArgsStr);
+//     // for (auto const& arg : tokens) {
+//     //     printf("**%s**\n", arg.c_str());
+//     // }   
+
+//     std::vector<std::string> args;
+//     std::string currentArg;
+//     bool prevWasHyphen = false;
+//     bool currentIsValue = false;
+
+//     for (size_t i = 0; i < tokens.size(); ++i) 
+//     {
+//         std::string const& token = tokens[i];
+
+//         if (token == "-") 
+//         {
+//             MRDOCS_CHECK( ! prevWasHyphen, "Unexpected token: " + token);
+
+//             // if (prevWasHyphen) {
+//             //     printf("ERROR: Unexpected token: %s\n", token.c_str());
+//             //     return {};
+//             // } 
+//             currentIsValue = false;
+//             prevWasHyphen = true;
+
+//             if ( ! currentArg.empty()) 
+//             {
+//                 args.push_back(currentArg);
+//                 currentArg.clear();
+//             }
+
+//             currentArg += token;
+//             continue;
+//         }
+
+//         if ( ! prevWasHyphen && token.size() >= 3 && 
+//             ((token[0] == '"' && token[token.size() - 1] == '"') ||
+//             (token[0] == '\'' && token[token.size() - 1] == '\''))) 
+//         {
+//             currentIsValue = false;
+
+//             if ( ! currentArg.empty()) 
+//             {
+//                 args.push_back(currentArg);
+//                 currentArg.clear();
+//             }        
+//             args.push_back(token);
+//             continue;
+//         }
+
+//         if (prevWasHyphen) 
+//         {
+//             prevWasHyphen = false;
+//             currentIsValue = true;   
+//             if (token.size() == 1) 
+//             {
+//                 currentArg += token;
+//                 args.push_back(currentArg);
+//                 currentArg.clear();
+//             } 
+//             else 
+//             {
+//                 currentArg += token;                
+//             }
+//             continue;
+//         }
+
+//         if (currentIsValue) 
+//         {
+//             currentArg += token;
+//             continue;
+//         }
+//     }
+
+//     if ( ! currentArg.empty()) 
+//     {
+//         args.push_back(currentArg);
+//     }
+
+//     return args;
+// }
+
+
 std::vector<std::string> 
-tokenizeCmakeArgs(std::string const& cmakeArgsStr) 
-{
-    std::vector<std::string> tokens;
-    std::string currentToken;
-    bool inQuotes = false;
+parseCmakeArgs(std::string const& cmakeArgsStr) {
+    std::vector<std::string> args;
+    std::string currentArg;
     char quoteChar = '\0';
     bool escapeNextChar = false;
 
@@ -91,133 +241,44 @@ tokenizeCmakeArgs(std::string const& cmakeArgsStr)
     {
         if (escapeNextChar) 
         {
-            currentToken += ch;
+            currentArg += ch;
             escapeNextChar = false;
         } 
         else if (ch == '\\') 
         {
-            currentToken += ch;
             escapeNextChar = true;
         } 
         else if ((ch == '"' || ch == '\'')) 
         {
-            currentToken += ch;
-            if (inQuotes && ch == quoteChar) 
+            if (quoteChar == '\0') 
             {
-                inQuotes = false;
-                tokens.push_back(currentToken);
-                currentToken.clear();
-            } 
-            else if (!inQuotes) 
-            {
-                inQuotes = true;
                 quoteChar = ch;
-            }
-        } 
-        else if (std::isspace(ch) && !inQuotes) 
-        {
-            if ( ! currentToken.empty()) 
+            } 
+            else if (ch == quoteChar) 
             {
-                tokens.push_back(currentToken);
-                currentToken.clear();
-            }
-        } 
-        else if (ch == '-' && !inQuotes) 
-        {
-            if ( ! currentToken.empty()) 
-            {
-                tokens.push_back(currentToken);
-                currentToken.clear();
-            }
-            tokens.push_back("-");
-        } 
-        else 
-        {
-            currentToken += ch;
-        }
-    }
-
-    if ( ! currentToken.empty()) {
-        tokens.push_back(currentToken);
-    }
-
-    return tokens;
-}
-
-Expected<std::vector<std::string>>
-parseCmakeArgs(std::string const& cmakeArgsStr) 
-{
-    auto const tokens = tokenizeCmakeArgs(cmakeArgsStr);
-    // for (auto const& arg : tokens) {
-    //     printf("**%s**\n", arg.c_str());
-    // }   
-
-    std::vector<std::string> args;
-    std::string currentArg;
-    bool prevWasHyphen = false;
-    bool currentIsValue = false;
-
-    for (size_t i = 0; i < tokens.size(); ++i) 
-    {
-        std::string const& token = tokens[i];
-
-        if (token == "-") 
-        {
-            MRDOCS_CHECK( ! prevWasHyphen, "Unexpected token: " + token);
-
-            // if (prevWasHyphen) {
-            //     printf("ERROR: Unexpected token: %s\n", token.c_str());
-            //     return {};
-            // } 
-            currentIsValue = false;
-            prevWasHyphen = true;
-
-            if ( ! currentArg.empty()) 
-            {
-                args.push_back(currentArg);
-                currentArg.clear();
-            }
-
-            currentArg += token;
-            continue;
-        }
-
-        if ( ! prevWasHyphen && token.size() >= 3 && 
-            ((token[0] == '"' && token[token.size() - 1] == '"') ||
-            (token[0] == '\'' && token[token.size() - 1] == '\''))) 
-        {
-            currentIsValue = false;
-
-            if ( ! currentArg.empty()) 
-            {
-                args.push_back(currentArg);
-                currentArg.clear();
-            }        
-            args.push_back(token);
-            continue;
-        }
-
-        if (prevWasHyphen) 
-        {
-            prevWasHyphen = false;
-            currentIsValue = true;   
-            if (token.size() == 1) 
-            {
-                currentArg += token;
-                args.push_back(currentArg);
-                currentArg.clear();
+                quoteChar = '\0';
             } 
             else 
             {
-                currentArg += token;                
+                currentArg.push_back(ch);
             }
-            continue;
-        }
-
-        if (currentIsValue) 
+        } else if (std::isspace(ch)) 
         {
-            currentArg += token;
-            continue;
+            if (quoteChar != '\0') 
+            {
+                currentArg.push_back(ch);
+            } 
+            else 
+            {
+                if ( ! currentArg.empty()) 
+                {
+                    args.push_back(currentArg);
+                    currentArg.clear();
+                }
+            }            
+        } else 
+        {
+            currentArg += ch;
         }
     }
 
@@ -255,11 +316,12 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
 
     std::vector<llvm::StringRef> args = {cmakePath, "-S", projectPath, "-B", tempDir.str(), "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"};
 
-    MRDOCS_TRY(auto const additionalArgs, parseCmakeArgs(cmakeArgs.str()));
+    auto const additionalArgs = parseCmakeArgs(cmakeArgs.str());
+    
     bool visualStudioFound = false;
     for (auto const& arg : additionalArgs) 
     {
-        // printf("arg: **%s**\n", arg.c_str());
+        printf("arg: **%s**\n", arg.c_str());
         if (arg.starts_with("-G") && arg.find("Visual Studio", 2) != std::string::npos)
         {
             args.push_back("-GNinja");
