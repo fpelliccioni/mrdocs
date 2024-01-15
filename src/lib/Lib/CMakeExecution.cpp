@@ -337,6 +337,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
                     {
                         args.push_back("-GNinja");
                         visualStudioFound = true;
+                        ++i;
                         continue;
                     }
                 }
@@ -361,6 +362,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
                     auto const& optionName = additionalArgs[i + 1];
                     if (optionName.starts_with("CMAKE_EXPORT_COMPILE_COMMANDS")) 
                     {
+                        ++i;
                         continue;
                     }
                 }
