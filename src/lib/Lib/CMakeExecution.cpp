@@ -326,12 +326,14 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
 
         if (arg.starts_with("-G"))
         {
+            printf("arg starts_with -G\n")
             if (arg.size() == 2) 
             {
+                printf("arg == '-G'\n");
                 if (i + 1 < additionalArgs.size()) 
                 {
                     auto const& generatorName = additionalArgs[i + 1];
-                    if (generatorName.starts_with("Visual Studio", 2)) 
+                    if (generatorName.starts_with("Visual Studio")) 
                     {
                         args.push_back("-GNinja");
                         visualStudioFound = true;
@@ -346,15 +348,18 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
                     continue;
                 }
             }
-        }        
+        }
+        printf("arg does not start_with -G\n")
         if (arg.starts_with("-D"))
         {
+            printf("arg starts_with -D\n")
             if (arg.size() == 2) 
             {
+                printf("arg == '-D'\n");
                 if (i + 1 < additionalArgs.size()) 
                 {
                     auto const& optionName = additionalArgs[i + 1];
-                    if (optionName.starts_with("CMAKE_EXPORT_COMPILE_COMMANDS", 2)) 
+                    if (optionName.starts_with("CMAKE_EXPORT_COMPILE_COMMANDS")) 
                     {
                         continue;
                     }
@@ -366,6 +371,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
                 }
             }
         }         
+        printf("arg does not start_with -D\n")
         args.push_back(arg);
     }
     
