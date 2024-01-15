@@ -326,7 +326,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
 
         if (arg.starts_with("-G"))
         {
-            printf("arg starts_with -G\n")
+            printf("arg starts_with -G\n");
             if (arg.size() == 2) 
             {
                 printf("arg == '-G'\n");
@@ -349,10 +349,10 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
                 }
             }
         }
-        printf("arg does not start_with -G\n")
+        printf("arg does not start_with -G\n");
         if (arg.starts_with("-D"))
         {
-            printf("arg starts_with -D\n")
+            printf("arg starts_with -D\n");
             if (arg.size() == 2) 
             {
                 printf("arg == '-D'\n");
@@ -371,7 +371,7 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
                 }
             }
         }         
-        printf("arg does not start_with -D\n")
+        printf("arg does not start_with -D\n");
         args.push_back(arg);
     }
     
