@@ -319,22 +319,56 @@ executeCmakeExportCompileCommands(llvm::StringRef projectPath, llvm::StringRef c
     auto const additionalArgs = parseCmakeArgs(cmakeArgs.str());
     
     bool visualStudioFound = false;
-    for (auto const& arg : additionalArgs) 
+    for (size_t i = 0; i < additionalArgs.size(); ++i) 
     {
+        auto const& arg = additionalArgs[i];
         printf("arg: **%s**\n", arg.c_str());
-        if (arg.starts_with("-G") && arg.find("Visual Studio", 2) != std::string::npos)
+
+        if (arg.starts_with("-G"))
         {
-            args.push_back("-GNinja");
-            visualStudioFound = true;
-            continue;
+            if (arg.size() == 2) 
+            {
+                if (i + 1 < additionalArgs.size()) 
+                {
+                    auto const& generatorName = additionalArgs[i + 1];
+                    if (generatorName.starts_with("Visual Studio", 2)) 
+                    {
+                        args.push_back("-GNinja");
+                        visualStudioFound = true;
+                        continue;
+                    }
+                }
+            } else {
+                if (arg.find("Visual Studio", 2) != std::string::npos) 
+                {
+                    args.push_back("-GNinja");
+                    visualStudioFound = true;
+                    continue;
+                }
+            }
         }        
-        if (arg.starts_with("-D") && arg.find("CMAKE_EXPORT_COMPILE_COMMANDS", 2) != std::string::npos)
+        if (arg.starts_with("-D"))
         {
-            continue;
+            if (arg.size() == 2) 
+            {
+                if (i + 1 < additionalArgs.size()) 
+                {
+                    auto const& optionName = additionalArgs[i + 1];
+                    if (optionName.starts_with("CMAKE_EXPORT_COMPILE_COMMANDS", 2)) 
+                    {
+                        continue;
+                    }
+                }
+            } else {
+                if (arg.find("CMAKE_EXPORT_COMPILE_COMMANDS", 2) != std::string::npos) 
+                {
+                    continue;
+                }
+            }
         }         
         args.push_back(arg);
     }
-
+    
     if ( ! visualStudioFound) 
     {
         MRDOCS_TRY(auto const cmakeDefaultGeneratorIsVisualStudio, cmakeDefaultGeneratorIsVisualStudio(cmakePath));
