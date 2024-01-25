@@ -132,8 +132,10 @@ executeCmakeSystemInformation(llvm::StringRef cmakePath)
 
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.path(), errOutputPath.path()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--system-information"};
-    llvm::ArrayRef<llvm::StringRef> emptyEnv;
-    int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
+    // llvm::ArrayRef<llvm::StringRef> emptyEnv;
+    // int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
+    int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
+
     if (result != 0)
     {
         auto const bufferOrError = llvm::MemoryBuffer::getFile(errOutputPath.path());
