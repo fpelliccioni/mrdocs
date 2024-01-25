@@ -41,51 +41,6 @@ executeCmakeHelp(llvm::StringRef cmakePath)
     ScopedTempFile const errOutputPath("cmake-help-err", "txt");
     MRDOCS_CHECK(errOutputPath, "Failed to create temporary file");
 
-    report::info("executeCmakeHelp - outputPath: {}", outputPath.path().str());
-    report::info("executeCmakeHelp - errOutputPath: {}", errOutputPath.path().str());
-
-    std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.path(), errOutputPath.path()};
-    std::vector<llvm::StringRef> const args = {cmakePath, "--help"};
-    llvm::ArrayRef<llvm::StringRef> emptyEnv;
-    int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
-    if (result != 0)
-    {
-        auto const bufferOrError = llvm::MemoryBuffer::getFile(errOutputPath.path());
-        MRDOCS_CHECK(bufferOrError, "CMake --help execution failed (no error output available)");
-        auto const bufferOrError2 = llvm::MemoryBuffer::getFile(errOutputPath.path());
-        MRDOCS_CHECK(bufferOrError2, "CMake --help execution failed (no error output available)");
-        // Concatenate both outputs
-        std::string output;
-        if (bufferOrError.get()->getBuffer().str().empty())
-        {
-            output = bufferOrError2.get()->getBuffer().str();
-        }
-        else if (bufferOrError2.get()->getBuffer().str().empty())
-        {
-            output = bufferOrError.get()->getBuffer().str();
-        }
-        else
-        {
-            output = bufferOrError.get()->getBuffer().str() + "\n" + bufferOrError2.get()->getBuffer().str();
-        }
-        return Unexpected(Error("CMake --help execution failed: \n" + output));
-    }
-    auto const bufferOrError = llvm::MemoryBuffer::getFile(outputPath.path());
-    MRDOCS_CHECK(bufferOrError, "Failed to read CMake --help output");
-    return bufferOrError.get()->getBuffer().str();
-}
-
-Expected<std::string>
-executeCmakeHelp2(llvm::StringRef cmakePath)
-{
-    ScopedTempFile const outputPath("cmake-help", "txt");
-    MRDOCS_CHECK(outputPath, "Failed to create temporary file");
-    ScopedTempFile const errOutputPath("cmake-help-err", "txt");
-    MRDOCS_CHECK(errOutputPath, "Failed to create temporary file");
-
-    report::info("executeCmakeHelp2 - outputPath: {}", outputPath.path().str());
-    report::info("executeCmakeHelp2 - errOutputPath: {}", errOutputPath.path().str());
-
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.path(), errOutputPath.path()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--help"};
 
@@ -125,11 +80,6 @@ executeCmakeSystemInformation(llvm::StringRef cmakePath)
     MRDOCS_CHECK(outputPath, "Failed to create temporary file");
     ScopedTempFile const errOutputPath("cmake-system-information-err", "txt");
     MRDOCS_CHECK(errOutputPath, "Failed to create temporary file");
-
-    report::info("executeCmakeSystemInformation - cmakePath: {}", cmakePath.str());
-    report::info("executeCmakeSystemInformation - outputPath: {}", outputPath.path().str());
-    report::info("executeCmakeSystemInformation - errOutputPath: {}", errOutputPath.path().str());
-
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.path(), errOutputPath.path()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--system-information"};
     // llvm::ArrayRef<llvm::StringRef> emptyEnv;
