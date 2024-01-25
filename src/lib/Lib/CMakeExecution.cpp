@@ -40,7 +40,6 @@ executeCmakeHelp(llvm::StringRef cmakePath)
     MRDOCS_CHECK(outputPath, "Failed to create temporary file");
     ScopedTempFile const errOutputPath("cmake-help-err", "txt");
     MRDOCS_CHECK(errOutputPath, "Failed to create temporary file");
-
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.path(), errOutputPath.path()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--help"};
 
@@ -82,8 +81,6 @@ executeCmakeSystemInformation(llvm::StringRef cmakePath)
     MRDOCS_CHECK(errOutputPath, "Failed to create temporary file");
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.path(), errOutputPath.path()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--system-information"};
-    // llvm::ArrayRef<llvm::StringRef> emptyEnv;
-    // int const result = llvm::sys::ExecuteAndWait(cmakePath, args, emptyEnv, redirects);
     int const result = llvm::sys::ExecuteAndWait(cmakePath, args, std::nullopt, redirects);
 
     if (result != 0)
