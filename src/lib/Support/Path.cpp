@@ -421,7 +421,8 @@ ScopedTempFile(
     // report::info("ScopedTempFile::ScopedTempFile() - tempPath: {}", tempPath.str().str());
     if (ok_)
     {
-        path_ = files::makeDirsy(tempPath.str());
+        // path_ = files::makeDirsy(tempPath.str());
+        path_ = tempPath;
     }
     // report::info("ScopedTempFile::ScopedTempFile() - path_: {}", path_.str());
 }
