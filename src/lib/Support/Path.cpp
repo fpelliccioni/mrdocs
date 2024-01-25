@@ -406,7 +406,7 @@ ScopedTempFile::
 {
     if (ok_)
     {
-        llvm::sys::fs::remove(path_);
+        // llvm::sys::fs::remove(path_);
     }
 }
 
