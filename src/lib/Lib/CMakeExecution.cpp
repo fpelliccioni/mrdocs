@@ -158,9 +158,7 @@ Expected<std::string>
 getCmakeDefaultGenerator(llvm::StringRef cmakePath)
 {
     Expected<std::string> const cmakeHelpExp = executeCmakeHelp(cmakePath);
-    Expected<std::string> const cmakeHelpExp2 = executeCmakeHelp2(cmakePath);
-    // if (!cmakeHelpExp)
-    if (true)
+    if (!cmakeHelpExp)
     {
         Expected<std::string> const cmakeSystemInformationExp = executeCmakeSystemInformation(cmakePath);
         if (!cmakeSystemInformationExp)
