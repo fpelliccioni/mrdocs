@@ -126,6 +126,7 @@ executeCmakeSystemInformation(llvm::StringRef cmakePath)
     ScopedTempFile const errOutputPath("cmake-system-information-err", "txt");
     MRDOCS_CHECK(errOutputPath, "Failed to create temporary file");
 
+    report::info("executeCmakeSystemInformation - cmakePath: {}", cmakePath.str());
     report::info("executeCmakeSystemInformation - outputPath: {}", outputPath.path().str());
     report::info("executeCmakeSystemInformation - errOutputPath: {}", errOutputPath.path().str());
 
