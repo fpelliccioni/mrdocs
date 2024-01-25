@@ -41,8 +41,8 @@ executeCmakeHelp(llvm::StringRef cmakePath)
     ScopedTempFile const errOutputPath("cmake-help-err", "txt");
     MRDOCS_CHECK(errOutputPath, "Failed to create temporary file");
 
-    report::info("executeCmakeHelp - outputPath: {}", outputPath.path());
-    report::info("executeCmakeHelp - errOutputPath: {}", errOutputPath.path());
+    report::info("executeCmakeHelp - outputPath: {}", outputPath.path().str());
+    report::info("executeCmakeHelp - errOutputPath: {}", errOutputPath.path().str());
 
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.path(), errOutputPath.path()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--help"};
@@ -83,8 +83,8 @@ executeCmakeHelp2(llvm::StringRef cmakePath)
     ScopedTempFile const errOutputPath("cmake-help-err", "txt");
     MRDOCS_CHECK(errOutputPath, "Failed to create temporary file");
 
-    report::info("executeCmakeHelp2 - outputPath: {}", outputPath.path());
-    report::info("executeCmakeHelp2 - errOutputPath: {}", errOutputPath.path());
+    report::info("executeCmakeHelp2 - outputPath: {}", outputPath.path().str());
+    report::info("executeCmakeHelp2 - errOutputPath: {}", errOutputPath.path().str());
 
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.path(), errOutputPath.path()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--help"};
@@ -126,8 +126,8 @@ executeCmakeSystemInformation(llvm::StringRef cmakePath)
     ScopedTempFile const errOutputPath("cmake-system-information-err", "txt");
     MRDOCS_CHECK(errOutputPath, "Failed to create temporary file");
 
-    report::info("executeCmakeSystemInformation - outputPath: {}", outputPath.path());
-    report::info("executeCmakeSystemInformation - errOutputPath: {}", errOutputPath.path());
+    report::info("executeCmakeSystemInformation - outputPath: {}", outputPath.path().str());
+    report::info("executeCmakeSystemInformation - errOutputPath: {}", errOutputPath.path().str());
 
     std::optional<llvm::StringRef> const redirects[] = {llvm::StringRef(), outputPath.path(), errOutputPath.path()};
     std::vector<llvm::StringRef> const args = {cmakePath, "--system-information"};
