@@ -418,7 +418,7 @@ ScopedTempFile(
     llvm::SmallString<128> tempPath;
     ok_ = !llvm::sys::fs::createTemporaryFile(prefix, ext, tempPath);
     report::info("ScopedTempFile::ScopedTempFile() - ok_:      {}", ok_);
-    report::info("ScopedTempFile::ScopedTempFile() - tempPath: {}", tempPath.str());
+    report::info("ScopedTempFile::ScopedTempFile() - tempPath: {}", tempPath.str().str());
     if (ok_)
     {
         path_ = files::makeDirsy(path_.str());
