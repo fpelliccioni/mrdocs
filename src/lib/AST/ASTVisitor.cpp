@@ -542,7 +542,11 @@ public:
             // other declarations of the function that have parameters declared
             // with different top-level cv-qualifiers.
             for(ParmVarDecl* P : FD->parameters())
+            {
+                // isExplicitObjectParameter
+                int x = P->getType();
                 P->setType(context_.getSignatureParameterType(P->getType()));
+            }
         }
         return index::generateUSRForDecl(D, usr_);
     }
