@@ -1804,6 +1804,8 @@ public:
                 convertToReferenceKind(
                     D->getRefQualifier());
             I.specs0.isFinal |= D->template hasAttr<FinalAttr>();
+            // isExplicitObjectParameter
+            I.specs0.isExplicitObjectParameter |= D->isExplicitObjectParameter();
             //D->isCopyAssignmentOperator()
             //D->isMoveAssignmentOperator()
             //D->isOverloadedOperator();
