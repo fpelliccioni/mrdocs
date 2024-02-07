@@ -44,7 +44,6 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include <iostream>
 
 namespace clang {
 namespace mrdocs {
@@ -544,9 +543,7 @@ public:
             // other declarations of the function that have parameters declared
             // with different top-level cv-qualifiers.
             for(ParmVarDecl* P : FD->parameters())
-            {
                 P->setType(context_.getSignatureParameterType(P->getType()));
-            }
         }
         return index::generateUSRForDecl(D, usr_);
     }
@@ -1804,10 +1801,6 @@ public:
                 convertToReferenceKind(
                     D->getRefQualifier());
             I.specs0.isFinal |= D->template hasAttr<FinalAttr>();
-
-            std::cout << "*** AST CXXMethodDecl isConst: " << D->isConst() << std::endl;
-            std::cout << "*** AST CXXMethodDecl isExplicitObjectMemberFunction: " << D->isExplicitObjectMemberFunction() << std::endl;
-
             I.specs1.isExplicitObjectMemberFunction |= D->isExplicitObjectMemberFunction();
             //D->isCopyAssignmentOperator()
             //D->isMoveAssignmentOperator()
