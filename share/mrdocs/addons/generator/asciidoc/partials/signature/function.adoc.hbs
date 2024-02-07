@@ -8,7 +8,7 @@
 {{/if~}}
 {{#if symbol.isVirtual}}virtual
 {{/if~}}
-{{#if symbol.isExplicitObjectMemberFunction}}this {{/if~}}
+{{#if symbol.isExplicitObjectMemberFunction}}this {{else}}NONTHIS {{/if~}}
 {{#if (eq symbol.class "normal")}}{{>declarator-before symbol.return}}
 {{/if~}}
 {{>declarator-id symbol link=symbol.template.primary}}
