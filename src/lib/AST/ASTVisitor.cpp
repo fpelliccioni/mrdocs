@@ -44,7 +44,6 @@
 #include <unordered_map>
 #include <unordered_set>
 
-
 namespace clang {
 namespace mrdocs {
 
