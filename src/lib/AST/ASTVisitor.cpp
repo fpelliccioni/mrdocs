@@ -1802,6 +1802,10 @@ public:
                 convertToReferenceKind(
                     D->getRefQualifier());
             I.specs0.isFinal |= D->template hasAttr<FinalAttr>();
+
+            std::cout << "*** AST CXXMethodDecl isConst: " << D->isConst() << std::endl;
+            std::cout << "*** AST CXXMethodDecl isExplicitObjectMemberFunction: " << D->isExplicitObjectMemberFunction() << std::endl;
+
             I.specs1.isExplicitObjectMemberFunction |= D->isExplicitObjectMemberFunction();
             //D->isCopyAssignmentOperator()
             //D->isMoveAssignmentOperator()
