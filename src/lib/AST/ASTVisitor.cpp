@@ -543,8 +543,6 @@ public:
             // with different top-level cv-qualifiers.
             for(ParmVarDecl* P : FD->parameters())
             {
-                // isExplicitObjectParameter
-                int x = P->getType();
                 P->setType(context_.getSignatureParameterType(P->getType()));
             }
         }
@@ -1804,8 +1802,7 @@ public:
                 convertToReferenceKind(
                     D->getRefQualifier());
             I.specs0.isFinal |= D->template hasAttr<FinalAttr>();
-            // isExplicitObjectParameter
-            I.specs0.isExplicitObjectParameter |= D->isExplicitObjectParameter();
+            I.specs1.isExplicitObjectParameter |= D->isExplicitObjectParameter();
             //D->isCopyAssignmentOperator()
             //D->isMoveAssignmentOperator()
             //D->isOverloadedOperator();

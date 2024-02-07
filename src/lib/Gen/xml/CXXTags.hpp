@@ -170,6 +170,7 @@ inline void write(FnFlags1 const& bits, XMLTags& tags)
 
     fw.write(&FnFlags1::explicitSpec,      "explicit-spec");
     fw.write(&FnFlags1::isNodiscard,       "nodiscard");
+    fw.write(&FnFlags1::isExplicitObjectParameter, "is-explicit-object-parameter");
 }
 
 
