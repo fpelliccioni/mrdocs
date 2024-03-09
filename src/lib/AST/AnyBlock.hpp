@@ -1874,6 +1874,50 @@ public:
 
 //------------------------------------------------
 
+class NamespaceAliasBlock
+    : public TopLevelBlock<NamespaceAliasInfo>
+{
+public:
+    using TopLevelBlock::TopLevelBlock;
+
+    Error
+    parseRecord(
+        Record const& R,
+        unsigned ID,
+        llvm::StringRef Blob) override
+    {
+        switch(ID)
+        {
+        case NAMESPACE_SYMBOL:
+            return decodeRecord(R, I->Target, Blob);
+        default:
+            return TopLevelBlock::parseRecord(R, ID, Blob);
+        }
+    }
+
+    Error
+    readSubBlock(
+        unsigned ID) override
+    {
+        switch(ID)
+        {
+        case BI_TEMPLATE_BLOCK_ID:
+        {
+            I->Template = std::make_unique<TemplateInfo>();
+            TemplateBlock B(*I->Template, br_);
+            return br_.readBlock(B, ID);
+        }
+        default:
+            return TopLevelBlock::readSubBlock(ID);
+        }
+    }
+};
+
+//------------------------------------------------
+
+
+//------------------------------------------------
+
 class EnumeratorBlock
     : public TopLevelBlock<EnumeratorInfo>
 {
