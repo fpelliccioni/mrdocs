@@ -309,7 +309,7 @@ RecordIDNameMap = []()
         {JAVADOC_NODE_SYMBOLREF, {"JavadocNodeSymbol", &SymbolIDAbbrev}},
         {JAVADOC_PARAM_DIRECTION, {"JavadocParamDirection", &Integer32Abbrev}},
         {NAMESPACE_BITS, {"NamespaceBits", &Integer32ArrayAbbrev}},
-        {NAMESPACE_ALIAS_SYMBOL, {"AliasSymbol", &SymbolIDAbbrev}},
+        {NAMESPACE_ALIAS_SYMBOL, {"AliasedSymbol", &SymbolIDAbbrev}},
         {NAME_INFO_KIND, {"NameKind", &Integer32Abbrev}},
         {NAME_INFO_ID, {"NameID", &SymbolIDAbbrev}},
         {NAME_INFO_NAME, {"NameName", &StringAbbrev}},
@@ -1138,7 +1138,7 @@ emitBlock(
     StreamSubBlockGuard Block(Stream, BI_NAMESPACE_ALIAS_BLOCK_ID);
     emitInfoPart(I);
     emitSourceInfo(I);
-    emitRecord(I.AliasSymbol, NAMESPACE_ALIAS_SYMBOL);
+    emitRecord(I.AliasedSymbol, NAMESPACE_ALIAS_SYMBOL);
 }
 
 //TODO
