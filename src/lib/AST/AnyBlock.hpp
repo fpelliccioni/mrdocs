@@ -1889,7 +1889,7 @@ public:
         switch(ID)
         {
         case NAMESPACE_ALIAS_SYMBOL:
-            return decodeRecord(R, I->Target, Blob);
+            return decodeRecord(R, I->AliasedSymbol, Blob);
         default:
             return TopLevelBlock::parseRecord(R, ID, Blob);
         }
