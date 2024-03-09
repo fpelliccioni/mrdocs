@@ -537,7 +537,8 @@ public:
             if (index::generateUSRForDecl(UDD->getNominatedNamespace(), usr_))
                 return true;
             usr_.append("@UD");
-            usr_.append(UDD->getNominatedNamespaceAsWritten()->getName());
+            // usr_.append(UDD->getNominatedNamespaceAsWritten()->getName());
+            usr_.append(UD->getNameAsString());
             return false;
         }
 
