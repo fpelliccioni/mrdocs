@@ -522,33 +522,14 @@ public:
         MRDOCS_ASSERT(D);
         MRDOCS_ASSERT(usr_.empty());
 
-        if (const auto* NAD = dyn_cast<NamespaceAliasDecl>(D)) {
-            // Primero, genera el USR para el espacio de nombres original
+        if (const auto* NAD = dyn_cast<NamespaceAliasDecl>(D))
+        {
             if (index::generateUSRForDecl(cast<Decl>(NAD->getNamespace()), usr_))
                 return true;
-            // Agrega un separador para la unicidad
             usr_.append("@NA");
-            // Agrega el nombre del alias para identificación
             usr_.append(NAD->getNameAsString());
             return false;
         }
-
-
-        // // Agregar manejo para NamespaceAliasDecl
-        // if (const auto* NAD = dyn_cast<NamespaceAliasDecl>(D))
-        // {
-        //     // Generar el USR para el NamespaceDecl original
-        //     if (index::generateUSRForDecl(NAD->getAliasedNamespace(), usr_))
-        //         return true;
-
-        //     // Añadir separador e identificador único para NamespaceAlias
-        //     usr_.append("@NA");
-
-        //     // Añadir el nombre del alias para completar el USR
-        //     usr_.append(NAD->getNameAsString());
-
-        //     return false; // USR generado exitosamente
-        // }
 
         // KRYSTIAN NOTE: clang doesn't currently support
         // generating USRs for friend declarations, so we

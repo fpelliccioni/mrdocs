@@ -39,5 +39,6 @@
 #include <mrdocs/Metadata/Type.hpp>
 #include <mrdocs/Metadata/Typedef.hpp>
 #include <mrdocs/Metadata/Variable.hpp>
+#include <mrdocs/Metadata/Using.hpp>
 
 #endif
