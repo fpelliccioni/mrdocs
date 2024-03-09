@@ -38,6 +38,8 @@ struct SpecializationInfo;
 struct FriendInfo;
 struct EnumeratorInfo;
 struct GuideInfo;
+struct NamespaceAliasInfo;
+struct UsingInfo;
 
 /** Info variant discriminator
 */

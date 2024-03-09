@@ -57,6 +57,7 @@ struct TypeInfo;
 struct TypedefInfo;
 struct VariableInfo;
 struct VerbatimBlock;
+struct UsingInfo;
 
 struct ExprInfo;
 template<typename T>
