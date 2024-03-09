@@ -538,7 +538,7 @@ public:
                 return true;
             usr_.append("@UD");
             // usr_.append(UDD->getNominatedNamespaceAsWritten()->getName());
-            usr_.append(UD->getNameAsString());
+            usr_.append(UDD->getNameAsString());
             return false;
         }
 
