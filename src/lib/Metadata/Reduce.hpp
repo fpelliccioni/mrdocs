@@ -35,7 +35,6 @@ void merge(GuideInfo& I, GuideInfo&& Other);
 void merge(NamespaceAliasInfo& I, NamespaceAliasInfo&& Other);
 void merge(UsingInfo& I, UsingInfo&& Other);
 
-
 //
 // This file defines the merging of different types of infos. The data in the
 // calling Info is preserved during a merge unless that field is empty or

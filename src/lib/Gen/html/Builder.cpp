@@ -166,8 +166,7 @@ DEFINE(FriendInfo);
 DEFINE(EnumeratorInfo);
 DEFINE(GuideInfo);
 DEFINE(NamespaceAliasInfo);
-//TODO
-// DEFINE(UsingInfo);
+DEFINE(UsingInfo);
 
 } // html
 } // mrdocs
