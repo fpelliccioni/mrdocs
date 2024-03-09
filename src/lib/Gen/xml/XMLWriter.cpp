@@ -387,7 +387,7 @@ writeNamespaceAlias(
     NamespaceAliasInfo const& I)
 {
     tags_.open(namespaceAliasTagName, {
-        { "name", I.AliasName },
+        // { "name", I.AliasName },
         { I.Access },
         { I.id }
         });
