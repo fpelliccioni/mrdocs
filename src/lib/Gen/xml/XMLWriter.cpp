@@ -383,6 +383,30 @@ writeGuide(
 
 void
 XMLWriter::
+writeNamespaceAlias(
+    NamespaceAliasInfo const& I)
+{
+    tags_.open(namespaceAliasTagName, {
+        { "name", I.AliasName },
+        { I.Access },
+        { I.id }
+        });
+
+    writeSourceInfo(I);
+
+    writeJavadoc(I.javadoc);
+
+    Attributes attrs = {};
+
+    attrs.push({"aliasedSymbol", toString(I.AliasedSymbol)});
+
+    tags_.write("aliased", {}, attrs);
+
+    tags_.close(namespaceAliasTagName);
+}
+
+void
+XMLWriter::
 writeRecord(
     RecordInfo const& I)
 {
