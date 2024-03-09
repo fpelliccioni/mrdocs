@@ -30,6 +30,7 @@ struct NamespaceAliasInfo
     */
     SymbolID AliasedSymbol = SymbolID::invalid;
 
+    //TODO
     // /** Name of the namespace alias.
     // */
     // std::string AliasName;
