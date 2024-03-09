@@ -50,7 +50,7 @@ getTagName(Info const& I) noexcept
     case InfoKind::Enumerator:
         return enumeratorTagName;
     case InfoKind::Alias:
-        return aliasTagName;
+        return namespaceAliasTagName;
     case InfoKind::Using:
         return usingTagName;
     default:
