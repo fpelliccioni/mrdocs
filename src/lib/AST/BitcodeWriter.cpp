@@ -258,6 +258,8 @@ BlockIdNameMap = []()
         {BI_ENUMERATOR_BLOCK_ID, "EnumeratorBlock"},
         {BI_VARIABLE_BLOCK_ID, "VarBlock"},
         {BI_NAME_INFO_ID, "NameInfoBlock"},
+        {BI_NAMESPACE_ALIAS_BLOCK_ID, "NamespaceAliasBlock"},
+        {BI_USING_BLOCK_ID, "UsingBlock"},
     };
     MRDOCS_ASSERT(Inits.size() == BlockIdCount);
     for (const auto& Init : Inits)
@@ -307,6 +309,7 @@ RecordIDNameMap = []()
         {JAVADOC_NODE_SYMBOLREF, {"JavadocNodeSymbol", &SymbolIDAbbrev}},
         {JAVADOC_PARAM_DIRECTION, {"JavadocParamDirection", &Integer32Abbrev}},
         {NAMESPACE_BITS, {"NamespaceBits", &Integer32ArrayAbbrev}},
+        {NAMESPACE_ALIAS_SYMBOL, {"AliasSymbol", &SymbolIDAbbrev}},
         {NAME_INFO_KIND, {"NameKind", &Integer32Abbrev}},
         {NAME_INFO_ID, {"NameID", &SymbolIDAbbrev}},
         {NAME_INFO_NAME, {"NameName", &StringAbbrev}},
@@ -334,7 +337,8 @@ RecordIDNameMap = []()
         {TYPEINFO_NOEXCEPT, {"TypeinfoNoexcept", &NoexceptAbbrev}},
         {TYPEINFO_REFQUAL, {"TypeinfoRefqual", &Integer32Abbrev}},
         {TYPEDEF_IS_USING, {"IsUsing", &BoolAbbrev}},
-        {VARIABLE_BITS, {"Bits", &Integer32ArrayAbbrev}}
+        {VARIABLE_BITS, {"Bits", &Integer32ArrayAbbrev}},
+        {USING_SYMBOL, {"UsingSymbol", &SymbolIDAbbrev}},
     };
     // MRDOCS_ASSERT(Inits.size() == RecordIDCount);
     for (const auto& Init : Inits)
@@ -422,6 +426,16 @@ RecordsByBlock{
     {BI_FRIEND_BLOCK_ID,
         {FRIEND_SYMBOL}},
     // FriendInfo
+
+
+    // NamespaceAliasInfo
+    {BI_NAMESPACE_ALIAS_BLOCK_ID,
+        {NAMESPACE_ALIAS_SYMBOL}},
+    // UsingInfo
+    {BI_USING_BLOCK_ID,
+        {USING_SYMBOL}},
+
+    // EnumeratorInfo
     {BI_ENUMERATOR_BLOCK_ID,
         {}},
     // TypeInfo
@@ -1115,6 +1129,29 @@ emitBlock(
     emitRecord(I.FriendSymbol, FRIEND_SYMBOL);
     emitBlock(I.FriendType);
 }
+
+void
+BitcodeWriter::
+emitBlock(
+    NamespaceAliasInfo const& I)
+{
+    StreamSubBlockGuard Block(Stream, BI_NAMESPACE_ALIAS_BLOCK_ID);
+    emitInfoPart(I);
+    emitSourceInfo(I);
+    emitRecord(I.AliasSymbol, NAMESPACE_ALIAS_SYMBOL);
+}
+
+//TODO
+// void
+// BitcodeWriter::
+// emitBlock(
+//     UsingInfo const& I)
+// {
+//     StreamSubBlockGuard Block(Stream, BI_USING_BLOCK_ID);
+//     emitInfoPart(I);
+//     emitSourceInfo(I);
+//     emitRecord(I.UsingSymbol, USING_SYMBOL);
+// }
 
 void
 BitcodeWriter::
