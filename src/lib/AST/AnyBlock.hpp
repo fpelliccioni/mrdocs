@@ -1902,12 +1902,12 @@ public:
     {
         switch(ID)
         {
-        case BI_TEMPLATE_BLOCK_ID:
-        {
-            I->Template = std::make_unique<TemplateInfo>();
-            TemplateBlock B(*I->Template, br_);
-            return br_.readBlock(B, ID);
-        }
+        //TODO
+        // case BI_TYPEINFO_BLOCK_ID:
+        // {
+        //     TypeInfoBlock B(I->FriendType, br_);
+        //     return br_.readBlock(B, ID);
+        // }
         default:
             return TopLevelBlock::readSubBlock(ID);
         }
