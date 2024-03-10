@@ -317,9 +317,10 @@ void merge(UsingInfo& I, UsingInfo&& Other)
     std::cout << "(3) I.UsingSymbols.size() = " << I.UsingSymbols.size() << "\n";
     std::cout << "(3) Other.UsingSymbols.size() = " << Other.UsingSymbols.size() << "\n";
 
-    if(! I.UsingSymbols.empty()) {
-        I.UsingSymbols = std::move(Other.UsingSymbols);
-    }
+    // if(! I.UsingSymbols.empty()) {
+    //     I.UsingSymbols = std::move(Other.UsingSymbols);
+    // }
+    reduceSymbolIDs(I.UsingSymbols, std::move(Other.UsingSymbols));
 
     std::cout << "(3) I.UsingSymbols.size() = " << I.UsingSymbols.size() << "\n";
     std::cout << "(3) Other.UsingSymbols.size() = " << Other.UsingSymbols.size() << "\n";
