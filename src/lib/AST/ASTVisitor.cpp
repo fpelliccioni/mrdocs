@@ -544,19 +544,19 @@ public:
             return false;
         }
 
-        // Handling UsingDecl
-        if (const auto* UD = dyn_cast<UsingDecl>(D))
-        {
-            for (const auto* shadow : UD->shadows())
-            {
-                if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
-                    return true;
-                break;
-            }
-            usr_.append("@UDec");
-            usr_.append(UD->getNameAsString());
-            return false;
-        }
+        // // Handling UsingDecl
+        // if (const auto* UD = dyn_cast<UsingDecl>(D))
+        // {
+        //     for (const auto* shadow : UD->shadows())
+        //     {
+        //         if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
+        //             return true;
+        //         break;
+        //     }
+        //     usr_.append("@UDec");
+        //     usr_.append(UD->getNameAsString());
+        //     return false;
+        // }
 
         // KRYSTIAN NOTE: clang doesn't currently support
         // generating USRs for friend declarations, so we
@@ -2220,48 +2220,48 @@ public:
 
     //------------------------------------------------
 
-    void
-    buildUsingDeclaration(
-        UsingInfo& I,
-        bool created,
-        UsingDecl* D)
-    {
-        std::cout << "buildUsingDeclaration - 1\n";
-        bool documented = parseRawComment(I.javadoc, D);
-        addSourceLocation(I, D->getBeginLoc(), true, documented);
-        std::cout << "buildUsingDeclaration - 2\n";
+    // void
+    // buildUsingDeclaration(
+    //     UsingInfo& I,
+    //     bool created,
+    //     UsingDecl* D)
+    // {
+    //     std::cout << "buildUsingDeclaration - 1\n";
+    //     bool documented = parseRawComment(I.javadoc, D);
+    //     addSourceLocation(I, D->getBeginLoc(), true, documented);
+    //     std::cout << "buildUsingDeclaration - 2\n";
 
-        if(! created)
-            return;
+    //     if(! created)
+    //         return;
 
-        std::cout << "buildUsingDeclaration - 3\n";
-        I.Name = extractName(D);
-        I.IsDirective = false;
+    //     std::cout << "buildUsingDeclaration - 3\n";
+    //     I.Name = extractName(D);
+    //     I.IsDirective = false;
 
-        // std::cout << "buildUsingDeclaration - 4\n";
-        // for (auto const* shadow : D->shadows())
-        // {
-        //     std::cout << "buildUsingDeclaration - 5\n";
-        //     NamedDecl* ND = shadow->getTargetDecl();
-        //     SymbolID id;
-        //     std::cout << "buildUsingDeclaration - 6\n";
-        //     extractSymbolID(ND, id);
-        //     I.UsedSymbols.emplace_back(id);
-        //     std::cout << "buildUsingDeclaration - 7\n";
+    //     // std::cout << "buildUsingDeclaration - 4\n";
+    //     // for (auto const* shadow : D->shadows())
+    //     // {
+    //     //     std::cout << "buildUsingDeclaration - 5\n";
+    //     //     NamedDecl* ND = shadow->getTargetDecl();
+    //     //     SymbolID id;
+    //     //     std::cout << "buildUsingDeclaration - 6\n";
+    //     //     extractSymbolID(ND, id);
+    //     //     I.UsedSymbols.emplace_back(id);
+    //     //     std::cout << "buildUsingDeclaration - 7\n";
 
-        //     // If this is a using declaration naming
-        //     // a previously undeclared namespace, traverse it.
-        //     if(ND->isFirstDecl()) {
-        //         std::cout << "buildUsingDeclaration - 8\n";
-        //         traverseDecl(ND);
-        //     }
-        //     std::cout << "buildUsingDeclaration - 9\n";
-        // }
+    //     //     // If this is a using declaration naming
+    //     //     // a previously undeclared namespace, traverse it.
+    //     //     if(ND->isFirstDecl()) {
+    //     //         std::cout << "buildUsingDeclaration - 8\n";
+    //     //         traverseDecl(ND);
+    //     //     }
+    //     //     std::cout << "buildUsingDeclaration - 9\n";
+    //     // }
 
-        std::cout << "buildUsingDeclaration - 10\n";
-        getParentNamespaces(I, D);
-        std::cout << "buildUsingDeclaration - 11\n";
-    }
+    //     std::cout << "buildUsingDeclaration - 10\n";
+    //     getParentNamespaces(I, D);
+    //     std::cout << "buildUsingDeclaration - 11\n";
+    // }
 
     //------------------------------------------------
 
@@ -2363,16 +2363,16 @@ public:
     void
     traverse(UsingDirectiveDecl*);
 
-    /** Traverse a using declaration
+    // /** Traverse a using declaration
 
-        This function is called by traverseDecl to traverse
-        a using declaration.
+    //     This function is called by traverseDecl to traverse
+    //     a using declaration.
 
-        A UsingDecl inherits from NamedDecl.
+    //     A UsingDecl inherits from NamedDecl.
 
-    */
-    void
-    traverse(UsingDecl*);
+    // */
+    // void
+    // traverse(UsingDecl*);
 
     /** Traverse a member of a struct, union, or class
 
@@ -2623,15 +2623,15 @@ traverse(UsingDirectiveDecl* D)
 //------------------------------------------------
 // UsingDecl
 
-void
-ASTVisitor::
-traverse(UsingDecl* D)
-{
-    auto const exp = getAsMrDocsInfo(D);
-    if( ! exp) { return; }
-    auto [I, created] = *exp;
-    buildUsingDeclaration(I, created, D);
-}
+// void
+// ASTVisitor::
+// traverse(UsingDecl* D)
+// {
+//     auto const exp = getAsMrDocsInfo(D);
+//     if( ! exp) { return; }
+//     auto [I, created] = *exp;
+//     buildUsingDeclaration(I, created, D);
+// }
 
 //------------------------------------------------
 
