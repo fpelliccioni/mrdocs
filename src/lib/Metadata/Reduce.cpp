@@ -14,6 +14,9 @@
 #include <mrdocs/Platform.hpp>
 #include <llvm/ADT/STLExtras.h>
 
+#include <iostream>
+
+
 namespace clang {
 namespace mrdocs {
 
