@@ -15,6 +15,8 @@
 #include <ranges>
 #include <span>
 
+#include <iostream>
+
 namespace clang {
 namespace mrdocs {
 
