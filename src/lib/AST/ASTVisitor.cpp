@@ -2600,7 +2600,7 @@ void
 ASTVisitor::
 traverse(NamespaceAliasDecl* D)
 {
-    auto const exp = getAsMrDocsInfo(D);
+    auto exp = getAsMrDocsInfo(D);
     if( ! exp) { return; }
     auto [I, created] = *exp;
     buildNamespaceAlias(I, created, D);
@@ -2613,7 +2613,7 @@ void
 ASTVisitor::
 traverse(UsingDirectiveDecl* D)
 {
-    auto const exp = getAsMrDocsInfo(D);
+    auto exp = getAsMrDocsInfo(D);
     if( ! exp) { return; }
     auto [I, created] = *exp;
     buildUsingDirective(I, created, D);
