@@ -2148,7 +2148,7 @@ public:
         if(! created)
             return;
 
-        // I.Name = extractName(D);
+        I.Name = extractName(D);
         // I.Aliased = extractSymbolID(D->getAliasedNamespace());
             //   AliasedSymbol
 
