@@ -302,9 +302,8 @@ visit(
         return visitor.template visit<GuideInfo>();
     case InfoKind::Alias:
         return visitor.template visit<NamespaceAliasInfo>();
-    //TODO:
-    // case InfoKind::Using:
-    //     return visitor.template visit<UsingInfo>();
+    case InfoKind::Using:
+        return visitor.template visit<UsingInfo>();
     default:
         MRDOCS_UNREACHABLE();
     }
