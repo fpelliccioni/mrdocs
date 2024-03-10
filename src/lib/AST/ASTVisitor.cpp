@@ -2174,31 +2174,45 @@ public:
         bool created,
         UsingDirectiveDecl* D)
     {
+        std::cout << "buildUsingDirective - 1\n";
         bool documented = parseRawComment(I.javadoc, D);
         addSourceLocation(I, D->getBeginLoc(), true, documented);
 
+        std::cout << "buildUsingDirective - 2\n";
         if(! created)
             return;
 
+        std::cout << "buildUsingDirective - 3\n";
+
         I.Name = extractName(D);
         I.IsDirective = true;
+
+        std::cout << "buildUsingDirective - 4\n";
 
         // A NamedDecl nominated by a UsingDirectiveDecl
         // will be one of the following:
         // -
         if(NamedDecl* ND = D->getNominatedNamespace())
         {
+            std::cout << "buildUsingDirective - 5\n";
             SymbolID id;
             extractSymbolID(ND, id);
+            std::cout << "buildUsingDirective - 6\n";
             I.UsedSymbols.emplace_back(id);
+            std::cout << "buildUsingDirective - 7\n";
+
 
             // If this is a using directive declaration naming
             // a previously undeclared namespace, traverse it.
-            if(ND->isFirstDecl())
+            if(ND->isFirstDecl()) {
+                std::cout << "buildUsingDirective - 8\n";
                 traverseDecl(ND);
+            }
+            std::cout << "buildUsingDirective - 9\n";
         }
-
+        std::cout << "buildUsingDirective - 10\n";
         getParentNamespaces(I, D);
+        std::cout << "buildUsingDirective - 11\n";
     }
 
 
@@ -2210,29 +2224,41 @@ public:
         bool created,
         UsingDecl* D)
     {
+        std::cout << "buildUsingDeclaration - 1\n";
         bool documented = parseRawComment(I.javadoc, D);
         addSourceLocation(I, D->getBeginLoc(), true, documented);
+        std::cout << "buildUsingDeclaration - 2\n";
 
         if(! created)
             return;
 
+        std::cout << "buildUsingDeclaration - 3\n";
         I.Name = extractName(D);
         I.IsDirective = false;
 
+        std::cout << "buildUsingDeclaration - 4\n";
         for (auto const* shadow : D->shadows())
         {
+            std::cout << "buildUsingDeclaration - 5\n";
             NamedDecl* ND = shadow->getTargetDecl();
             SymbolID id;
+            std::cout << "buildUsingDeclaration - 6\n";
             extractSymbolID(ND, id);
             I.UsedSymbols.emplace_back(id);
+            std::cout << "buildUsingDeclaration - 7\n";
 
             // If this is a using declaration naming
             // a previously undeclared namespace, traverse it.
-            if(ND->isFirstDecl())
+            if(ND->isFirstDecl()) {
+                std::cout << "buildUsingDeclaration - 8\n";
                 traverseDecl(ND);
+            }
+            std::cout << "buildUsingDeclaration - 9\n";
         }
 
+        std::cout << "buildUsingDeclaration - 10\n";
         getParentNamespaces(I, D);
+        std::cout << "buildUsingDeclaration - 11\n";
     }
 
     //------------------------------------------------
