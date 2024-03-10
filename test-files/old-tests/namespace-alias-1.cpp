@@ -1,5 +1,3 @@
-namespace LargeName {
+namespace LongName {}
 
-}
-
-namespace A = LargeName;
+namespace A = LongName;
