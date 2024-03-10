@@ -2205,7 +2205,8 @@ public:
             SymbolID id;
             extractSymbolID(ND, id);
             std::cout << "buildUsingDirective - 6\n";
-            I.UsedSymbols.emplace_back(id);
+            // I.UsedSymbols.emplace_back(id);
+            I.UsedSymbols = id;
             std::cout << "buildUsingDirective - 7\n";
 
 
