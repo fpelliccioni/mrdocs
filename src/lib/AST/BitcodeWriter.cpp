@@ -1075,6 +1075,17 @@ emitBlock(
 
 void
 BitcodeWriter::
+    UsingInfo const& I)
+{
+    StreamSubBlockGuard Block(Stream, BI_USING_BLOCK_ID);
+    emitInfoPart(I);
+    emitSourceInfo(I);
+    emitRecord(I.UsingSymbol, USING_SYMBOL);
+
+}
+
+void
+BitcodeWriter::
 emitBlock(
     RecordInfo const& I)
 {
