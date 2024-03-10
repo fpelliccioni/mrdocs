@@ -2149,13 +2149,10 @@ public:
             return;
 
         I.Name = extractName(D);
-        // I.Aliased = extractSymbolID(D->getAliasedNamespace());
-            //   AliasedSymbol
 
         // A NamedDecl nominated by a NamespaceAliasDecl
         // will be one of the following:
         // - NamespaceDecl
-
         if(NamedDecl* ND = D->getAliasedNamespace())
         {
             extractSymbolID(ND, I.AliasedSymbol);

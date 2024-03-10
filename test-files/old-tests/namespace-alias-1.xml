@@ -4,7 +4,7 @@
 <namespace id="//////////////////////////8=">
   <namespace name="LargeName" id="6ZR21eIt45fvR0UJAIXvZ5vzM4E=">
   </namespace>
-  <namespace-alias id="Ab84yRNNRG5zm/lPuKfbxe51PyM=">
+  <namespace-alias name"A" id="Ab84yRNNRG5zm/lPuKfbxe51PyM=">
     <file path="namespace-alias-1.cpp" line="5" class="def"/>
     <aliased aliasedSymbol="6ZR21eIt45fvR0UJAIXvZ5vzM4E="/>
   </namespace-alias>
