@@ -2217,7 +2217,7 @@ public:
         //     std::cout << "buildUsingDirective - 9\n";
         // }
         std::cout << "buildUsingDirective - 10\n";
-        getParentNamespaces(I, D);
+        // getParentNamespaces(I, D);
         std::cout << "buildUsingDirective - 11\n";
     }
 
