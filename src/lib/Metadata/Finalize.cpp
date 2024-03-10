@@ -349,7 +349,9 @@ public:
     {
         check(I.Namespace);
         finalize(I.javadoc);
-        finalize(I.UsedSymbols);
+        std::cout << "Finalizer::operator()(UsingInfo& I) 1\n";
+        // finalize(I.UsedSymbols);
+        std::cout << "Finalizer::operator()(UsingInfo& I) 2\n";
     }
 
     void operator()(EnumeratorInfo& I)

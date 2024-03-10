@@ -1930,8 +1930,9 @@ public:
     {
         switch(ID)
         {
-        case USING_SYMBOL:
-            return decodeRecord(R, I->UsedSymbols, Blob);
+        //TODO:
+        // case USING_SYMBOL:
+        //     return decodeRecord(R, I->UsedSymbols, Blob);
         default:
             return TopLevelBlock::parseRecord(R, ID, Blob);
         }

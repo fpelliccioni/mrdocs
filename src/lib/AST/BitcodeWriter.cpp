@@ -1149,7 +1149,7 @@ emitBlock(
     StreamSubBlockGuard Block(Stream, BI_USING_BLOCK_ID);
     emitInfoPart(I);
     emitSourceInfo(I);
-    emitRecord(I.UsedSymbols, USING_SYMBOL);
+    // emitRecord(I.UsedSymbols, USING_SYMBOL); //TODO
 }
 
 void
