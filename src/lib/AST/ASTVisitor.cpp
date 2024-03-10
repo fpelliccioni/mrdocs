@@ -2223,7 +2223,7 @@ public:
         // - ClassTemplateDecl
         // - NamespaceDecl
 
-        if(NamedDecl* ND = D->getNameInfo())
+        if(DeclarationNameInfo* ND = D->getNameInfo())
         {
             extractSymbolID(ND, I.UsedSymbol);
 
