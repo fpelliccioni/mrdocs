@@ -1152,6 +1152,31 @@ emitBlock(
     emitRecord(I.UsingSymbols, USING_SYMBOL);
 }
 
+
+
+
+
+
+// BitcodeWriter::
+// emitScopeInfo(
+//     const ScopeInfo& S)
+// {
+//     StreamSubBlockGuard Block(Stream, BI_SCOPE_INFO_ID);
+//     emitRecord(S.Members, SCOPE_INFO_MEMBERS);
+//     for(const auto& [name, symbols] : S.Lookups)
+//         emitLookup(name, symbols);
+// }
+
+// void
+// BitcodeWriter::
+// emitLookup(llvm::StringRef Name, std::vector<SymbolID> const& Members)
+// {
+//     StreamSubBlockGuard Block(Stream, BI_LOOKUP_INFO_ID);
+//     emitRecord(Name, LOOKUP_NAME);
+//     emitRecord(Members, LOOKUP_MEMBERS);
+// }
+
+
 void
 BitcodeWriter::
 emitBlock(
