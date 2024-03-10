@@ -1,5 +1,7 @@
 namespace LongName {
-struct S {};
+struct S1 {};
+struct S2 {};
 }
 
-using LongName::S;
+using LongName::S1;
+using LongName::S2;
