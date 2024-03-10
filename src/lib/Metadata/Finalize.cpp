@@ -345,13 +345,12 @@ public:
         finalize(I.AliasedSymbol);
     }
 
-    //TODO
-    // void operator()(UsingInfo& I)
-    // {
-    //     check(I.Namespace);
-    //     finalize(I.javadoc);
-    //     finalize(I.Target);
-    // }
+    void operator()(UsingInfo& I)
+    {
+        check(I.Namespace);
+        finalize(I.javadoc);
+        finalize(I.UsedSymbols);
+    }
 
     void operator()(EnumeratorInfo& I)
     {
