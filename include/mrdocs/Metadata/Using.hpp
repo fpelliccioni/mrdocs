@@ -15,7 +15,6 @@
 #include <mrdocs/Metadata/Info.hpp>
 #include <mrdocs/Metadata/Source.hpp>
 #include <mrdocs/Metadata/Type.hpp>
-#include <string>
 #include <vector>
 #include <utility>
 
