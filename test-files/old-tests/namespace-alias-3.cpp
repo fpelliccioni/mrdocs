@@ -1,4 +1,4 @@
-namespace LogName {}
+namespace LongName {}
 
-namespace A = LogName;
+namespace A = LongName;
 namespace B = A;
