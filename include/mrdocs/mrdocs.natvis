@@ -33,6 +33,8 @@
 		<AlternativeType Name="clang::mrdocs::FriendInfo"/>
 		<AlternativeType Name="clang::mrdocs::EnumeratorInfo"/>
 		<AlternativeType Name="clang::mrdocs::GuideInfo"/>
+        <AlternativeType Name="clang::mrdocs::NamespaceAliasInfo"/>
+        <AlternativeType Name="clang::mrdocs::UsingInfo"/>
 
 		<DisplayString>{Kind,en} {Name} (ID = {id})</DisplayString>
 

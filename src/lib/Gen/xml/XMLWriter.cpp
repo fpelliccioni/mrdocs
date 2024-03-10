@@ -232,6 +232,10 @@ operator()(
         writeFriend(I);
     if constexpr(T::isGuide())
         writeGuide(I);
+    if constexpr(T::isNamespaceAlias())
+        writeNamespaceAlias(I);
+    if constexpr(T::isUsing())
+        writeUsing(I);
 }
 
 //------------------------------------------------
