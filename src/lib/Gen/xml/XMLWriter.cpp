@@ -408,6 +408,31 @@ writeNamespaceAlias(
 
 void
 XMLWriter::
+    UsingInfo(const UsingInfo& I)
+{
+    tags_.open(usingTagName, {
+        // { "name", I.Name },
+        { I.Access },
+        { I.id }
+        });
+
+    writeSourceInfo(I);
+
+    writeJavadoc(I.javadoc);
+
+    Attributes attrs = {};
+
+    for(auto const& J : I.UsedSymbols) {
+        attrs.push({J});
+    }
+
+    tags_.write("used", {}, attrs);
+
+    tags_.close(usingTagName);
+}
+
+void
+XMLWriter::
 writeRecord(
     RecordInfo const& I)
 {
