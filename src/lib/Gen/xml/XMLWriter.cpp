@@ -415,37 +415,25 @@ void
 XMLWriter::
     writeUsing(UsingInfo const& I)
 {
-    std::cout << "writeUsing() - 1" << std::endl;
-    // tags_.open(usingTagName);
-
     tags_.open(usingTagName, {
         { I.Access },
         { I.id },
-        { "is-directive", "true", I.IsDirective }
+        { "is-directive", I.IsDirective }
         });
 
     writeSourceInfo(I);
 
     writeJavadoc(I.javadoc);
 
-    Attributes attrs = {};
-
-    // attrs.push({"symbol", toString(I.UsingSymbols)});
-    // attrs.push({"symbol", toString(I.UsingSymbols)});
-    // attrs.push({"symbol", toString(I.UsingSymbols)});
     // attrs.push({"symbol", toString(I.UsingSymbols)});
 
-    std::cout << "(2) I.UsingSymbols.size() = " << I.UsingSymbols.size() << "\n";
     for (auto const& symbol : I.UsingSymbols) {
-        // attrs.push({"symbol", symbol});
-        attrs.push({"symbol", toString(symbol)});
+        Attributes attrs = {};
+        attrs.push({"id", toString(symbol)});
+        tags_.write("symbol", {}, attrs);
     }
 
-    tags_.write("using", {}, attrs);
-
     tags_.close(usingTagName);
-
-    std::cout << "writeUsing() - 2" << std::endl;
 }
 
 void
