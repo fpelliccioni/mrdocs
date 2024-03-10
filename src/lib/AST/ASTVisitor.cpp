@@ -549,7 +549,6 @@ public:
             {
                 if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
                     return true;
-                // break;
             }
             usr_.append("@UDec");
             usr_.append(UD->getNameAsString());
@@ -2210,41 +2209,30 @@ public:
         bool created,
         UsingDecl* D)
     {
-        // std::cout << "buildUsingDeclaration - 1\n";
         bool documented = parseRawComment(I.javadoc, D);
         addSourceLocation(I, D->getBeginLoc(), true, documented);
-        // std::cout << "buildUsingDeclaration - 2\n";
 
         if(! created)
             return;
 
-        // std::cout << "buildUsingDeclaration - 3\n";
         I.Name = extractName(D);
         I.IsDirective = false;
 
-        // std::cout << "buildUsingDeclaration - 4\n";
-        // for (auto const* shadow : D->shadows())
-        // {
-        //     // std::cout << "buildUsingDeclaration - 5\n";
-        //     NamedDecl* ND = shadow->getTargetDecl();
-        //     SymbolID id;
-        //     // std::cout << "buildUsingDeclaration - 6\n";
-        //     extractSymbolID(ND, id);
-        //     I.UsingSymbols.emplace_back(id);
-        //     // std::cout << "buildUsingDeclaration - 7\n";
 
-        //     // If this is a using declaration naming
-        //     // a previously undeclared namespace, traverse it.
-        //     if(ND->isFirstDecl()) {
-        //         // std::cout << "buildUsingDeclaration - 8\n";
-        //         traverseDecl(ND);
-        //     }
-        //     // std::cout << "buildUsingDeclaration - 9\n";
-        // }
+        for (auto const* shadow : D->shadows())
+        {
+            NamedDecl* ND = shadow->getTargetDecl();
+            SymbolID id;
+            extractSymbolID(ND, id);
+            I.UsingSymbols.emplace_back(id);
 
-        // std::cout << "buildUsingDeclaration - 10\n";
+            // If this is a using declaration naming
+            // a previously undeclared namespace, traverse it.
+            if(ND->isFirstDecl()) {
+                traverseDecl(ND);
+            }
+        }
         getParentNamespaces(I, D);
-        // std::cout << "buildUsingDeclaration - 11\n";
     }
 
     //------------------------------------------------

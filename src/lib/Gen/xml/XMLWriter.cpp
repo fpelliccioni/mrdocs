@@ -413,13 +413,6 @@ void
 XMLWriter::
     writeUsing(UsingInfo const& I)
 {
-    // tags_.open(usingTagName, {
-    //     { I.Access },
-    //     { I.id },
-    //     { "is-directive", I.IsDirective ? "true" : "false" }
-    //     });
-
-
     tags_.open(usingTagName, {
         { I.Access },
         { I.id },
