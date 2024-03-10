@@ -544,6 +544,7 @@ public:
             std::cout << "generateUSRForDecl success" << std::endl;
             usr_.append("@UD");
             // usr_.append(UDD->getNominatedNamespaceAsWritten()->getName());
+            std::cout << "UDD->getNameAsString(): " << UDD->getNameAsString() << std::endl;
             usr_.append(UDD->getNameAsString());
             return false;
         }
