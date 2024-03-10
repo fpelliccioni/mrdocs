@@ -415,6 +415,9 @@ void
 XMLWriter::
     writeUsing(UsingInfo const& I)
 {
+
+    std::cout << "writeUsing - I.IsDirective: " << I.IsDirective << std::endl;
+
     tags_.open(usingTagName, {
         { I.Access },
         { I.id },
