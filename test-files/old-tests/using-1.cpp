@@ -1,3 +1,3 @@
-namespace LongName {}
+// namespace LongName {}
 
-using namespace LongName;
+// using namespace LongName;

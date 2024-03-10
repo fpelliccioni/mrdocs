@@ -1,7 +1,7 @@
-// Using directive example
+// // Using directive example
 
-namespace LongName {
-struct klass {};
-}
+// namespace LongName {
+// struct klass {};
+// }
 
-using LongName::klass;
+// using LongName::klass;
