@@ -271,13 +271,12 @@ public:
         push(&Tranche::NamespaceAliases, access, I);
     }
 
-    //TODO
-    // void operator()(
-    //     UsingInfo const& I,
-    //     AccessKind access)
-    // {
-    //     push(&Tranche::Usings, access, I);
-    // }
+    void operator()(
+        UsingInfo const& I,
+        AccessKind access)
+    {
+        push(&Tranche::Usings, access, I);
+    }
 
     void operator()(
         const EnumeratorInfo& I,
