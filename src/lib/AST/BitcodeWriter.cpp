@@ -1143,6 +1143,7 @@ emitBlock(
 
 void
 BitcodeWriter::
+emitBlock(
     UsingInfo const& I)
 {
     StreamSubBlockGuard Block(Stream, BI_USING_BLOCK_ID);
