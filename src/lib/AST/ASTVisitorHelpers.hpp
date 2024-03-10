@@ -61,8 +61,8 @@ struct MrDocsType<NamespaceAliasDecl> : std::type_identity<NamespaceAliasInfo> {
 template <>
 struct MrDocsType<UsingDirectiveDecl> : std::type_identity<UsingInfo> {};
 
-// template <>
-// struct MrDocsType<UsingDecl> : std::type_identity<UsingInfo> {};
+template <>
+struct MrDocsType<UsingDecl> : std::type_identity<UsingInfo> {};
 
 /// @copydoc MrDocsType
 template <class DeclType>
