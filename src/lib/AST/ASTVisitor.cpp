@@ -2620,7 +2620,7 @@ traverse(UsingDirectiveDecl* D)
     auto exp = getAsMrDocsInfo(D);
     if( ! exp) { return; }
     auto [I, created] = *exp;
-    buildUsingDirective(I, created, D);
+    // buildUsingDirective(I, created, D);
     std::cout << "traverse(UsingDirectiveDecl* D)\n";
 }
 
