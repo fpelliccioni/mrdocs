@@ -2192,8 +2192,8 @@ public:
         {
             SymbolID id;
             extractSymbolID(ND, id);
-            // I.UsingSymbols.emplace_back(id);
-            I.UsingSymbols = id;
+            I.UsingSymbols.emplace_back(id);
+            // I.UsingSymbols = id;
 
             // If this is a using directive declaration naming
             // a previously undeclared namespace, traverse it.
