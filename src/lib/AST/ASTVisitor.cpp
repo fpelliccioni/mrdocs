@@ -2621,6 +2621,7 @@ traverse(UsingDirectiveDecl* D)
     if( ! exp) { return; }
     auto [I, created] = *exp;
     buildUsingDirective(I, created, D);
+    std::cout << "traverse(UsingDirectiveDecl* D)\n";
 }
 
 
