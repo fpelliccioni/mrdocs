@@ -352,6 +352,7 @@ public:
         check(I.Namespace);
         finalize(I.javadoc);
         finalize(I.UsingSymbols);
+        finalize(I.IsDirective);
     }
 
     void operator()(EnumeratorInfo& I)

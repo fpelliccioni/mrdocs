@@ -339,6 +339,7 @@ RecordIDNameMap = []()
         {TYPEDEF_IS_USING, {"IsUsing", &BoolAbbrev}},
         {VARIABLE_BITS, {"Bits", &Integer32ArrayAbbrev}},
         {USING_SYMBOL, {"UsingSymbol", &SymbolIDAbbrev}},
+        {USING_IS_DIRECTIVE, {"UsingIsDirective", &BoolAbbrev}},
     };
     // MRDOCS_ASSERT(Inits.size() == RecordIDCount);
     for (const auto& Init : Inits)
@@ -431,9 +432,11 @@ RecordsByBlock{
     // NamespaceAliasInfo
     {BI_NAMESPACE_ALIAS_BLOCK_ID,
         {NAMESPACE_ALIAS_SYMBOL}},
+
+
     // UsingInfo
     {BI_USING_BLOCK_ID,
-        {USING_SYMBOL}},
+        {USING_SYMBOL, USING_IS_DIRECTIVE}},
 
     // EnumeratorInfo
     {BI_ENUMERATOR_BLOCK_ID,
@@ -1150,32 +1153,8 @@ emitBlock(
     emitInfoPart(I);
     emitSourceInfo(I);
     emitRecord(I.UsingSymbols, USING_SYMBOL);
+    emitRecord(F.IsDirective, USING_IS_DIRECTIVE);
 }
-
-
-
-
-
-
-// BitcodeWriter::
-// emitScopeInfo(
-//     const ScopeInfo& S)
-// {
-//     StreamSubBlockGuard Block(Stream, BI_SCOPE_INFO_ID);
-//     emitRecord(S.Members, SCOPE_INFO_MEMBERS);
-//     for(const auto& [name, symbols] : S.Lookups)
-//         emitLookup(name, symbols);
-// }
-
-// void
-// BitcodeWriter::
-// emitLookup(llvm::StringRef Name, std::vector<SymbolID> const& Members)
-// {
-//     StreamSubBlockGuard Block(Stream, BI_LOOKUP_INFO_ID);
-//     emitRecord(Name, LOOKUP_NAME);
-//     emitRecord(Members, LOOKUP_MEMBERS);
-// }
-
 
 void
 BitcodeWriter::

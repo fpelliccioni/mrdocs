@@ -1758,6 +1758,8 @@ public:
             return decodeRecord(R, {&I->specs.raw}, Blob);
         case FIELD_IS_MUTABLE:
             return decodeRecord(R, I->IsMutable, Blob);
+        case USING_IS_DIRECTIVE:
+            return decodeRecord(R, I->IsDirective, Blob);
         case FIELD_IS_BITFIELD:
             return decodeRecord(R, I->IsBitfield, Blob);
         default:
