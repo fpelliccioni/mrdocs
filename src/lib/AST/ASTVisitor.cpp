@@ -2216,20 +2216,15 @@ public:
         I.Name = extractName(D);
         I.IsDirective = false;
 
-        // A NamedDecl nominated by a UsingDecl
-        // will be one of the following:
-        // - FunctionDecl
-        // - FunctionTemplateDecl
-        // - ClassTemplateDecl
-        // - NamespaceDecl
-
-        if(DeclarationNameInfo* ND = D->getNameInfo())
+        if(NamedDecl* ND = D->getNominatedNamespace())
         {
             extractSymbolID(ND, I.UsedSymbol);
-
+            // If this is a using declaration naming
+            // a previously undeclared namespace, traverse it.
             if(ND->isFirstDecl())
                 traverseDecl(ND);
         }
+
 
         getParentNamespaces(I, D);
     }
