@@ -2165,6 +2165,75 @@ public:
         getParentNamespaces(I, D);
     }
 
+
+    //------------------------------------------------
+
+    void
+    buildUsingDirective(
+        UsingInfo& I,
+        bool created,
+        UsingDirectiveDecl* D)
+    {
+        bool documented = parseRawComment(I.javadoc, D);
+        addSourceLocation(I, D->getBeginLoc(), true, documented);
+
+        if(! created)
+            return;
+
+        I.Name = extractName(D);
+        I.IsDirective = true;
+
+        // A NamedDecl nominated by a UsingDirectiveDecl
+        // will be one of the following:
+        // -
+        if(NamedDecl* ND = D->getNominatedNamespace())
+        {
+            extractSymbolID(ND, I.UsedSymbol);
+            // If this is a using directive declaration naming
+            // a previously undeclared namespace, traverse it.
+            if(ND->isFirstDecl())
+                traverseDecl(ND);
+        }
+
+        getParentNamespaces(I, D);
+    }
+
+
+    //------------------------------------------------
+
+    void
+    buildUsingDeclaration(
+        UsingInfo& I,
+        bool created,
+        UsingDecl* D)
+    {
+        bool documented = parseRawComment(I.javadoc, D);
+        addSourceLocation(I, D->getBeginLoc(), true, documented);
+
+        if(! created)
+            return;
+
+        I.Name = extractName(D);
+        I.IsDirective = false;
+
+        // A NamedDecl nominated by a UsingDecl
+        // will be one of the following:
+        // - FunctionDecl
+        // - FunctionTemplateDecl
+        // - ClassTemplateDecl
+        // - NamespaceDecl
+
+        if(NamedDecl* ND = D->getQualifier())
+        {
+            extractSymbolID(ND, I.UsedSymbol);
+
+            if(ND->isFirstDecl())
+                traverseDecl(ND);
+        }
+
+        getParentNamespaces(I, D);
+    }
+
     //------------------------------------------------
 
     /** Get the DeclType as a MrDocs Info object
