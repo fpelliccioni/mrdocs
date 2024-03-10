@@ -1758,8 +1758,8 @@ public:
             return decodeRecord(R, {&I->specs.raw}, Blob);
         case FIELD_IS_MUTABLE:
             return decodeRecord(R, I->IsMutable, Blob);
-        case USING_IS_DIRECTIVE:
-            return decodeRecord(R, I->IsDirective, Blob);
+        // case USING_IS_DIRECTIVE:
+        //     return decodeRecord(R, I->IsDirective, Blob);
         case FIELD_IS_BITFIELD:
             return decodeRecord(R, I->IsBitfield, Blob);
         default:
@@ -1934,6 +1934,8 @@ public:
         {
         case USING_SYMBOL:
             return decodeRecord(R, I->UsingSymbols, Blob);
+        case USING_IS_DIRECTIVE:
+            return decodeRecord(R, I->IsDirective, Blob);
         default:
             return TopLevelBlock::parseRecord(R, ID, Blob);
         }
