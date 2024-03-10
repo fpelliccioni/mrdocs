@@ -2136,6 +2136,40 @@ public:
 
     //------------------------------------------------
 
+    void
+    buildNamespaceAlias(
+        NamespaceAliasInfo& I,
+        bool created,
+        NamespaceAliasDecl* D)
+    {
+        bool documented = parseRawComment(I.javadoc, D);
+        addSourceLocation(I, D->getBeginLoc(), true, documented);
+
+        if(! created)
+            return;
+
+        // I.Name = extractName(D);
+        // I.Aliased = extractSymbolID(D->getAliasedNamespace());
+            //   AliasedSymbol
+
+        // A NamedDecl nominated by a NamespaceAliasDecl
+        // will be one of the following:
+        // - NamespaceDecl
+
+        if(NamedDecl* ND = D->getAliasedNamespace())
+        {
+            extractSymbolID(ND, I.AliasedSymbol);
+            // If this is a namespace alias declaration naming
+            // a previously undeclared namespace, traverse it.
+            if(ND->isFirstDecl())
+                traverseDecl(ND);
+        }
+
+        getParentNamespaces(I, D);
+    }
+
+    //------------------------------------------------
+
     /** Get the DeclType as a MrDocs Info object
 
         The function will get or create the MrDocs Info
@@ -2210,6 +2244,18 @@ public:
     */
     void
     traverse(FriendDecl*);
+
+
+    /** Traverse a namespace alias declaration
+
+        This function is called by traverseDecl to traverse
+        a namespace alias declaration.
+
+        A NamespaceAliasDecl inherits from NamedDecl.
+
+    */
+    void
+    traverse(NamespaceAliasDecl*);
 
     /** Traverse a member of a struct, union, or class
 
@@ -2428,6 +2474,19 @@ traverse(FriendDecl* D)
     if(! exp) { return; }
     auto [I, created] = *exp;
     buildFriend(I, created, D);
+}
+
+//------------------------------------------------
+// NamespaceAliasDecl
+
+void
+ASTVisitor::
+traverse(NamespaceAliasDecl* D)
+{
+    auto const exp = getAsMrDocsInfo(D);
+    if( ! exp) { return; }
+    auto [I, created] = *exp;
+    buildNamespaceAlias(I, created, D);
 }
 
 //------------------------------------------------
