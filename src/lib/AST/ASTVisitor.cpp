@@ -45,6 +45,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <iostream>
+
 namespace clang {
 namespace mrdocs {
 
@@ -2210,41 +2212,41 @@ public:
         bool created,
         UsingDecl* D)
     {
-        // std::cout << "buildUsingDeclaration - 1\n";
+        std::cout << "buildUsingDeclaration - 1\n";
         bool documented = parseRawComment(I.javadoc, D);
         addSourceLocation(I, D->getBeginLoc(), true, documented);
-        // std::cout << "buildUsingDeclaration - 2\n";
+        std::cout << "buildUsingDeclaration - 2\n";
 
         if(! created)
             return;
 
-        // std::cout << "buildUsingDeclaration - 3\n";
+        std::cout << "buildUsingDeclaration - 3\n";
         I.Name = extractName(D);
         I.IsDirective = false;
 
-        // std::cout << "buildUsingDeclaration - 4\n";
+        std::cout << "buildUsingDeclaration - 4\n";
         for (auto const* shadow : D->shadows())
         {
-            // std::cout << "buildUsingDeclaration - 5\n";
+            std::cout << "buildUsingDeclaration - 5\n";
             NamedDecl* ND = shadow->getTargetDecl();
             SymbolID id;
-            // std::cout << "buildUsingDeclaration - 6\n";
+            std::cout << "buildUsingDeclaration - 6\n";
             extractSymbolID(ND, id);
             I.UsingSymbols.emplace_back(id);
-            // std::cout << "buildUsingDeclaration - 7\n";
+            std::cout << "buildUsingDeclaration - 7\n";
 
             // If this is a using declaration naming
             // a previously undeclared namespace, traverse it.
             if(ND->isFirstDecl()) {
-                // std::cout << "buildUsingDeclaration - 8\n";
+                std::cout << "buildUsingDeclaration - 8\n";
                 traverseDecl(ND);
             }
-            // std::cout << "buildUsingDeclaration - 9\n";
+            std::cout << "buildUsingDeclaration - 9\n";
         }
 
-        // std::cout << "buildUsingDeclaration - 10\n";
+        std::cout << "buildUsingDeclaration - 10\n";
         getParentNamespaces(I, D);
-        // std::cout << "buildUsingDeclaration - 11\n";
+        std::cout << "buildUsingDeclaration - 11\n";
     }
 
     //------------------------------------------------
