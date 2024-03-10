@@ -232,7 +232,7 @@ operator()(
         writeFriend(I);
     if constexpr(T::isGuide())
         writeGuide(I);
-    if constexpr(T::isNamespaceAlias())
+    if constexpr(T::isAlias())
         writeNamespaceAlias(I);
     if constexpr(T::isUsing())
         writeUsing(I);
