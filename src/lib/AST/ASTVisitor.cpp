@@ -549,7 +549,7 @@ public:
             {
                 if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
                     return true;
-                break;
+                // break;
             }
             usr_.append("@UDec");
             usr_.append(UD->getNameAsString());
