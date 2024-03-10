@@ -866,6 +866,16 @@ DomInfo<T>::construct() const
             entries.emplace_back("type", befriended);
         }
     }
+    if constexpr(T::isAlias())
+    {
+        auto aliased = domCorpus_.get(I_.AliasedSymbol);
+        entries.emplace_back("name", aliased.get("name"));
+        entries.emplace_back("symbol", aliased);
+    }
+    if constexpr(T::isUsing())
+    {
+        //TODO
+    }
     if constexpr(T::isEnumerator())
     {
         entries.insert(entries.end(), {

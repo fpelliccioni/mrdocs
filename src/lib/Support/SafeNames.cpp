@@ -200,6 +200,18 @@ public:
                     return getReserved(t);
                 }
 
+                if constexpr(T::IsAlias())
+                {
+                    MRDOCS_ASSERT(! t.Name.empty());
+                    return t.Name;
+                }
+
+                if constexpr(T::isUsing()) {
+                    // TODO
+                    // MRDOCS_ASSERT(! t.UsingName.empty());
+                    // return t.UsingName;
+                }
+
                 if constexpr(T::isEnumerator())
                 {
                     MRDOCS_ASSERT(! t.Name.empty());
