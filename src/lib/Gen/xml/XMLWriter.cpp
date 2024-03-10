@@ -437,7 +437,7 @@ XMLWriter::
 
     for (auto const& symbol : I.UsingSymbols) {
         // attrs.push({"symbol", symbol});
-        attrs.push({"symbol", toString(symbol))});
+        attrs.push({"symbol", toString(symbol)});
     }
 
     tags_.write("using", {}, attrs);
