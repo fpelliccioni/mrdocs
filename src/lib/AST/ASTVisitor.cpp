@@ -536,8 +536,12 @@ public:
         // Handling UsingDirectiveDecl
         if (const auto* UDD = dyn_cast<UsingDirectiveDecl>(D))
         {
-            if (index::generateUSRForDecl(UDD->getNominatedNamespace(), usr_))
+            std::cout << "Casted to UsingDirectiveDecl Ok" << std::endl;
+            if (index::generateUSRForDecl(UDD->getNominatedNamespace(), usr_)) {
+                std::cout << "generateUSRForDecl failed" << std::endl;
                 return true;
+            }
+            std::cout << "generateUSRForDecl success" << std::endl;
             usr_.append("@UD");
             // usr_.append(UDD->getNominatedNamespaceAsWritten()->getName());
             usr_.append(UDD->getNameAsString());
