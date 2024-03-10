@@ -430,15 +430,15 @@ XMLWriter::
 
     Attributes attrs = {};
 
-    attrs.push({"UsedSymbols", toString(I.UsedSymbols)});
-    attrs.push({"UsedSymbols", toString(I.UsedSymbols)});
-    attrs.push({"UsedSymbols", toString(I.UsedSymbols)});
-    attrs.push({"UsedSymbols", toString(I.UsedSymbols)});
+    attrs.push({"symbol", toString(I.UsingSymbols)});
+    attrs.push({"symbol", toString(I.UsingSymbols)});
+    attrs.push({"symbol", toString(I.UsingSymbols)});
+    attrs.push({"symbol", toString(I.UsingSymbols)});
 
-    // // for (auto const& symbol : I.UsedSymbols)
-    // //     attrs.push({"UsedSymbols", symbol});
+    // // for (auto const& symbol : I.UsingSymbols)
+    // //     attrs.push({"symbol", symbol});
 
-    tags_.write("used", {}, attrs);
+    tags_.write("using", {}, attrs);
 
     tags_.close(usingTagName);
 

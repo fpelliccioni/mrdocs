@@ -31,8 +31,8 @@ struct UsingInfo
     bool IsDirective = false;
 
     /** The symbols being "used". */
-    // std::vector<SymbolID> UsedSymbols;
-    SymbolID UsedSymbols = SymbolID::invalid;
+    // std::vector<SymbolID> UsingSymbols;
+    SymbolID UsingSymbols = SymbolID::invalid;
 
     //--------------------------------------------
 

@@ -536,15 +536,10 @@ public:
         // Handling UsingDirectiveDecl
         if (const auto* UDD = dyn_cast<UsingDirectiveDecl>(D))
         {
-            std::cout << "Casted to UsingDirectiveDecl Ok" << std::endl;
             if (index::generateUSRForDecl(UDD->getNominatedNamespace(), usr_)) {
-                std::cout << "generateUSRForDecl failed" << std::endl;
                 return true;
             }
-            std::cout << "generateUSRForDecl success" << std::endl;
             usr_.append("@UD");
-            // usr_.append(UDD->getNominatedNamespaceAsWritten()->getName());
-            std::cout << "UDD->getNameAsString(): " << UDD->getNameAsString() << std::endl;
             usr_.append(UDD->getNameAsString());
             return false;
         }
@@ -2181,46 +2176,32 @@ public:
         bool created,
         UsingDirectiveDecl* D)
     {
-        std::cout << "buildUsingDirective - 1\n";
         bool documented = parseRawComment(I.javadoc, D);
         addSourceLocation(I, D->getBeginLoc(), true, documented);
 
-        std::cout << "buildUsingDirective - 2\n";
         if(! created)
             return;
-
-        std::cout << "buildUsingDirective - 3\n";
 
         I.Name = extractName(D);
         I.IsDirective = true;
 
-        std::cout << "buildUsingDirective - 4\n";
-
         // A NamedDecl nominated by a UsingDirectiveDecl
         // will be one of the following:
-        // -
+        // - NamespaceDecl
         if(NamedDecl* ND = D->getNominatedNamespace())
         {
-            std::cout << "buildUsingDirective - 5\n";
             SymbolID id;
             extractSymbolID(ND, id);
-            std::cout << "buildUsingDirective - 6\n";
-            // I.UsedSymbols.emplace_back(id);
-            I.UsedSymbols = id;
-            std::cout << "buildUsingDirective - 7\n";
-
+            // I.UsingSymbols.emplace_back(id);
+            I.UsingSymbols = id;
 
             // If this is a using directive declaration naming
             // a previously undeclared namespace, traverse it.
             if(ND->isFirstDecl()) {
-                std::cout << "buildUsingDirective - 8\n";
                 traverseDecl(ND);
             }
-            std::cout << "buildUsingDirective - 9\n";
         }
-        std::cout << "buildUsingDirective - 10\n";
         getParentNamespaces(I, D);
-        std::cout << "buildUsingDirective - 11\n";
     }
 
 
@@ -2252,7 +2233,7 @@ public:
     //     //     SymbolID id;
     //     //     std::cout << "buildUsingDeclaration - 6\n";
     //     //     extractSymbolID(ND, id);
-    //     //     I.UsedSymbols.emplace_back(id);
+    //     //     I.UsingSymbols.emplace_back(id);
     //     //     std::cout << "buildUsingDeclaration - 7\n";
 
     //     //     // If this is a using declaration naming
@@ -2623,7 +2604,6 @@ traverse(UsingDirectiveDecl* D)
     if( ! exp) { return; }
     auto [I, created] = *exp;
     buildUsingDirective(I, created, D);
-    std::cout << "traverse(UsingDirectiveDecl* D)\n";
 }
 
 
