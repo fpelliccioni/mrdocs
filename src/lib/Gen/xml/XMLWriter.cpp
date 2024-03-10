@@ -20,8 +20,6 @@
 #include <llvm/Support/YAMLParser.h>
 #include <llvm/Support/YAMLTraits.h>
 
-#include <iostream>
-
 //------------------------------------------------
 //
 // YAML
