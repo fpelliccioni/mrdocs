@@ -28,24 +28,16 @@ struct UsingInfo
     : IsInfo<InfoKind::Using>,
     SourceInfo
 {
-    /** Indicates whether this is a using directive. */
+    /** Indicates whether this is a using directive or a using declaration. */
     bool IsDirective = false;
 
-    /** The symbol(s) being used.
-        For declarations, this will have a single element.
-        For directives, this could theoretically be empty (though unlikely in practical use).
-    */
-    std::vector<SymbolID> UsedSymbols;
-
-    /** Name of the using declaration or directive.
-        This could be the alias name in declarations, or the namespace name in directives.
-    */
-    std::string UsingName;
+    /** The symbol being used. */
+    SymbolID UsedSymbol;
 
     //--------------------------------------------
 
-    explicit UsingInfo(SymbolID ID, bool isDirective = false) noexcept
-        : IsInfo(ID), IsDirective(isDirective)
+    explicit UsingInfo(SymbolID ID) noexcept
+        : IsInfo(ID)
     {
     }
 };

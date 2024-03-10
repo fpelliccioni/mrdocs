@@ -414,7 +414,6 @@ XMLWriter::
     writeUsing(UsingInfo const& I)
 {
     tags_.open(usingTagName, {
-        // { "name", I.Name },
         { I.Access },
         { I.id }
         });
@@ -425,9 +424,7 @@ XMLWriter::
 
     Attributes attrs = {};
 
-    for(auto const& J : I.UsedSymbols) {
-        attrs.push({J});
-    }
+    attrs.push({"usedSymbol", toString(I.UsedSymbol)});
 
     tags_.write("used", {}, attrs);
 
