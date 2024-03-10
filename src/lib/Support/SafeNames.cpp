@@ -207,9 +207,8 @@ public:
                 }
 
                 if constexpr(T::isUsing()) {
-                    // TODO
-                    // MRDOCS_ASSERT(! t.UsingName.empty());
-                    // return t.UsingName;
+                    MRDOCS_ASSERT(! t.Name.empty());
+                    return t.Name;
                 }
 
                 if constexpr(T::isEnumerator())
