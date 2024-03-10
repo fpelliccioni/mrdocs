@@ -1150,7 +1150,6 @@ emitBlock(
     emitInfoPart(I);
     emitSourceInfo(I);
     emitRecord(I.UsedSymbols, USING_SYMBOL);
-
 }
 
 void

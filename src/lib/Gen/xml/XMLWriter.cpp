@@ -423,10 +423,11 @@ XMLWriter::
     writeJavadoc(I.javadoc);
 
     Attributes attrs = {};
+    attrs.push({"IsDirective", I.IsDirective});
 
     // attrs.push({"UsedSymbols", toString(I.UsedSymbols)});
-    for (auto const& symbol : I.UsedSymbols)
-        attrs.push({"UsedSymbols", symbol});
+    // for (auto const& symbol : I.UsedSymbols)
+    //     attrs.push({"UsedSymbols", symbol});
 
     tags_.write("used", {}, attrs);
 
