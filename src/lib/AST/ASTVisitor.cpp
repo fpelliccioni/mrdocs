@@ -2188,7 +2188,10 @@ public:
         // -
         if(NamedDecl* ND = D->getNominatedNamespace())
         {
-            extractSymbolID(ND, I.UsedSymbols);
+            SymbolID id;
+            extractSymbolID(ND, id);
+            I.UsedSymbols.emplace_back(id);
+
             // If this is a using directive declaration naming
             // a previously undeclared namespace, traverse it.
             if(ND->isFirstDecl())
@@ -2216,15 +2219,18 @@ public:
         I.Name = extractName(D);
         I.IsDirective = false;
 
-        if(NamedDecl* ND = D->getNominatedNamespace())
+        for (auto const* shadow : UD->shadows())
         {
-            extractSymbolID(ND, I.UsedSymbols);
+            NamedDecl* ND = shadow->getTargetDecl();
+            SymbolID id;
+            extractSymbolID(ND, id);
+            I.UsedSymbols.emplace_back(id);
+
             // If this is a using declaration naming
             // a previously undeclared namespace, traverse it.
             if(ND->isFirstDecl())
                 traverseDecl(ND);
         }
-
 
         getParentNamespaces(I, D);
     }
