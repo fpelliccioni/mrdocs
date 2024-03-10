@@ -2324,6 +2324,28 @@ public:
     void
     traverse(NamespaceAliasDecl*);
 
+    /** Traverse a using directive
+
+        This function is called by traverseDecl to traverse
+        a using directive.
+
+        A UsingDirectiveDecl inherits from NamedDecl.
+
+    */
+    void
+    traverse(UsingDirectiveDecl*);
+
+    /** Traverse a using declaration
+
+        This function is called by traverseDecl to traverse
+        a using declaration.
+
+        A UsingDecl inherits from NamedDecl.
+
+    */
+    void
+    traverse(UsingDecl*);
+
     /** Traverse a member of a struct, union, or class
 
         This function is called by traverseDecl to traverse
