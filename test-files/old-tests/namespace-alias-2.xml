@@ -2,15 +2,15 @@
 <mrdocs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://github.com/cppalliance/mrdocs/raw/develop/mrdocs.rnc">
 <namespace id="//////////////////////////8=">
-  <namespace name="LongName" id="6ZR21eIt45fvR0UJAIXvZ5vzM4E=">
+  <namespace name="LongName" id="VDHd4Mqic4JhCfan8E830/7+1n4=">
   </namespace>
   <namespace-alias name="A" id="Ab84yRNNRG5zm/lPuKfbxe51PyM=">
     <file path="namespace-alias-1.cpp" line="5" class="def"/>
-    <aliased aliasedSymbol="6ZR21eIt45fvR0UJAIXvZ5vzM4E="/>
+    <aliased aliasedSymbol="VDHd4Mqic4JhCfan8E830/7+1n4="/>
   </namespace-alias>
   <namespace-alias name="B" id="Ab84yRNNRG5zm/lPuKfbxe51PyM=">
     <file path="namespace-alias-1.cpp" line="5" class="def"/>
-    <aliased aliasedSymbol="6ZR21eIt45fvR0UJAIXvZ5vzM4E="/>
+    <aliased aliasedSymbol="VDHd4Mqic4JhCfan8E830/7+1n4="/>
   </namespace-alias>
 </namespace>
 </mrdocs>
