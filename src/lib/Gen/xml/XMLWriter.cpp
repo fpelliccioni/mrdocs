@@ -415,20 +415,22 @@ void
 XMLWriter::
     writeUsing(UsingInfo const& I)
 {
+    // tags_.open(usingTagName, {
+    //     { I.Access },
+    //     { I.id },
+    //     { "is-directive", I.IsDirective ? "true" : "false" }
+    //     });
 
-    std::cout << "writeUsing - I.IsDirective: " << I.IsDirective << std::endl;
 
     tags_.open(usingTagName, {
         { I.Access },
         { I.id },
-        { "is-directive", I.IsDirective ? "true" : "false" }
+        { "is-directive", "true", I.IsDirective }
         });
 
     writeSourceInfo(I);
 
     writeJavadoc(I.javadoc);
-
-    // attrs.push({"symbol", toString(I.UsingSymbols)});
 
     for (auto const& symbol : I.UsingSymbols) {
         Attributes attrs = {};
