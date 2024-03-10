@@ -435,6 +435,7 @@ XMLWriter::
     // attrs.push({"symbol", toString(I.UsingSymbols)});
     // attrs.push({"symbol", toString(I.UsingSymbols)});
 
+    std::cout << "** I.UsingSymbols.size() = " << I.UsingSymbols.size() << "\n";
     for (auto const& symbol : I.UsingSymbols) {
         // attrs.push({"symbol", symbol});
         attrs.push({"symbol", toString(symbol)});

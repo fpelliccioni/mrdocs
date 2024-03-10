@@ -2192,7 +2192,9 @@ public:
         {
             SymbolID id;
             extractSymbolID(ND, id);
+            std::cout << "I.UsingSymbols.size() = " << I.UsingSymbols.size() << "\n";
             I.UsingSymbols.emplace_back(id);
+            std::cout << "I.UsingSymbols.size() = " << I.UsingSymbols.size() << "\n";
             // I.UsingSymbols = id;
 
             // If this is a using directive declaration naming
