@@ -298,14 +298,6 @@ void merge(FriendInfo& I, FriendInfo&& Other)
         I.FriendType = std::move(Other.FriendType);
 }
 
-    // /** Aliased symbol.
-    // */
-    // SymbolID AliasedSymbol = SymbolID::invalid;
-
-    // /** Name of the namespace alias.
-    // */
-    // std::string AliasName;
-
 void merge(NamespaceAliasInfo& I, NamespaceAliasInfo&& Other)
 {
     MRDOCS_ASSERT(canMerge(I, Other));
