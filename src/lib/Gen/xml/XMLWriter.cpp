@@ -408,7 +408,7 @@ writeNamespaceAlias(
 
 void
 XMLWriter::
-    UsingInfo(const UsingInfo& I)
+    writeUsing(UsingInfo const& I)
 {
     tags_.open(usingTagName, {
         // { "name", I.Name },
