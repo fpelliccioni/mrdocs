@@ -200,7 +200,7 @@ public:
                     return getReserved(t);
                 }
 
-                if constexpr(T::IsAlias())
+                if constexpr(T::isAlias())
                 {
                     MRDOCS_ASSERT(! t.Name.empty());
                     return t.Name;
