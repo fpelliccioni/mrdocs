@@ -2557,6 +2557,33 @@ traverse(NamespaceAliasDecl* D)
 }
 
 //------------------------------------------------
+// UsingDirectiveDecl
+
+void
+ASTVisitor::
+traverse(UsingDirectiveDecl* D)
+{
+    auto const exp = getAsMrDocsInfo(D);
+    if( ! exp) { return; }
+    auto [I, created] = *exp;
+    buildUsingDirective(I, created, D);
+}
+
+
+//------------------------------------------------
+// UsingDecl
+
+void
+ASTVisitor::
+traverse(UsingDecl* D)
+{
+    auto const exp = getAsMrDocsInfo(D);
+    if( ! exp) { return; }
+    auto [I, created] = *exp;
+    buildUsingDeclaration(I, created, D);
+}
+
+//------------------------------------------------
 
 template<std::derived_from<CXXRecordDecl> CXXRecordTy>
 void
