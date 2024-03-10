@@ -349,7 +349,7 @@ public:
     {
         check(I.Namespace);
         finalize(I.javadoc);
-        finalize(I.UsedSymbol);
+        finalize(I.UsedSymbols);
     }
 
     void operator()(EnumeratorInfo& I)

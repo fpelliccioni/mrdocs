@@ -2188,7 +2188,7 @@ public:
         // -
         if(NamedDecl* ND = D->getNominatedNamespace())
         {
-            extractSymbolID(ND, I.UsedSymbol);
+            extractSymbolID(ND, I.UsedSymbols);
             // If this is a using directive declaration naming
             // a previously undeclared namespace, traverse it.
             if(ND->isFirstDecl())
@@ -2218,7 +2218,7 @@ public:
 
         if(NamedDecl* ND = D->getNominatedNamespace())
         {
-            extractSymbolID(ND, I.UsedSymbol);
+            extractSymbolID(ND, I.UsedSymbols);
             // If this is a using declaration naming
             // a previously undeclared namespace, traverse it.
             if(ND->isFirstDecl())

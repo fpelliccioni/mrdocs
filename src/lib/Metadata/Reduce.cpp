@@ -319,8 +319,8 @@ void merge(UsingInfo& I, UsingInfo&& Other)
 {
     MRDOCS_ASSERT(canMerge(I, Other));
 
-    if(! I.UsedSymbol)
-        I.UsedSymbol = std::move(Other.UsedSymbol);
+    if(! I.UsedSymbols.empty())
+        I.UsedSymbols = std::move(Other.UsedSymbols);
     I.IsDirective |= Other.IsDirective;
     mergeSourceInfo(I, std::move(Other));
     mergeInfo(I, std::move(Other));

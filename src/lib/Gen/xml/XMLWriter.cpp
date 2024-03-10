@@ -424,7 +424,9 @@ XMLWriter::
 
     Attributes attrs = {};
 
-    attrs.push({"usedSymbol", toString(I.UsedSymbol)});
+    // attrs.push({"UsedSymbols", toString(I.UsedSymbols)});
+    for (auto const& symbol : I.UsedSymbols)
+        attrs.push({"UsedSymbols", symbol});
 
     tags_.write("used", {}, attrs);
 

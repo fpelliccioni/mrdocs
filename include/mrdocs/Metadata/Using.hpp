@@ -31,8 +31,8 @@ struct UsingInfo
     /** Indicates whether this is a using directive or a using declaration. */
     bool IsDirective = false;
 
-    /** The symbol being used. */
-    SymbolID UsedSymbol;
+    /** The symbols being "used". */
+    std::vector<SymbolID> UsedSymbols;
 
     //--------------------------------------------
 
