@@ -2219,7 +2219,7 @@ public:
         I.Name = extractName(D);
         I.IsDirective = false;
 
-        for (auto const* shadow : UD->shadows())
+        for (auto const* shadow : D->shadows())
         {
             NamedDecl* ND = shadow->getTargetDecl();
             SymbolID id;
