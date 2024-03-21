@@ -2154,12 +2154,6 @@ public:
         // - NamespaceDecl
         if(NamedDecl* ND = D->getAliasedNamespace())
         {
-            // extractSymbolID(ND, I.AliasedSymbol);
-            // // If this is a namespace alias declaration naming
-            // // a previously undeclared namespace, traverse it.
-            // if(ND->isFirstDecl())
-            //     traverseDecl(ND);
-
             SymbolID id;
             getDependencyID(ND, id);
             if (id != SymbolID::invalid)
@@ -2194,20 +2188,8 @@ public:
         // - NamespaceDecl
         if(NamedDecl* ND = D->getNominatedNamespace())
         {
-            // SymbolID id;
-            // extractSymbolID(ND, id);
-            // I.UsingSymbols.emplace_back(id);
-
-            // // If this is a using directive declaration naming
-            // // a previously undeclared namespace, traverse it.
-            // if(ND->isFirstDecl()) {
-            //     traverseDecl(ND);
-            // }
-
-
             SymbolID id;
             getDependencyID(ND, id);
-
             if (id != SymbolID::invalid)
             {
                 I.UsingSymbols.emplace_back(id);
@@ -2233,28 +2215,6 @@ public:
 
         I.Name = extractName(D);
         I.IsDirective = false;
-
-
-        // for (auto const* shadow : D->shadows())
-        // {
-        //     NamedDecl* ND = shadow->getTargetDecl();
-        //     SymbolID id;
-        //     extractSymbolID(ND, id);
-        //     I.UsingSymbols.emplace_back(id);
-
-        //     If this is a using declaration naming
-        //     a previously undeclared namespace, traverse it.
-        //     if(ND->isFirstDecl()) {
-        //         traverseDecl(ND);
-        //     }
-
-        //     // auto Name = std::make_unique<NameInfo>();
-        //     // if(const IdentifierInfo* II = D->getIdentifier())
-        //     //     Name->Name = II->getName();
-        //     // V.getDependencyID(V.getInstantiatedFrom(D), Name->id);
-        // }
-        // getParentNamespaces(I, D);
-
 
         for (auto const* shadow : D->shadows())
         {
