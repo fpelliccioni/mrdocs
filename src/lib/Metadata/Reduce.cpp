@@ -341,8 +341,7 @@ void merge(UsingInfo& I, UsingInfo&& Other)
 
 void merge(NameInfo& I, NameInfo&& Other)
 {
-    if(I.Kind == NameKind::None)
-        I.Kind = Other.Kind;
+    I.Kind = Other.Kind;
     if(I.id == SymbolID::invalid)
         I.id = Other.id;
     if(I.Name.empty())
