@@ -766,25 +766,24 @@ emitRecord(
     Stream.EmitRecordWithAbbrev(Abbrevs.get(ID), Record);
 }
 
-void
-BitcodeWriter::
-emitRecord(
-    NameInfo const& Info, RecordID ID)
-{
-    MRDOCS_ASSERT(RecordIDNameMap[ID] && "Unknown RecordID.");
-    MRDOCS_ASSERT(RecordIDNameMap[ID].Abbrev == &NameInfoAbbrev &&
-        "Abbrev type mismatch.");
-    if (!prepRecordData(ID, true))
-        return;
+// void
+// BitcodeWriter::
+// emitRecord(
+//     NameInfo const& Info, RecordID ID)
+// {
+//     MRDOCS_ASSERT(RecordIDNameMap[ID] && "Unknown RecordID.");
+//     MRDOCS_ASSERT(RecordIDNameMap[ID].Abbrev == &NameInfoAbbrev &&
+//         "Abbrev type mismatch.");
+//     if (!prepRecordData(ID, true))
+//         return;
 
-    Record.push_back(static_cast<unsigned>(Info.Kind));
-    Record.push_back(static_cast<unsigned>(Info.id));
+//     Record.push_back(static_cast<unsigned>(Info.Kind));
+//     Record.push_back(static_cast<unsigned>(Info.id));
 
-    MRDOCS_ASSERT(Info.Name.size() < (1U << BitCodeConstants::StringLengthSize));
+//     MRDOCS_ASSERT(Info.Name.size() < (1U << BitCodeConstants::StringLengthSize));
 
-    Stream.EmitRecordWithBlob(Abbrevs.get(ID), Record, Info.Name);
-}
-
+//     Stream.EmitRecordWithBlob(Abbrevs.get(ID), Record, Info.Name);
+// }
 
 bool
 BitcodeWriter::

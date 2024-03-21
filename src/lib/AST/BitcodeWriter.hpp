@@ -110,7 +110,7 @@ public:
     void emitRecord(NoexceptInfo const& I, RecordID ID);
     void emitRecord(bool Value, RecordID ID);
     void emitRecord(std::initializer_list<BitFieldFullValue> values, RecordID ID);
-    void emitRecord(NameInfo const& Info, RecordID ID);
+    // void emitRecord(NameInfo const& Info, RecordID ID);
 
     bool prepRecordData(RecordID ID, bool ShouldEmit = true);
 
