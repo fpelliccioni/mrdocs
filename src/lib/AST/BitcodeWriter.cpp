@@ -1178,7 +1178,7 @@ emitBlock(
     emitInfoPart(I);
     emitSourceInfo(I);
     // emitRecord(I.UsingSymbols, USING_SYMBOL);
-    emitRecord(I.UsingName, USING_NAME);
+    emitBlock(I.UsingName);
     emitRecord(I.IsDirective, USING_IS_DIRECTIVE);
 }
 
