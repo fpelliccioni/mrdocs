@@ -2192,7 +2192,6 @@ public:
             getDependencyID(ND, id);
             if (id != SymbolID::invalid)
             {
-                I.UsingName = NameInfo();
                 I.UsingName->id = id;
                 I.UsingName->Name = ND->getNameAsString();
 
@@ -2224,7 +2223,6 @@ public:
 
         I.Name = extractName(D);
         I.IsDirective = false;
-        I.UsingName = NameInfo();
         I.UsingName.Name = extractName(D);
 
         for (auto const* shadow : D->shadows())
