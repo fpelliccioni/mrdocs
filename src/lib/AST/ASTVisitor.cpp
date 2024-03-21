@@ -2219,21 +2219,43 @@ public:
         I.IsDirective = false;
 
 
+        // for (auto const* shadow : D->shadows())
+        // {
+        //     NamedDecl* ND = shadow->getTargetDecl();
+        //     SymbolID id;
+        //     extractSymbolID(ND, id);
+        //     I.UsingSymbols.emplace_back(id);
+
+        //     If this is a using declaration naming
+        //     a previously undeclared namespace, traverse it.
+        //     if(ND->isFirstDecl()) {
+        //         traverseDecl(ND);
+        //     }
+
+        //     // auto Name = std::make_unique<NameInfo>();
+        //     // if(const IdentifierInfo* II = D->getIdentifier())
+        //     //     Name->Name = II->getName();
+        //     // V.getDependencyID(V.getInstantiatedFrom(D), Name->id);
+        // }
+        // getParentNamespaces(I, D);
+
+
         for (auto const* shadow : D->shadows())
         {
             NamedDecl* ND = shadow->getTargetDecl();
             SymbolID id;
-            extractSymbolID(ND, id);
-            I.UsingSymbols.emplace_back(id);
+            getDependencyID(ND, id);
 
-            // If this is a using declaration naming
-            // a previously undeclared namespace, traverse it.
-            if(ND->isFirstDecl()) {
-                traverseDecl(ND);
+            if (id.isValid())
+            {
+                I.UsingSymbols.emplace_back(id);
             }
         }
         getParentNamespaces(I, D);
+
     }
+
+
 
     //------------------------------------------------
 
