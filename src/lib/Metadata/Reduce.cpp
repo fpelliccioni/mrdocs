@@ -308,26 +308,26 @@ void merge(AliasInfo& I, AliasInfo&& Other)
     mergeInfo(I, std::move(Other));
 }
 
-// void merge(UsingInfo& I, UsingInfo&& Other)
-// {
-//     MRDOCS_ASSERT(canMerge(I, Other));
+void merge(UsingInfo& I, UsingInfo&& Other)
+{
+    MRDOCS_ASSERT(canMerge(I, Other));
 
-//     // reduceSymbolIDs(I.UsingSymbols, std::move(Other.UsingSymbols));
-//     // reduceSymbolIDs(I.UsingName, std::move(Other.UsingName));
-//     I.UsingName = std::move(Other.UsingName);
-//     I.IsDirective |= Other.IsDirective;
+    // reduceSymbolIDs(I.UsingSymbols, std::move(Other.UsingSymbols));
+    // reduceSymbolIDs(I.UsingName, std::move(Other.UsingName));
+    merge(I.UsingName, std::move(Other.UsingName));
+    I.IsDirective |= Other.IsDirective;
 
-//     mergeSourceInfo(I, std::move(Other));
-//     mergeInfo(I, std::move(Other));
-// }
+    mergeSourceInfo(I, std::move(Other));
+    mergeInfo(I, std::move(Other));
+}
 
-// void merge(NameInfo& I, NameInfo&& Other)
-// {
-//     if(I.Name.empty())
-//         I.Name = Other.Name;
-//     if(I.TemplateArgs.empty())
-//         I.TemplateArgs = std::move(Other.TemplateArgs);
-// }
+void merge(NameInfo& I, NameInfo&& Other)
+{
+    if(I.Name.empty())
+        I.Name = Other.Name;
+    if(I.TemplateArgs.empty())
+        I.TemplateArgs = std::move(Other.TemplateArgs);
+}
 
 
 void merge(EnumeratorInfo& I, EnumeratorInfo&& Other)
