@@ -2187,14 +2187,23 @@ public:
         // - NamespaceDecl
         if(NamedDecl* ND = D->getNominatedNamespace())
         {
-            SymbolID id;
-            extractSymbolID(ND, id);
-            I.UsingSymbols.emplace_back(id);
+            // SymbolID id;
+            // extractSymbolID(ND, id);
+            // I.UsingSymbols.emplace_back(id);
 
-            // If this is a using directive declaration naming
-            // a previously undeclared namespace, traverse it.
-            if(ND->isFirstDecl()) {
-                traverseDecl(ND);
+            // // If this is a using directive declaration naming
+            // // a previously undeclared namespace, traverse it.
+            // if(ND->isFirstDecl()) {
+            //     traverseDecl(ND);
+            // }
+
+
+            SymbolID id;
+            getDependencyID(ND, id);
+
+            if (id != SymbolID::invalid)
+            {
+                I.UsingSymbols.emplace_back(id);
             }
         }
         getParentNamespaces(I, D);
