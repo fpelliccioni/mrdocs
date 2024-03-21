@@ -321,12 +321,34 @@ void merge(UsingInfo& I, UsingInfo&& Other)
     mergeInfo(I, std::move(Other));
 }
 
+// struct NameInfo
+// {
+//     /** The kind of name this is.
+//     */
+//     NameKind Kind;
+
+//     /** The SymbolID of the named symbol, if it exists.
+//     */
+//     SymbolID id = SymbolID::invalid;
+
+//     /** The unqualified name.
+//     */
+//     std::string Name;
+
+//     /** The parent name info, if any.
+//     */
+//     std::unique_ptr<NameInfo> Prefix;
+
 void merge(NameInfo& I, NameInfo&& Other)
 {
+    if(I.Kind == NameKind::None)
+        I.Kind = Other.Kind;
+    if(I.id == SymbolID::invalid)
+        I.id = Other.id;
     if(I.Name.empty())
         I.Name = Other.Name;
-    if(I.TemplateArgs.empty())
-        I.TemplateArgs = std::move(Other.TemplateArgs);
+    if(! I.Prefix)
+        merge(*I.Prefix, std::move(*Other.Prefix));
 }
 
 
