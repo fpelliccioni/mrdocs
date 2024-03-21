@@ -208,17 +208,23 @@ inline
 Error
 decodeRecord(
     const Record& R,
-    std::vector<Location>& Field,
+    NameInfo& Field,
     llvm::StringRef Blob)
 {
-    if (R[0] > INT_MAX)
-        return formatError("integer {} is too large", R[0]);
-    Location& loc = Field.emplace_back();
-    loc.LineNumber = R[0];
-    loc.Kind = static_cast<FileKind>(R[1]);
-    loc.Documented = static_cast<bool>(R[2]);
-    loc.Path.append(Blob.substr(0, R[3]));
-    loc.Filename.append(Blob.substr(R[3], R[4] - R[3]));
+    if (R.size() < expectedSize)
+        return formatError("Record does not contain enough elements for NameInfo");
+
+    Field.Kind = static_cast<NameKind>(R[0]);
+    // Field.id = SymbolID{R[1]};
+    Field.id = SymbolID(&R[1]);
+    Field.Name = Blob.substr(R[2], R[3] - R[2]);
+
+    if (R.size() > expectedSizeForPrefix)
+    {
+        auto prefixInfo = std::make_unique<NameInfo>();
+        Field.Prefix = std::move(prefixInfo);
+    }
+
     return Error::success();
 }
 //------------------------------------------------
