@@ -2246,7 +2246,7 @@ public:
             SymbolID id;
             getDependencyID(ND, id);
 
-            if (id.isValid())
+            if (id != SymbolID::invalid)
             {
                 I.UsingSymbols.emplace_back(id);
             }
