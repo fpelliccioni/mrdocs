@@ -211,6 +211,9 @@ decodeRecord(
     NameInfo& Field,
     llvm::StringRef Blob)
 {
+    constexpr size_t expectedSize = 4;
+    constexpr size_t expectedSizeForPrefix = 5;
+
     if (R.size() < expectedSize)
         return formatError("Record does not contain enough elements for NameInfo");
 
