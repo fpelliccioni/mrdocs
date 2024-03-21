@@ -2192,13 +2192,13 @@ public:
             getDependencyID(ND, id);
             if (id != SymbolID::invalid)
             {
-                I.UsingName->id = id;
-                I.UsingName->Name = ND->getNameAsString();
+                I.UsingName.id = id;
+                I.UsingName.Name = ND->getNameAsString();
 
                 if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
                 {
-                    I.UsingName->Prefix = std::make_unique<NameInfo>();
-                    I.UsingName->Prefix->Name = parentContext->getNameAsString();
+                    I.UsingName.Prefix = std::make_unique<NameInfo>();
+                    I.UsingName.Prefix->Name = parentContext->getNameAsString();
                 }
             }
         }
