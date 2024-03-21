@@ -33,7 +33,7 @@ void merge(FriendInfo& I, FriendInfo&& Other);
 void merge(EnumeratorInfo& I, EnumeratorInfo&& Other);
 void merge(GuideInfo& I, GuideInfo&& Other);
 void merge(AliasInfo& I, AliasInfo&& Other);
-void merge(UsingInfo& I, UsingInfo&& Other);
+// void merge(UsingInfo& I, UsingInfo&& Other);
 
 //
 // This file defines the merging of different types of infos. The data in the
