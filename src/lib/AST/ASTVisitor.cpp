@@ -2163,6 +2163,7 @@ public:
             SymbolID id;
             getDependencyID(ND, id);
             if (id != SymbolID::invalid)
+            {
                 I.AliasedSymbol = id;
             }
         }
