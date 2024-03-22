@@ -14,6 +14,7 @@
 #define MRDOCS_LIB_AST_ANYBLOCK_HPP
 
 #include "BitcodeReader.hpp"
+#include <iostream>
 
 namespace clang {
 namespace mrdocs {
@@ -1942,7 +1943,6 @@ public:
 
 //------------------------------------------------
 
-#include <iostream>
 
 class UsingBlock
     : public TopLevelBlock<UsingInfo>
