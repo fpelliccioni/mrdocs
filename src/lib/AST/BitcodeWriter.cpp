@@ -339,7 +339,7 @@ RecordIDNameMap = []()
         {TYPEDEF_IS_USING, {"IsUsing", &BoolAbbrev}},
         {VARIABLE_BITS, {"Bits", &Integer32ArrayAbbrev}},
         // {USING_SYMBOL, {"UsingSymbol", &SymbolIDAbbrev}},
-        {USING_NAME, {"UsingName", &SymbolIDAbbrev}},
+        // {USING_NAME, {"UsingName", &SymbolIDAbbrev}},
         {USING_IS_DIRECTIVE, {"UsingIsDirective", &BoolAbbrev}},
     };
     // MRDOCS_ASSERT(Inits.size() == RecordIDCount);
