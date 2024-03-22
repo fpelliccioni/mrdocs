@@ -1942,6 +1942,8 @@ public:
 
 //------------------------------------------------
 
+#include <iostream>
+
 class UsingBlock
     : public TopLevelBlock<UsingInfo>
 {
