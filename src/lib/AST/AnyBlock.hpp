@@ -1994,11 +1994,25 @@ public:
     {
         switch(ID)
         {
+        // case BI_NAME_INFO_ID:
+        // {
+        //     NameInfoBlock B(I->UsingName, br_);
+        //     return br_.readBlock(B, ID);
+        // }
         case BI_NAME_INFO_ID:
         {
-            NameInfoBlock B(I->UsingName, br_);
+            std::unique_ptr<NameInfo>* NI = nullptr;
+            visit(*I_, [&]<typename T>(T& t)
+            {
+                if constexpr(requires { t.Name; })
+                    NI = &t.Name;
+            });
+            if(! NI)
+                return Error("wrong TypeInfo kind");
+            NameInfoBlock B(*NI, br_);
             return br_.readBlock(B, ID);
         }
+
         default:
             return AnyBlock::readSubBlock(ID);
         }
