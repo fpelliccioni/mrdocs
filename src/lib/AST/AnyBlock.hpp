@@ -1939,24 +1939,6 @@ public:
         }
     }
 
-    // Error
-    // readSubBlock(
-    //     unsigned ID) override
-    // {
-    //     switch(ID)
-    //     {
-    //     //TODO
-    //     // case BI_TEMPLATE_BLOCK_ID:
-    //     // {
-    //     //     I->Template = std::make_unique<TemplateInfo>();
-    //     //     TemplateBlock B(*I->Template, br_);
-    //     //     return br_.readBlock(B, ID);
-    //     // }
-    //     default:
-    //         return TopLevelBlock::readSubBlock(ID);
-    //     }
-    // }
-
     Error
     readSubBlock(
         unsigned ID) override
@@ -1972,7 +1954,6 @@ public:
             return br_.readBlock(B, ID);
         }
         default:
-            // return AnyBlock::readSubBlock(ID);
             return TopLevelBlock::readSubBlock(ID);
         }
     }
