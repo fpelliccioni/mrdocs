@@ -2256,14 +2256,14 @@ public:
             {
                 I.UsingSymbols.emplace_back(id);
 
-                // I.UsingName = std::make_unique<NameInfo>();
-                // I.UsingName->id = id;
-                // I.UsingName->Name = ND->getNameAsString();
-                // if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
-                // {
-                //     I.UsingName->Prefix = std::make_unique<NameInfo>();
-                //     I.UsingName->Prefix->Name = parentContext->getNameAsString();
-                // }
+                I.UsingName = std::make_unique<NameInfo>();
+                I.UsingName->id = id;
+                I.UsingName->Name = ND->getNameAsString();
+                if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
+                {
+                    I.UsingName->Prefix = std::make_unique<NameInfo>();
+                    I.UsingName->Prefix->Name = parentContext->getNameAsString();
+                }
             }
         }
         getParentNamespaces(I, D);
