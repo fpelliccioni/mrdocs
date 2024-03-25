@@ -1963,14 +1963,14 @@ public:
     {
         switch(ID)
         {
-        case BI_NAME_INFO_ID:
-        {
-            if (!I->UsingName)
-                I->UsingName = std::make_unique<NameInfo>();
+        // case BI_NAME_INFO_ID:
+        // {
+            // if (!I->UsingName)
+            //     I->UsingName = std::make_unique<NameInfo>();
 
-            NameInfoBlock B(I->UsingName, br_);
-            return br_.readBlock(B, ID);
-        }
+            // NameInfoBlock B(I->UsingName, br_);
+            // return br_.readBlock(B, ID);
+        // }
         default:
             return AnyBlock::readSubBlock(ID);
         }
