@@ -558,23 +558,25 @@ public:
         // Handling UnresolvedUsingTypenameDecl
         if (const auto* UD = dyn_cast<UnresolvedUsingTypenameDecl>(D))
         {
-            // if (index::generateUSRForDecl(UD->getQualifier(), usr_))
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUTDec");
             usr_.append(UD->getNameAsString());
+            usr_.append(UD->getDeclName().getAsString());
             return false;
         }
 
-        // // Handling UnresolvedUsingValueDecl
-        // if (const auto* UD = dyn_cast<UnresolvedUsingValueDecl>(D))
-        // {
-        //     if (index::generateUSRForDecl(UD->getQualifier(), usr_))
-        //         return true;
-        //     usr_.append("@UDec");
-        //     usr_.append(UD->getNameAsString());
-        //     return false;
-        // }
+        // Handling UnresolvedUsingValueDecl
+        if (const auto* UD = dyn_cast<UnresolvedUsingValueDecl>(D))
+        {
+            // if (index::generateUSRForDecl(UD->getQualifier(), usr_))
+            if (index::generateUSRForDecl(UD, usr_))
+                return true;
+            usr_.append("@UUV");
+            usr_.append(UD->getNameAsString());
+            usr_.append(UUVD->getDeclName().getAsString());
+            return false;
+        }
 
         // // Handling UsingPackDecl
         // if (const auto* UD = dyn_cast<UsingPackDecl>(D))
