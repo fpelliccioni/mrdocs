@@ -313,11 +313,25 @@ void merge(UsingInfo& I, UsingInfo&& Other)
     MRDOCS_ASSERT(canMerge(I, Other));
 
     reduceSymbolIDs(I.UsingSymbols, std::move(Other.UsingSymbols));
+    // reduceSymbolIDs(I.UsingName, std::move(Other.UsingName));
+    merge(I.UsingName, std::move(Other.UsingName));
     I.IsDirective |= Other.IsDirective;
 
     mergeSourceInfo(I, std::move(Other));
     mergeInfo(I, std::move(Other));
 }
+
+void merge(NameInfo& I, NameInfo&& Other)
+{
+    I.Kind = Other.Kind;
+    if(I.id == SymbolID::invalid)
+        I.id = Other.id;
+    if(I.Name.empty())
+        I.Name = Other.Name;
+    if(! I.Prefix)
+        merge(*I.Prefix, std::move(*Other.Prefix));
+}
+
 
 void merge(EnumeratorInfo& I, EnumeratorInfo&& Other)
 {

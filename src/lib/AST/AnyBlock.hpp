@@ -14,6 +14,7 @@
 #define MRDOCS_LIB_AST_ANYBLOCK_HPP
 
 #include "BitcodeReader.hpp"
+#include <iostream>
 
 namespace clang {
 namespace mrdocs {
@@ -204,6 +205,32 @@ decodeRecord(
     return Error::success();
 }
 
+inline
+Error
+decodeRecord(
+    const Record& R,
+    NameInfo& Field,
+    llvm::StringRef Blob)
+{
+    constexpr size_t expectedSize = 4;
+    constexpr size_t expectedSizeForPrefix = 5;
+
+    if (R.size() < expectedSize)
+        return formatError("Record does not contain enough elements for NameInfo");
+
+    Field.Kind = static_cast<NameKind>(R[0]);
+    // Field.id = SymbolID{R[1]};
+    Field.id = SymbolID(&R[1]);
+    Field.Name = Blob.substr(R[2], R[3] - R[2]);
+
+    if (R.size() > expectedSizeForPrefix)
+    {
+        auto prefixInfo = std::make_unique<NameInfo>();
+        Field.Prefix = std::move(prefixInfo);
+    }
+
+    return Error::success();
+}
 //------------------------------------------------
 
 struct BitcodeReader::AnyBlock
@@ -1916,6 +1943,7 @@ public:
 
 //------------------------------------------------
 
+
 class UsingBlock
     : public TopLevelBlock<UsingInfo>
 {
@@ -1932,6 +1960,9 @@ public:
         {
         case USING_SYMBOLS:
             return decodeRecord(R, I->UsingSymbols, Blob);
+        // case USING_NAME:
+        //     std::cout << "*********************************** USING_NAME\n";
+        //     return decodeRecord(R, I->UsingName, Blob);
         case USING_IS_DIRECTIVE:
             return decodeRecord(R, I->IsDirective, Blob);
         default:
@@ -1939,21 +1970,57 @@ public:
         }
     }
 
+    // Error
+    // readSubBlock(
+    //     unsigned ID) override
+    // {
+    //     switch(ID)
+    //     {
+    //     //TODO
+    //     // case BI_TEMPLATE_BLOCK_ID:
+    //     // {
+    //     //     I->Template = std::make_unique<TemplateInfo>();
+    //     //     TemplateBlock B(*I->Template, br_);
+    //     //     return br_.readBlock(B, ID);
+    //     // }
+    //     default:
+    //         return TopLevelBlock::readSubBlock(ID);
+    //     }
+    // }
+
     Error
     readSubBlock(
         unsigned ID) override
     {
         switch(ID)
         {
-        //TODO
-        // case BI_TEMPLATE_BLOCK_ID:
+        // case BI_NAME_INFO_ID:
         // {
-        //     I->Template = std::make_unique<TemplateInfo>();
-        //     TemplateBlock B(*I->Template, br_);
+        //     NameInfoBlock B(I->UsingName, br_);
         //     return br_.readBlock(B, ID);
         // }
+        // case BI_NAME_INFO_ID:
+        // {
+        //     std::unique_ptr<NameInfo>* NI = nullptr;
+        //     visit(*I, [&]<typename T>(T& t)
+        //     {
+        //         if constexpr(requires { t.Name; })
+        //             NI = &t.Name;
+        //     });
+        //     if(! NI)
+        //         return Error("wrong UsingBlock kind");
+        //     NameInfoBlock B(*NI, br_);
+        //     return br_.readBlock(B, ID);
+        // }
+
+        case BI_NAME_INFO_ID:
+        {
+            NameInfoBlock B(I->UsingName.Prefix, br_);
+            return br_.readBlock(B, ID);
+        }
+
         default:
-            return TopLevelBlock::readSubBlock(ID);
+            return AnyBlock::readSubBlock(ID);
         }
     }
 };

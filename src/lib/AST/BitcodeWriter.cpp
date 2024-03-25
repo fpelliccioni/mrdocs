@@ -338,7 +338,8 @@ RecordIDNameMap = []()
         {TYPEINFO_REFQUAL, {"TypeinfoRefqual", &Integer32Abbrev}},
         {TYPEDEF_IS_USING, {"IsUsing", &BoolAbbrev}},
         {VARIABLE_BITS, {"Bits", &Integer32ArrayAbbrev}},
-        {USING_SYMBOLS, {"UsingSymbols", &SymbolIDAbbrev}},
+        {USING_SYMBOLS, {"UsingSymbols", &SymbolIDsAbbrev}},
+        // {USING_NAME, {"UsingName", &SymbolIDAbbrev}},
         {USING_IS_DIRECTIVE, {"UsingIsDirective", &BoolAbbrev}},
     };
     // MRDOCS_ASSERT(Inits.size() == RecordIDCount);
@@ -437,6 +438,10 @@ RecordsByBlock{
     // UsingInfo
     {BI_USING_BLOCK_ID,
         {USING_SYMBOLS, USING_IS_DIRECTIVE}},
+
+    // // UsingInfo
+    // {BI_USING_BLOCK_ID,
+    //     {USING_NAME, USING_IS_DIRECTIVE}},
 
     // EnumeratorInfo
     {BI_ENUMERATOR_BLOCK_ID,
@@ -759,6 +764,25 @@ emitRecord(
     Record.push_back(Val);
     Stream.EmitRecordWithAbbrev(Abbrevs.get(ID), Record);
 }
+
+// void
+// BitcodeWriter::
+// emitRecord(
+//     NameInfo const& Info, RecordID ID)
+// {
+//     MRDOCS_ASSERT(RecordIDNameMap[ID] && "Unknown RecordID.");
+//     MRDOCS_ASSERT(RecordIDNameMap[ID].Abbrev == &NameInfoAbbrev &&
+//         "Abbrev type mismatch.");
+//     if (!prepRecordData(ID, true))
+//         return;
+
+//     Record.push_back(static_cast<unsigned>(Info.Kind));
+//     Record.push_back(static_cast<unsigned>(Info.id));
+
+//     MRDOCS_ASSERT(Info.Name.size() < (1U << BitCodeConstants::StringLengthSize));
+
+//     Stream.EmitRecordWithBlob(Abbrevs.get(ID), Record, Info.Name);
+// }
 
 bool
 BitcodeWriter::
@@ -1153,6 +1177,7 @@ emitBlock(
     emitInfoPart(I);
     emitSourceInfo(I);
     emitRecord(I.UsingSymbols, USING_SYMBOLS);
+    emitBlock(I.UsingName);
     emitRecord(I.IsDirective, USING_IS_DIRECTIVE);
 }
 

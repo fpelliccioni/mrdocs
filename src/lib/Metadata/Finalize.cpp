@@ -349,9 +349,10 @@ public:
     {
         check(I.Namespace);
         finalize(I.javadoc);
-        // finalize(I.UsingSymbols);
+        finalize(I.UsingSymbols);
         for (auto& U : I.UsingSymbols)
             finalize(U);
+        finalize(I.UsingName);
     }
 
     void operator()(EnumeratorInfo& I)

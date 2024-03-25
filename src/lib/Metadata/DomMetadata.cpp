@@ -880,6 +880,8 @@ DomInfo<T>::construct() const
             entries.emplace_back("name", sym.get("name"));
             entries.emplace_back("symbol", sym);
         }
+
+        entries.emplace_back("name", I_.UsingName.Name);
     }
     if constexpr(T::isEnumerator())
     {

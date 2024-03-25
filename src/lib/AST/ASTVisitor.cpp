@@ -2189,15 +2189,20 @@ public:
         if(NamedDecl* ND = D->getNominatedNamespace())
         {
             SymbolID id;
-            extractSymbolID(ND, id);
-            I.UsingSymbols.emplace_back(id);
+            getDependencyID(ND, id);
+            if (id != SymbolID::invalid)
+            {
+                I.UsingName.id = id;
+                I.UsingName.Name = ND->getNameAsString();
 
-            // If this is a using directive declaration naming
-            // a previously undeclared namespace, traverse it.
-            if(ND->isFirstDecl()) {
-                traverseDecl(ND);
+                if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
+                {
+                    I.UsingName.Prefix = std::make_unique<NameInfo>();
+                    I.UsingName.Prefix->Name = parentContext->getNameAsString();
+                }
             }
         }
+
         getParentNamespaces(I, D);
     }
 
@@ -2218,23 +2223,24 @@ public:
 
         I.Name = extractName(D);
         I.IsDirective = false;
-
+        I.UsingName.Name = extractName(D);
 
         for (auto const* shadow : D->shadows())
         {
             NamedDecl* ND = shadow->getTargetDecl();
             SymbolID id;
-            extractSymbolID(ND, id);
-            I.UsingSymbols.emplace_back(id);
+            getDependencyID(ND, id);
 
-            // If this is a using declaration naming
-            // a previously undeclared namespace, traverse it.
-            if(ND->isFirstDecl()) {
-                traverseDecl(ND);
+            if (id != SymbolID::invalid)
+            {
+                //?
             }
         }
         getParentNamespaces(I, D);
+
     }
+
+
 
     //------------------------------------------------
 
