@@ -439,9 +439,9 @@ RecordsByBlock{
     {BI_USING_BLOCK_ID,
         {USING_SYMBOLS, USING_IS_DIRECTIVE}},
 
-    // UsingInfo
-    {BI_USING_BLOCK_ID,
-        {USING_NAME, USING_IS_DIRECTIVE}},
+    // // UsingInfo
+    // {BI_USING_BLOCK_ID,
+    //     {USING_NAME, USING_IS_DIRECTIVE}},
 
     // EnumeratorInfo
     {BI_ENUMERATOR_BLOCK_ID,
