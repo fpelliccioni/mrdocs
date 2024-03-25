@@ -1972,7 +1972,8 @@ public:
             // return br_.readBlock(B, ID);
         // }
         default:
-            return AnyBlock::readSubBlock(ID);
+            // return AnyBlock::readSubBlock(ID);
+            return TopLevelBlock::readSubBlock(ID);
         }
     }
 };
