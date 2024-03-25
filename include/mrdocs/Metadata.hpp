@@ -41,5 +41,4 @@
 #include <mrdocs/Metadata/Using.hpp>
 #include <mrdocs/Metadata/Variable.hpp>
 
-
 #endif
