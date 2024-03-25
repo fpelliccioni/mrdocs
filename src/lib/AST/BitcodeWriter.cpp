@@ -338,7 +338,7 @@ RecordIDNameMap = []()
         {TYPEINFO_REFQUAL, {"TypeinfoRefqual", &Integer32Abbrev}},
         {TYPEDEF_IS_USING, {"IsUsing", &BoolAbbrev}},
         {VARIABLE_BITS, {"Bits", &Integer32ArrayAbbrev}},
-        // {USING_SYMBOL, {"UsingSymbol", &SymbolIDAbbrev}},
+        {USING_SYMBOLS, {"UsingSymbols", &SymbolIDsAbbrev}},
         // {USING_NAME, {"UsingName", &SymbolIDAbbrev}},
         {USING_IS_DIRECTIVE, {"UsingIsDirective", &BoolAbbrev}},
     };
@@ -435,9 +435,9 @@ RecordsByBlock{
         {NAMESPACE_ALIAS_SYMBOL}},
 
 
-    // // UsingInfo
-    // {BI_USING_BLOCK_ID,
-    //     {USING_SYMBOL, USING_IS_DIRECTIVE}},
+    // UsingInfo
+    {BI_USING_BLOCK_ID,
+        {USING_SYMBOL, USING_IS_DIRECTIVE}},
 
     // UsingInfo
     {BI_USING_BLOCK_ID,
@@ -1177,7 +1177,7 @@ emitBlock(
     StreamSubBlockGuard Block(Stream, BI_USING_BLOCK_ID);
     emitInfoPart(I);
     emitSourceInfo(I);
-    // emitRecord(I.UsingSymbols, USING_SYMBOL);
+    emitRecord(I.UsingSymbols, USING_SYMBOLS);
     emitBlock(I.UsingName);
     emitRecord(I.IsDirective, USING_IS_DIRECTIVE);
 }
