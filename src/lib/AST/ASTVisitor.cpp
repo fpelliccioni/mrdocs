@@ -579,11 +579,8 @@ public:
         // Handling UsingPackDecl
         if (const auto* UD = dyn_cast<UsingPackDecl>(D))
         {
-            for (const auto* shadow : UD->shadows())
-            {
-                if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
-                    return true;
-            }
+            if (index::generateUSRForDecl(UD, usr_))
+                return true;
             usr_.append("@UPD");
             usr_.append(UD->getNameAsString());
             return false;
