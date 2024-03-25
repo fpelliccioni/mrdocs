@@ -1999,17 +1999,23 @@ public:
         //     NameInfoBlock B(I->UsingName, br_);
         //     return br_.readBlock(B, ID);
         // }
+        // case BI_NAME_INFO_ID:
+        // {
+        //     std::unique_ptr<NameInfo>* NI = nullptr;
+        //     visit(*I, [&]<typename T>(T& t)
+        //     {
+        //         if constexpr(requires { t.Name; })
+        //             NI = &t.Name;
+        //     });
+        //     if(! NI)
+        //         return Error("wrong UsingBlock kind");
+        //     NameInfoBlock B(*NI, br_);
+        //     return br_.readBlock(B, ID);
+        // }
+
         case BI_NAME_INFO_ID:
         {
-            std::unique_ptr<NameInfo>* NI = nullptr;
-            visit(*I, [&]<typename T>(T& t)
-            {
-                if constexpr(requires { t.Name; })
-                    NI = &t.Name;
-            });
-            if(! NI)
-                return Error("wrong UsingBlock kind");
-            NameInfoBlock B(*NI, br_);
+            NameInfoBlock B(I->Prefix, br_);
             return br_.readBlock(B, ID);
         }
 
