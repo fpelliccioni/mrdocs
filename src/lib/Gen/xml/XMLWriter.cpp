@@ -433,11 +433,11 @@ XMLWriter::
     if (I.UsingName)
     {
         Attributes nameAttrs = {};
-        if (I.UsingName.id != SymbolID::invalid)
+        if (I.UsingName->id != SymbolID::invalid)
         {
-            nameAttrs.push({"id", toString(I.UsingName.id)});
+            nameAttrs.push({"id", toString(I.UsingName->id)});
         }
-        nameAttrs.push({"name", I.UsingName.Name});
+        nameAttrs.push({"name", I.UsingName->Name});
         tags_.write("name", {}, nameAttrs);
     }
 

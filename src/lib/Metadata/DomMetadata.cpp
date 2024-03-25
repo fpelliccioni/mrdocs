@@ -883,7 +883,7 @@ DomInfo<T>::construct() const
 
         if (I_.UsingName)
         {
-            entries.emplace_back("name", I_.UsingName.Name);
+            entries.emplace_back("name", I_.UsingName->Name);
         }
     }
     if constexpr(T::isEnumerator())
