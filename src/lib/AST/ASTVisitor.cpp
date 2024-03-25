@@ -2203,12 +2203,14 @@ public:
             if (id != SymbolID::invalid)
             {
                 I.UsingSymbols.emplace_back(id);
-                I.UsingName.id = id;
-                I.UsingName.Name = ND->getNameAsString();
+
+                I.UsingName = std::make_unique<NameInfo>();
+                I.UsingName->id = id;
+                I.UsingName->Name = ND->getNameAsString();
                 if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
                 {
-                    I.UsingName.Prefix = std::make_unique<NameInfo>();
-                    I.UsingName.Prefix->Name = parentContext->getNameAsString();
+                    I.UsingName->Prefix = std::make_unique<NameInfo>();
+                    I.UsingName->Prefix->Name = parentContext->getNameAsString();
                 }
             }
         }
@@ -2232,7 +2234,7 @@ public:
 
         I.Name = extractName(D);
         I.IsDirective = false;
-        I.UsingName.Name = extractName(D);
+        I.UsingName->Name = extractName(D);
 
         for (auto const* shadow : D->shadows())
         {
@@ -2253,12 +2255,14 @@ public:
             if (id != SymbolID::invalid)
             {
                 I.UsingSymbols.emplace_back(id);
-                I.UsingName.id = id;
-                I.UsingName.Name = ND->getNameAsString();
+
+                I.UsingName = std::make_unique<NameInfo>();
+                I.UsingName->id = id;
+                I.UsingName->Name = ND->getNameAsString();
                 if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
                 {
-                    I.UsingName.Prefix = std::make_unique<NameInfo>();
-                    I.UsingName.Prefix->Name = parentContext->getNameAsString();
+                    I.UsingName->Prefix = std::make_unique<NameInfo>();
+                    I.UsingName->Prefix->Name = parentContext->getNameAsString();
                 }
             }
         }
