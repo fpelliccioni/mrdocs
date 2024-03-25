@@ -562,7 +562,6 @@ public:
                 return true;
             usr_.append("@UUTDec");
             usr_.append(UD->getNameAsString());
-            usr_.append(UD->getDeclName().getAsString());
             return false;
         }
 
@@ -574,35 +573,34 @@ public:
                 return true;
             usr_.append("@UUV");
             usr_.append(UD->getNameAsString());
-            usr_.append(UD->getDeclName().getAsString());
             return false;
         }
 
-        // // Handling UsingPackDecl
-        // if (const auto* UD = dyn_cast<UsingPackDecl>(D))
-        // {
-        //     for (const auto* shadow : UD->shadows())
-        //     {
-        //         if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
-        //             return true;
-        //     }
-        //     usr_.append("@UDec");
-        //     usr_.append(UD->getNameAsString());
-        //     return false;
-        // }
+        // Handling UsingPackDecl
+        if (const auto* UD = dyn_cast<UsingPackDecl>(D))
+        {
+            for (const auto* shadow : UD->shadows())
+            {
+                if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
+                    return true;
+            }
+            usr_.append("@UPD");
+            usr_.append(UD->getNameAsString());
+            return false;
+        }
 
-        // // Handling UsingEnumDecl
-        // if (const auto* UD = dyn_cast<UsingEnumDecl>(D))
-        // {
-        //     for (const auto* shadow : UD->shadows())
-        //     {
-        //         if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
-        //             return true;
-        //     }
-        //     usr_.append("@UDec");
-        //     usr_.append(UD->getNameAsString());
-        //     return false;
-        // }
+        // Handling UsingEnumDecl
+        if (const auto* UD = dyn_cast<UsingEnumDecl>(D))
+        {
+            for (const auto* shadow : UD->shadows())
+            {
+                if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
+                    return true;
+            }
+            usr_.append("@UDec");
+            usr_.append(UD->getNameAsString());
+            return false;
+        }
 
         // KRYSTIAN NOTE: clang doesn't currently support
         // generating USRs for friend declarations, so we
