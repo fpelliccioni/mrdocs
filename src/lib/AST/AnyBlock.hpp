@@ -1939,21 +1939,37 @@ public:
         }
     }
 
+    // Error
+    // readSubBlock(
+    //     unsigned ID) override
+    // {
+    //     switch(ID)
+    //     {
+    //     //TODO
+    //     // case BI_TEMPLATE_BLOCK_ID:
+    //     // {
+    //     //     I->Template = std::make_unique<TemplateInfo>();
+    //     //     TemplateBlock B(*I->Template, br_);
+    //     //     return br_.readBlock(B, ID);
+    //     // }
+    //     default:
+    //         return TopLevelBlock::readSubBlock(ID);
+    //     }
+    // }
+
     Error
     readSubBlock(
         unsigned ID) override
     {
         switch(ID)
         {
-        //TODO
-        // case BI_TEMPLATE_BLOCK_ID:
-        // {
-        //     I->Template = std::make_unique<TemplateInfo>();
-        //     TemplateBlock B(*I->Template, br_);
-        //     return br_.readBlock(B, ID);
-        // }
+        case BI_NAME_INFO_ID:
+        {
+            NameInfoBlock B(I->UsingName, br_);
+            return br_.readBlock(B, ID);
+        }
         default:
-            return TopLevelBlock::readSubBlock(ID);
+            return AnyBlock::readSubBlock(ID);
         }
     }
 };
