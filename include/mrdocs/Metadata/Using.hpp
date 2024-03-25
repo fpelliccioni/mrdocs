@@ -34,7 +34,7 @@ struct UsingInfo
     std::vector<SymbolID> UsingSymbols;
 
     /** Name information for the using declaration/directive. */
-    NameInfo UsingName;
+    std::unique_ptr<NameInfo> UsingName;
 
     //--------------------------------------------
 
