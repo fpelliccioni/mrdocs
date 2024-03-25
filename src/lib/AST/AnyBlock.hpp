@@ -2002,13 +2002,13 @@ public:
         case BI_NAME_INFO_ID:
         {
             std::unique_ptr<NameInfo>* NI = nullptr;
-            visit(*I_, [&]<typename T>(T& t)
+            visit(*I, [&]<typename T>(T& t)
             {
                 if constexpr(requires { t.Name; })
                     NI = &t.Name;
             });
             if(! NI)
-                return Error("wrong TypeInfo kind");
+                return Error("wrong UsingBlock kind");
             NameInfoBlock B(*NI, br_);
             return br_.readBlock(B, ID);
         }
