@@ -33,9 +33,7 @@ struct UsingInfo
     /** The symbols being "used". */
     std::vector<SymbolID> UsingSymbols;
 
-    /** Name information for the using declaration/directive.
-        Captures the full name used in the declaration,
-        reflecting the potential to reference multiple symbols. */
+    /** Name information for the using declaration/directive. */
     NameInfo UsingName;
 
     //--------------------------------------------
