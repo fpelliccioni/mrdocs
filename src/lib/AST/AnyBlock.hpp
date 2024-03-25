@@ -2015,7 +2015,7 @@ public:
 
         case BI_NAME_INFO_ID:
         {
-            NameInfoBlock B(I->UsingName->Prefix, br_);
+            NameInfoBlock B(I->UsingName.Prefix, br_);
             return br_.readBlock(B, ID);
         }
 
