@@ -574,7 +574,7 @@ public:
                 return true;
             usr_.append("@UUV");
             usr_.append(UD->getNameAsString());
-            usr_.append(UUVD->getDeclName().getAsString());
+            usr_.append(UD->getDeclName().getAsString());
             return false;
         }
 
