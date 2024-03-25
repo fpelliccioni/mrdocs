@@ -592,12 +592,16 @@ public:
         // Handling UsingEnumDecl
         if (const auto* UD = dyn_cast<UsingEnumDecl>(D))
         {
-            for (const auto* shadow : UD->shadows())
+            if (index::generateUSRForDecl(UD, usr_))
+                return true;
+
+            usr_.append("@UED");
+            EnumDecl const* ED = UD->getEnumDecl();
+            if (ED)
             {
-                if (index::generateUSRForDecl(shadow->getTargetDecl(), usr_))
-                    return true;
+                usr_.append(ED->getNameAsString());
             }
-            usr_.append("@UDec");
+
             usr_.append(UD->getNameAsString());
             return false;
         }
