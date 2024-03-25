@@ -2234,7 +2234,7 @@ public:
 
         I.Name = extractName(D);
         I.IsDirective = false;
-        I.UsingName->Name = extractName(D);
+        // I.UsingName->Name = extractName(D);
 
         for (auto const* shadow : D->shadows())
         {
