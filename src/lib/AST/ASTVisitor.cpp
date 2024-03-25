@@ -568,7 +568,6 @@ public:
         // Handling UnresolvedUsingValueDecl
         if (const auto* UD = dyn_cast<UnresolvedUsingValueDecl>(D))
         {
-            // if (index::generateUSRForDecl(UD->getQualifier(), usr_))
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUV");
@@ -591,15 +590,12 @@ public:
         {
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
-
             usr_.append("@UED");
             EnumDecl const* ED = UD->getEnumDecl();
             if (ED)
             {
                 usr_.append(ED->getNameAsString());
             }
-
-            usr_.append(UD->getNameAsString());
             return false;
         }
 
