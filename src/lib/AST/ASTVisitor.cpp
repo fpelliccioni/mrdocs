@@ -2212,10 +2212,7 @@ public:
         {
             SymbolID id;
             getDependencyID(ND, id);
-            if (id != SymbolID::invalid)
-            {
-                I.AliasedSymbol = id;
-            }
+            I.AliasedSymbol = id;
         }
 
         getParentNamespaces(I, D);
@@ -2248,10 +2245,7 @@ public:
         {
             SymbolID id;
             getDependencyID(ND, id);
-            if (id != SymbolID::invalid)
-            {
-                I.UsingSymbols.emplace_back(id);
-            }
+            I.UsingSymbols.emplace_back(id);
         }
         getParentNamespaces(I, D);
     }
@@ -2281,10 +2275,7 @@ public:
 
             SymbolID id;
             getDependencyID(ND, id);
-            if (id != SymbolID::invalid)
-            {
-                I.UsingSymbols.emplace_back(id);
-            }
+            I.UsingSymbols.emplace_back(id);
         }
         getParentNamespaces(I, D);
     }
