@@ -2230,13 +2230,13 @@ public:
             {
                 I.AliasedSymbol = id;
 
-                // I.UsingName = std::make_unique<NameInfo>();
-                // I.UsingName->id = id;
-                // I.UsingName->Name = ND->getNameAsString();
+                // I.Qualifier = std::make_unique<NameInfo>();
+                // I.Qualifier->id = id;
+                // I.Qualifier->Name = ND->getNameAsString();
                 // if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
                 // {
-                //     I.UsingName->Prefix = std::make_unique<NameInfo>();
-                //     I.UsingName->Prefix->Name = parentContext->getNameAsString();
+                //     I.Qualifier->Prefix = std::make_unique<NameInfo>();
+                //     I.Qualifier->Prefix->Name = parentContext->getNameAsString();
                 // }
             }
         }
@@ -2296,7 +2296,7 @@ public:
 
         I.Name = extractName(D);
         I.IsDirective = false;
-        I.UsingName = buildNameInfo(D->getQualifier());
+        I.Qualifier = buildNameInfo(D->getQualifier());
 
         for (auto const* shadow : D->shadows())
         {

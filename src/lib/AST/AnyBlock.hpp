@@ -1947,10 +1947,10 @@ public:
         {
         case BI_NAME_INFO_ID:
         {
-            if (!I->UsingName)
-                I->UsingName = std::make_unique<NameInfo>();
+            if (!I->Qualifier)
+                I->Qualifier = std::make_unique<NameInfo>();
 
-            NameInfoBlock B(I->UsingName, br_);
+            NameInfoBlock B(I->Qualifier, br_);
             return br_.readBlock(B, ID);
         }
         default:

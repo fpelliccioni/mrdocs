@@ -1153,8 +1153,8 @@ emitBlock(
     emitInfoPart(I);
     emitSourceInfo(I);
     emitRecord(I.UsingSymbols, USING_SYMBOLS);
-    if (I.UsingName)
-        emitBlock(*I.UsingName);
+    if (I.Qualifier)
+        emitBlock(*I.Qualifier);
     emitRecord(I.IsDirective, USING_IS_DIRECTIVE);
 }
 

@@ -430,14 +430,14 @@ XMLWriter::
         tags_.write("symbol", {}, attrs);
     }
 
-    if (I.UsingName)
+    if (I.Qualifier)
     {
         Attributes nameAttrs = {};
-        if (I.UsingName->id != SymbolID::invalid)
+        if (I.Qualifier->id != SymbolID::invalid)
         {
-            nameAttrs.push({"id", toString(I.UsingName->id)});
+            nameAttrs.push({"id", toString(I.Qualifier->id)});
         }
-        nameAttrs.push({"name", I.UsingName->Name});
+        nameAttrs.push({"name", I.Qualifier->Name});
         tags_.write("name", {}, nameAttrs);
     }
 
