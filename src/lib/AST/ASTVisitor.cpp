@@ -565,10 +565,11 @@ public:
 
             llvm::SmallVector<char, 128> fullNameBuffer;
             llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
-            UUTD->getQualifier()->print(fullNameStream, UUTD->getASTContext().getPrintingPolicy());
-            fullNameStream << UUTD->getDeclName().getAsString();
-            std::string fullName = fullNameStream.str();
+            UD->getQualifier()->print(fullNameStream, UD->getASTContext().getPrintingPolicy());
+            fullNameStream << UD->getDeclName().getAsString();
+            std::string fullName = fullNameStream.str().str();
 
+            usr_.append(fullNameStream.str());
             usr_.append(fullName);
 
             return false;
