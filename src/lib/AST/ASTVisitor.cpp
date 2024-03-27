@@ -50,13 +50,25 @@ namespace mrdocs {
 
 namespace {
 
-template <typename T>
-llvm::StringRef getFullyQualifiedName(T const* D)
+// template <typename T>
+// llvm::StringRef getFullyQualifiedName(T const* D)
+// {
+//     llvm::SmallVector<char, 128> fullNameBuffer;
+//     llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
+//     D->getQualifier()->print(fullNameStream, D->getASTContext().getPrintingPolicy());
+//     fullNameStream << D->getDeclName().getAsString();
+//     return fullNameStream.str();
+// }
+
+llvm::StringRef getFullyQualifiedName(NamedDecl const* decl)
 {
     llvm::SmallVector<char, 128> fullNameBuffer;
     llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
-    D->getQualifier()->print(fullNameStream, D->getASTContext().getPrintingPolicy());
-    fullNameStream << D->getDeclName().getAsString();
+    //TODO
+    // if (NamedDecl const* ND = dyn_cast<NamedDecl>(D))
+    // {
+    decl->printQualifiedName(fullNameStream);
+    // }
     return fullNameStream.str();
 }
 
@@ -562,7 +574,6 @@ public:
                     return true;
             }
             usr_.append("@UDec");
-            // usr_.append(UD->getNameAsString());
             usr_.append(getFullyQualifiedName(UD));
             return false;
         }
@@ -573,18 +584,7 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUTDec");
-            // usr_.append(UD->getNameAsString());
-
-            // llvm::SmallVector<char, 128> fullNameBuffer;
-            // llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
-            // UD->getQualifier()->print(fullNameStream, UD->getASTContext().getPrintingPolicy());
-            // fullNameStream << UD->getDeclName().getAsString();
-            // usr_.append(fullNameStream.str());
-            // // std::string fullName = fullNameStream.str().str();
-            // // usr_.append(fullName);
-
             usr_.append(getFullyQualifiedName(UD));
-
             return false;
         }
 
@@ -594,7 +594,6 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUV");
-            // usr_.append(UD->getNameAsString());
             usr_.append(getFullyQualifiedName(UD));
             return false;
         }
@@ -606,7 +605,6 @@ public:
                 return true;
             usr_.append("@UPD");
             usr_.append(UD->getNameAsString());
-            // usr_.append(getFullyQualifiedName(UD));
             return false;
         }
 
@@ -619,7 +617,6 @@ public:
             EnumDecl const* ED = UD->getEnumDecl();
             if (ED)
             {
-                // usr_.append(ED->getNameAsString());
                 usr_.append(getFullyQualifiedName(ED));
             }
             return false;
