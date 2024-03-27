@@ -2229,6 +2229,15 @@ public:
             if (id != SymbolID::invalid)
             {
                 I.AliasedSymbol = id;
+
+                I.UsingName = std::make_unique<NameInfo>();
+                I.UsingName->id = id;
+                I.UsingName->Name = ND->getNameAsString();
+                if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
+                {
+                    I.UsingName->Prefix = std::make_unique<NameInfo>();
+                    I.UsingName->Prefix->Name = parentContext->getNameAsString();
+                }
             }
         }
 
