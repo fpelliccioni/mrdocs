@@ -1142,6 +1142,8 @@ emitBlock(
     emitInfoPart(I);
     emitSourceInfo(I);
     emitRecord(I.AliasedSymbol, NAMESPACE_ALIAS_SYMBOL);
+    if (I.Qualifier)
+        emitBlock(*I.Qualifier);
 }
 
 void

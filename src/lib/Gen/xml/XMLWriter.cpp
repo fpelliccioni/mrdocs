@@ -403,8 +403,17 @@ writeNamespaceAlias(
     Attributes attrs = {};
 
     attrs.push({"aliasedSymbol", toString(I.AliasedSymbol)});
-
     tags_.write("aliased", {}, attrs);
+    if (I.Qualifier)
+    {
+        Attributes nameAttrs = {};
+        if (I.Qualifier->id != SymbolID::invalid)
+        {
+            nameAttrs.push({"id", toString(I.Qualifier->id)});
+        }
+        nameAttrs.push({"name", I.Qualifier->Name});
+        tags_.write("name", {}, nameAttrs);
+    }
 
     tags_.close(namespaceAliasTagName);
 }

@@ -2218,6 +2218,10 @@ public:
             return;
 
         I.Name = extractName(D);
+        if (D->getQualifier())
+        {
+            I.Qualifier = buildNameInfo(D->getQualifier());
+        }
 
         // A NamedDecl nominated by a NamespaceAliasDecl
         // will be one of the following:
@@ -2229,15 +2233,6 @@ public:
             if (id != SymbolID::invalid)
             {
                 I.AliasedSymbol = id;
-
-                // I.Qualifier = std::make_unique<NameInfo>();
-                // I.Qualifier->id = id;
-                // I.Qualifier->Name = ND->getNameAsString();
-                // if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
-                // {
-                //     I.Qualifier->Prefix = std::make_unique<NameInfo>();
-                //     I.Qualifier->Prefix->Name = parentContext->getNameAsString();
-                // }
             }
         }
 

@@ -343,6 +343,7 @@ public:
         check(I.Namespace);
         finalize(I.javadoc);
         finalize(I.AliasedSymbol);
+        finalize(I.Qualifier);
     }
 
     void operator()(UsingInfo& I)
