@@ -50,28 +50,13 @@ namespace mrdocs {
 
 namespace {
 
-// template <typename T>
-// llvm::StringRef getFullyQualifiedName(T const* D)
-// {
-//     llvm::SmallVector<char, 128> fullNameBuffer;
-//     llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
-//     D->getQualifier()->print(fullNameStream, D->getASTContext().getPrintingPolicy());
-//     fullNameStream << D->getDeclName().getAsString();
-//     return fullNameStream.str();
-// }
-
 llvm::StringRef getFullyQualifiedName(NamedDecl const* decl)
 {
     llvm::SmallVector<char, 128> fullNameBuffer;
     llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
-    //TODO
-    // if (NamedDecl const* ND = dyn_cast<NamedDecl>(D))
-    // {
     decl->printQualifiedName(fullNameStream);
-    // }
     return fullNameStream.str();
 }
-
 
 struct SymbolFilter
 {
@@ -561,7 +546,7 @@ public:
                 return true;
             }
             usr_.append("@UD");
-            usr_.append(UDD->getNameAsString());
+            usr_.append(getFullyQualifiedName(UDD));
             return false;
         }
 
