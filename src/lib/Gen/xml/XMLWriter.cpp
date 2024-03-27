@@ -425,7 +425,7 @@ XMLWriter::
     tags_.open(usingTagName, {
         { I.Access },
         { I.id },
-        { "is-directive", "true", I.IsDirective }
+        { "class", "true", I.Class }
         });
 
     writeSourceInfo(I);

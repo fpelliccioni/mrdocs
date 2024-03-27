@@ -1931,8 +1931,8 @@ public:
         {
         case USING_SYMBOLS:
             return decodeRecord(R, I->UsingSymbols, Blob);
-        case USING_IS_DIRECTIVE:
-            return decodeRecord(R, I->IsDirective, Blob);
+        case USING_CLASS:
+            return decodeRecord(R, I->Class, Blob);
         default:
             return TopLevelBlock::parseRecord(R, ID, Blob);
         }

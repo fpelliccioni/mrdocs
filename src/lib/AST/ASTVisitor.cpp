@@ -2234,7 +2234,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        I.IsDirective = true;
+        I.Class = UsingClass::Namespace;
 
         if (D->getQualifier())
         {
@@ -2266,7 +2266,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        I.IsDirective = false;
+        I.Class = UsingClass::Normal;
         I.Qualifier = buildNameInfo(D->getQualifier());
 
         for (auto const* shadow : D->shadows())

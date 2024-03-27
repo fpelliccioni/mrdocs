@@ -313,7 +313,7 @@ void merge(UsingInfo& I, UsingInfo&& Other)
     MRDOCS_ASSERT(canMerge(I, Other));
 
     reduceSymbolIDs(I.UsingSymbols, std::move(Other.UsingSymbols));
-    I.IsDirective |= Other.IsDirective;
+    I.Class |= Other.Class;
 
     mergeSourceInfo(I, std::move(Other));
     mergeInfo(I, std::move(Other));
