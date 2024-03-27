@@ -561,7 +561,16 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUTDec");
-            usr_.append(UD->getNameAsString());
+            // usr_.append(UD->getNameAsString());
+
+            llvm::SmallVector<char, 128> fullNameBuffer;
+            llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
+            UUTD->getQualifier()->print(fullNameStream, UUTD->getASTContext().getPrintingPolicy());
+            fullNameStream << UUTD->getDeclName().getAsString();
+            std::string fullName = fullNameStream.str();
+
+            usr_.append(fullName);
+
             return false;
         }
 
