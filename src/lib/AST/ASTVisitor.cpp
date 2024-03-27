@@ -2262,25 +2262,18 @@ public:
         I.Name = extractName(D);
         I.IsDirective = true;
 
-        // A NamedDecl nominated by a UsingDirectiveDecl
-        // will be one of the following:
-        // - NamespaceDecl
-        if(NamedDecl* ND = D->getNominatedNamespace())
+        if (D->getQualifier())
+        {
+            I.Qualifier = buildNameInfo(D->getQualifier());
+        }
+
+        if (NamedDecl* ND = D->getNominatedNamespace())
         {
             SymbolID id;
             getDependencyID(ND, id);
             if (id != SymbolID::invalid)
             {
                 I.UsingSymbols.emplace_back(id);
-
-                I.UsingName = std::make_unique<NameInfo>();
-                I.UsingName->id = id;
-                I.UsingName->Name = ND->getNameAsString();
-                if (auto const* parentContext = dyn_cast<NamedDecl>(ND->getDeclContext()))
-                {
-                    I.UsingName->Prefix = std::make_unique<NameInfo>();
-                    I.UsingName->Prefix->Name = parentContext->getNameAsString();
-                }
             }
         }
         getParentNamespaces(I, D);
