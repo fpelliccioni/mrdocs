@@ -50,13 +50,13 @@ namespace mrdocs {
 
 namespace {
 
-llvm::StringRef getFullyQualifiedName(NamedDecl const* decl)
-{
-    llvm::SmallVector<char, 128> fullNameBuffer;
-    llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
-    decl->printQualifiedName(fullNameStream);
-    return fullNameStream.str();
-}
+// llvm::StringRef getFullyQualifiedName(NamedDecl const* decl)
+// {
+//     llvm::SmallVector<char, 128> fullNameBuffer;
+//     llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
+//     decl->printQualifiedName(fullNameStream);
+//     return fullNameStream.str();
+// }
 
 struct SymbolFilter
 {
@@ -546,7 +546,7 @@ public:
                 return true;
             }
             usr_.append("@UD");
-            usr_.append(getFullyQualifiedName(UDD));
+            // usr_.append(getFullyQualifiedName(UDD));
             usr_.append(UDD->getQualifiedNameAsString(usr_));
             return false;
         }
@@ -561,6 +561,7 @@ public:
             }
             usr_.append("@UDec");
             usr_.append(getFullyQualifiedName(UD));
+            usr_.append(UD->getQualifiedNameAsString(usr_));
             return false;
         }
 
@@ -570,7 +571,8 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUTDec");
-            usr_.append(getFullyQualifiedName(UD));
+            // usr_.append(getFullyQualifiedName(UD));
+            usr_.append(UD->getQualifiedNameAsString(usr_));
             return false;
         }
 
@@ -580,7 +582,8 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUV");
-            usr_.append(getFullyQualifiedName(UD));
+            // usr_.append(getFullyQualifiedName(UD));
+            usr_.append(UD->getQualifiedNameAsString(usr_));
             return false;
         }
 
@@ -603,7 +606,8 @@ public:
             EnumDecl const* ED = UD->getEnumDecl();
             if (ED)
             {
-                usr_.append(getFullyQualifiedName(ED));
+                // usr_.append(getFullyQualifiedName(ED));
+                usr_.append(ED->getQualifiedNameAsString(usr_));
             }
             return false;
         }
