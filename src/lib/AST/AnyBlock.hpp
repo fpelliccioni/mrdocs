@@ -1886,13 +1886,7 @@ public:
         unsigned ID,
         llvm::StringRef Blob) override
     {
-        switch(ID)
-        {
-        case NAMESPACE_ALIAS_SYMBOL:
-            return decodeRecord(R, I->AliasedSymbol, Blob);
-        default:
-            return TopLevelBlock::parseRecord(R, ID, Blob);
-        }
+        return TopLevelBlock::parseRecord(R, ID, Blob);
     }
 
     Error
@@ -1903,8 +1897,8 @@ public:
         {
         case BI_NAME_INFO_ID:
         {
-            I->FullyQualifiedName = std::make_unique<NameInfo>();
-            NameInfoBlock B(I->FullyQualifiedName, br_);
+            I->AliasedSymbol = std::make_unique<NameInfo>();
+            NameInfoBlock B(I->AliasedSymbol, br_);
             return br_.readBlock(B, ID);
         }
         default:

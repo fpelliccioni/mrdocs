@@ -616,8 +616,8 @@ public:
             { "friends",          init(tranche->Friends, domCorpus) },
             { "guides",           init(tranche->Guides, domCorpus) },
             { "overloads",        init(tranche->Overloads, domCorpus) },
-            { "staticoverloads", init(tranche->StaticOverloads, domCorpus) },
-            { "namespaceAliases", init(tranche->NamespaceAliases, domCorpus) },
+            { "staticoverloads",  init(tranche->StaticOverloads, domCorpus) },
+            { "aliases",          init(tranche->Aliases, domCorpus) },
             { "usings",           init(tranche->Usings, domCorpus) }
 
             })
@@ -871,10 +871,7 @@ DomInfo<T>::construct() const
         auto aliased = domCorpus_.get(I_.AliasedSymbol);
         entries.emplace_back("name", aliased.get("name"));
         entries.emplace_back("symbol", aliased);
-        if (I_.FullyQualifiedName)
-        {
-            entries.emplace_back("qualifier", domCreate(I_.FullyQualifiedName, domCorpus_));
-        }
+        entries.emplace_back("aliasedSymbol", domCreate(I_.AliasedSymbol, domCorpus_));
     }
     if constexpr(T::isUsing())
     {

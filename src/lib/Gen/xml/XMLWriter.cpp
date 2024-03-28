@@ -402,16 +402,15 @@ writeNamespaceAlias(
 
     Attributes attrs = {};
 
-    attrs.push({"aliasedSymbol", toString(I.AliasedSymbol)});
     tags_.write("aliased", {}, attrs);
-    if (I.FullyQualifiedName)
+    if (I.AliasedSymbol)
     {
         Attributes nameAttrs = {};
-        if (I.FullyQualifiedName->id != SymbolID::invalid)
+        if (I.AliasedSymbol->id != SymbolID::invalid)
         {
-            nameAttrs.push({"id", toString(I.FullyQualifiedName->id)});
+            nameAttrs.push({"id", toString(I.AliasedSymbol->id)});
         }
-        nameAttrs.push({"name", I.FullyQualifiedName->Name});
+        nameAttrs.push({"name", I.AliasedSymbol->Name});
         tags_.write("name", {}, nameAttrs);
     }
 

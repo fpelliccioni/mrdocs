@@ -309,7 +309,6 @@ RecordIDNameMap = []()
         {JAVADOC_NODE_SYMBOLREF, {"JavadocNodeSymbol", &SymbolIDAbbrev}},
         {JAVADOC_PARAM_DIRECTION, {"JavadocParamDirection", &Integer32Abbrev}},
         {NAMESPACE_BITS, {"NamespaceBits", &Integer32ArrayAbbrev}},
-        {NAMESPACE_ALIAS_SYMBOL, {"AliasedSymbol", &SymbolIDAbbrev}},
         {NAME_INFO_KIND, {"NameKind", &Integer32Abbrev}},
         {NAME_INFO_ID, {"NameID", &SymbolIDAbbrev}},
         {NAME_INFO_NAME, {"NameName", &StringAbbrev}},
@@ -430,9 +429,7 @@ RecordsByBlock{
 
 
     // AliasInfo
-    {BI_NAMESPACE_ALIAS_BLOCK_ID,
-        {NAMESPACE_ALIAS_SYMBOL}},
-
+    // ?
 
     // UsingInfo
     {BI_USING_BLOCK_ID,
@@ -1141,9 +1138,7 @@ emitBlock(
     StreamSubBlockGuard Block(Stream, BI_NAMESPACE_ALIAS_BLOCK_ID);
     emitInfoPart(I);
     emitSourceInfo(I);
-    emitRecord(I.AliasedSymbol, NAMESPACE_ALIAS_SYMBOL);
-    if (I.FullyQualifiedName)
-        emitBlock(*I.FullyQualifiedName);
+    emitBlock(*I.AliasedSymbol);
 }
 
 void
