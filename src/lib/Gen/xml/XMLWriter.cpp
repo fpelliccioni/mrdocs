@@ -426,7 +426,7 @@ XMLWriter::
     switch (I.Class)
     {
     case UsingClass::Normal:
-        klassStr = "using"
+        klassStr = "using";
         break;
     case UsingClass::Typename:
         klassStr = "using typename";
