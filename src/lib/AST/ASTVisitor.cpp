@@ -2181,7 +2181,7 @@ public:
     //------------------------------------------------
 
     void
-    buildNamespaceAlias(
+    buildAlias(
         AliasInfo& I,
         bool created,
         NamespaceAliasDecl* D)
@@ -2604,7 +2604,7 @@ traverse(NamespaceAliasDecl* D)
     auto exp = getAsMrDocsInfo(D);
     if( ! exp) { return; }
     auto [I, created] = *exp;
-    buildNamespaceAlias(I, created, D);
+    buildAlias(I, created, D);
 }
 
 //------------------------------------------------

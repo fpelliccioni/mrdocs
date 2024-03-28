@@ -872,12 +872,13 @@ DomInfo<T>::construct() const
     }
     if constexpr(T::isUsing())
     {
-        for (auto const& id : I_.UsingSymbols)
-        {
-            auto sym = domCorpus_.get(id);
-            entries.emplace_back("name", sym.get("name"));
-            entries.emplace_back("symbol", sym);
-        }
+        // for (auto const& id : I_.UsingSymbols)
+        // {
+        //     auto sym = domCorpus_.get(id);
+        //     entries.emplace_back("name", sym.get("name"));
+        //     entries.emplace_back("symbol", sym);
+        // }
+        entries.emplace_back("symbols", dom::newArray<DomSymbolArray>(I_.UsingSymbols, domCorpus_));
 
         if (I_.Qualifier)
         {

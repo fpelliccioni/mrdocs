@@ -390,7 +390,7 @@ XMLWriter::
 writeNamespaceAlias(
     AliasInfo const& I)
 {
-    tags_.open(namespaceAliasTagName, {
+    tags_.open(aliasTagName, {
         { "name", I.Name },
         { I.Access },
         { I.id }
@@ -414,7 +414,7 @@ writeNamespaceAlias(
         tags_.write("name", {}, nameAttrs);
     }
 
-    tags_.close(namespaceAliasTagName);
+    tags_.close(aliasTagName);
 }
 
 void

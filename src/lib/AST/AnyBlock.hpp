@@ -1874,7 +1874,7 @@ public:
 
 //------------------------------------------------
 
-class NamespaceAliasBlock
+class AliasBlock
     : public TopLevelBlock<AliasInfo>
 {
 public:
@@ -1897,7 +1897,6 @@ public:
         {
         case BI_NAME_INFO_ID:
         {
-            I->AliasedSymbol = std::make_unique<NameInfo>();
             NameInfoBlock B(I->AliasedSymbol, br_);
             return br_.readBlock(B, ID);
         }
@@ -1940,7 +1939,6 @@ public:
         {
         case BI_NAME_INFO_ID:
         {
-            I->Qualifier = std::make_unique<NameInfo>();
             NameInfoBlock B(I->Qualifier, br_);
             return br_.readBlock(B, ID);
         }

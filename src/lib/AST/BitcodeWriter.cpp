@@ -258,7 +258,7 @@ BlockIdNameMap = []()
         {BI_ENUMERATOR_BLOCK_ID, "EnumeratorBlock"},
         {BI_VARIABLE_BLOCK_ID, "VarBlock"},
         {BI_NAME_INFO_ID, "NameInfoBlock"},
-        {BI_NAMESPACE_ALIAS_BLOCK_ID, "NamespaceAliasBlock"},
+        {BI_ALIAS_BLOCK_ID, "AliasBlock"},
         {BI_USING_BLOCK_ID, "UsingBlock"},
     };
     MRDOCS_ASSERT(Inits.size() == BlockIdCount);
@@ -1135,7 +1135,7 @@ BitcodeWriter::
 emitBlock(
     AliasInfo const& I)
 {
-    StreamSubBlockGuard Block(Stream, BI_NAMESPACE_ALIAS_BLOCK_ID);
+    StreamSubBlockGuard Block(Stream, BI_ALIAS_BLOCK_ID);
     emitInfoPart(I);
     emitSourceInfo(I);
     emitBlock(*I.AliasedSymbol);
