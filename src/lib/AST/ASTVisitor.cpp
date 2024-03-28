@@ -50,16 +50,13 @@ namespace mrdocs {
 
 namespace {
 
-template <typename T>
-llvm::StringRef getFullyQualifiedName(T const* D)
+llvm::StringRef getFullyQualifiedName(NamedDecl const* decl)
 {
     llvm::SmallVector<char, 128> fullNameBuffer;
     llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
-    D->getQualifier()->print(fullNameStream, D->getASTContext().getPrintingPolicy());
-    fullNameStream << D->getDeclName().getAsString();
+    decl->printQualifiedName(fullNameStream);
     return fullNameStream.str();
 }
-
 
 struct SymbolFilter
 {
@@ -547,7 +544,7 @@ public:
                 return true;
             }
             usr_.append("@UD");
-            usr_.append(UDD->getNameAsString());
+            usr_.append(getFullyQualifiedName(UDD));
             return false;
         }
 
@@ -560,7 +557,6 @@ public:
                     return true;
             }
             usr_.append("@UDec");
-            // usr_.append(UD->getNameAsString());
             usr_.append(getFullyQualifiedName(UD));
             return false;
         }
@@ -571,18 +567,7 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUTDec");
-            // usr_.append(UD->getNameAsString());
-
-            // llvm::SmallVector<char, 128> fullNameBuffer;
-            // llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
-            // UD->getQualifier()->print(fullNameStream, UD->getASTContext().getPrintingPolicy());
-            // fullNameStream << UD->getDeclName().getAsString();
-            // usr_.append(fullNameStream.str());
-            // // std::string fullName = fullNameStream.str().str();
-            // // usr_.append(fullName);
-
             usr_.append(getFullyQualifiedName(UD));
-
             return false;
         }
 
@@ -592,7 +577,6 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUV");
-            // usr_.append(UD->getNameAsString());
             usr_.append(getFullyQualifiedName(UD));
             return false;
         }
@@ -604,7 +588,6 @@ public:
                 return true;
             usr_.append("@UPD");
             usr_.append(UD->getNameAsString());
-            // usr_.append(getFullyQualifiedName(UD));
             return false;
         }
 
@@ -617,7 +600,6 @@ public:
             EnumDecl const* ED = UD->getEnumDecl();
             if (ED)
             {
-                // usr_.append(ED->getNameAsString());
                 usr_.append(getFullyQualifiedName(ED));
             }
             return false;
@@ -2216,10 +2198,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        if (D->getQualifier())
-        {
-            I.Qualifier = buildNameInfo(D->getQualifier());
-        }
+        I.FullyQualifiedName = buildNameInfo(D);
 
         // A NamedDecl nominated by a NamespaceAliasDecl
         // will be one of the following:
@@ -2228,10 +2207,7 @@ public:
         {
             SymbolID id;
             getDependencyID(ND, id);
-            if (id != SymbolID::invalid)
-            {
-                I.AliasedSymbol = id;
-            }
+            I.AliasedSymbol = id;
         }
 
         getParentNamespaces(I, D);
@@ -2253,7 +2229,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        I.IsDirective = true;
+        I.Class = UsingClass::Namespace;
 
         if (D->getQualifier())
         {
@@ -2264,10 +2240,7 @@ public:
         {
             SymbolID id;
             getDependencyID(ND, id);
-            if (id != SymbolID::invalid)
-            {
-                I.UsingSymbols.emplace_back(id);
-            }
+            I.UsingSymbols.emplace_back(id);
         }
         getParentNamespaces(I, D);
     }
@@ -2288,7 +2261,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        I.IsDirective = false;
+        I.Class = UsingClass::Normal;
         I.Qualifier = buildNameInfo(D->getQualifier());
 
         for (auto const* shadow : D->shadows())
@@ -2297,10 +2270,7 @@ public:
 
             SymbolID id;
             getDependencyID(ND, id);
-            if (id != SymbolID::invalid)
-            {
-                I.UsingSymbols.emplace_back(id);
-            }
+            I.UsingSymbols.emplace_back(id);
         }
         getParentNamespaces(I, D);
     }
