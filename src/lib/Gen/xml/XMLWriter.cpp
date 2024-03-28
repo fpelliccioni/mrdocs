@@ -404,14 +404,14 @@ writeNamespaceAlias(
 
     attrs.push({"aliasedSymbol", toString(I.AliasedSymbol)});
     tags_.write("aliased", {}, attrs);
-    if (I.Qualifier)
+    if (I.FullyQualifiedName)
     {
         Attributes nameAttrs = {};
-        if (I.Qualifier->id != SymbolID::invalid)
+        if (I.FullyQualifiedName->id != SymbolID::invalid)
         {
-            nameAttrs.push({"id", toString(I.Qualifier->id)});
+            nameAttrs.push({"id", toString(I.FullyQualifiedName->id)});
         }
-        nameAttrs.push({"name", I.Qualifier->Name});
+        nameAttrs.push({"name", I.FullyQualifiedName->Name});
         tags_.write("name", {}, nameAttrs);
     }
 

@@ -2200,10 +2200,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        if (D->getQualifier())
-        {
-            I.Qualifier = buildNameInfo(D->getQualifier());
-        }
+        I.FullyQualifiedName = buildNameInfo(D);
 
         // A NamedDecl nominated by a NamespaceAliasDecl
         // will be one of the following:
