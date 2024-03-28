@@ -547,7 +547,7 @@ public:
             }
             usr_.append("@UD");
             // usr_.append(getFullyQualifiedName(UDD));
-            usr_.append(UDD->getQualifiedNameAsString(usr_));
+            usr_.append(UDD->getQualifiedNameAsString());
             return false;
         }
 
@@ -561,7 +561,7 @@ public:
             }
             usr_.append("@UDec");
             usr_.append(getFullyQualifiedName(UD));
-            usr_.append(UD->getQualifiedNameAsString(usr_));
+            usr_.append(UD->getQualifiedNameAsString());
             return false;
         }
 
@@ -572,7 +572,7 @@ public:
                 return true;
             usr_.append("@UUTDec");
             // usr_.append(getFullyQualifiedName(UD));
-            usr_.append(UD->getQualifiedNameAsString(usr_));
+            usr_.append(UD->getQualifiedNameAsString());
             return false;
         }
 
@@ -583,7 +583,7 @@ public:
                 return true;
             usr_.append("@UUV");
             // usr_.append(getFullyQualifiedName(UD));
-            usr_.append(UD->getQualifiedNameAsString(usr_));
+            usr_.append(UD->getQualifiedNameAsString());
             return false;
         }
 
@@ -607,7 +607,7 @@ public:
             if (ED)
             {
                 // usr_.append(getFullyQualifiedName(ED));
-                usr_.append(ED->getQualifiedNameAsString(usr_));
+                usr_.append(ED->getQualifiedNameAsString());
             }
             return false;
         }
