@@ -1880,14 +1880,14 @@ class AliasBlock
 public:
     using TopLevelBlock::TopLevelBlock;
 
-    Error
-    parseRecord(
-        Record const& R,
-        unsigned ID,
-        llvm::StringRef Blob) override
-    {
-        return TopLevelBlock::parseRecord(R, ID, Blob);
-    }
+    // Error
+    // parseRecord(
+    //     Record const& R,
+    //     unsigned ID,
+    //     llvm::StringRef Blob) override
+    // {
+    //     return TopLevelBlock::parseRecord(R, ID, Blob);
+    // }
 
     Error
     readSubBlock(
