@@ -422,11 +422,30 @@ void
 XMLWriter::
     writeUsing(UsingInfo const& I)
 {
+    dom::String klassStr;
+    switch (I.Class)
+    {
+    case UsingClass::Normal:
+        klassStr = "using"
+        break;
+    case UsingClass::Typename:
+        klassStr = "using typename";
+        break;
+    case UsingClass::Enum:
+        klassStr = "using enum";
+        break;
+    case UsingClass::Namespace:
+        klassStr = "using namespace";
+        break;
+    default:
+        MRDOCS_UNREACHABLE();
+    }
+
     tags_.open(usingTagName, {
         { I.Access },
         { I.id },
-        { "class", "true", I.Class }
-        });
+        { "class", klassStr, ! klassStr.empty() }
+    });
 
     writeSourceInfo(I);
 
