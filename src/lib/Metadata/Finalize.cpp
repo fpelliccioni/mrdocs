@@ -351,8 +351,7 @@ public:
         check(I.Namespace);
         finalize(I.javadoc);
         finalize(I.Qualifier);
-        for (auto& U : I.UsingSymbols)
-            finalize(U);
+        finalize(I.UsingSymbols);
     }
 
     void operator()(EnumeratorInfo& I)
