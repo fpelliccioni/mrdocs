@@ -1888,7 +1888,7 @@ public:
         {
         case BI_NAME_INFO_ID:
         {
-            I->TempAliasedSymbol = std::make_unique<NameInfo>();
+            // I->TempAliasedSymbol = std::make_unique<NameInfo>();
             NameInfoBlock B(I->TempAliasedSymbol, br_);
             return br_.readBlock(B, ID);
         }
@@ -1931,7 +1931,7 @@ public:
         {
         case BI_NAME_INFO_ID:
         {
-            I->Qualifier = std::make_unique<NameInfo>();
+            // I->Qualifier = std::make_unique<NameInfo>();
             NameInfoBlock B(I->Qualifier, br_);
             return br_.readBlock(B, ID);
         }
