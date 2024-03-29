@@ -2256,14 +2256,9 @@ public:
         I.Class = UsingClass::Normal;
         I.Qualifier = buildNameInfo(D->getQualifier());
 
-        for (auto const* shadow : D->shadows())
-        {
-            NamedDecl* ND = shadow->getTargetDecl();
+        for (auto const* UDS : D->shadows())
+            getDependencyID(UDS->getTargetDecl(), I.UsingSymbols.emplace_back());
 
-            SymbolID id;
-            getDependencyID(ND, id);
-            I.UsingSymbols.emplace_back(id);
-        }
         getParentNamespaces(I, D);
     }
 
