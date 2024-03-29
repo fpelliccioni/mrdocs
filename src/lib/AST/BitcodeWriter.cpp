@@ -279,7 +279,6 @@ RecordIDNameMap = []()
     // improvise
     static const std::vector<std::pair<RecordID, RecordIDDsc>> Inits = {
         {VERSION, {"Version", &Integer32Abbrev}},
-        {ALIAS_SYMBOL, {"AliasedSymbol", &SymbolIDAbbrev}},
         {BASE_ACCESS, {"BaseAccess", &Integer32Abbrev}},
         {BASE_IS_VIRTUAL, {"BaseIsVirtual", &BoolAbbrev}},
         {ENUM_SCOPED, {"Scoped", &BoolAbbrev}},
@@ -427,12 +426,6 @@ RecordsByBlock{
     {BI_FRIEND_BLOCK_ID,
         {FRIEND_SYMBOL}},
     // FriendInfo
-
-
-    // AliasInfo
-    {BI_ALIAS_BLOCK_ID,
-        {ALIAS_SYMBOL}},
-
 
     // UsingInfo
     {BI_USING_BLOCK_ID,
@@ -1141,9 +1134,8 @@ emitBlock(
     StreamSubBlockGuard Block(Stream, BI_ALIAS_BLOCK_ID);
     emitInfoPart(I);
     emitSourceInfo(I);
-    emitRecord(I.AliasedSymbol, ALIAS_SYMBOL);
-    if (I.FullyQualifiedName)
-        emitBlock(*I.FullyQualifiedName);
+    if (I.AliasedSymbol)
+        emitBlock(*I.AliasedSymbol);
 }
 
 void

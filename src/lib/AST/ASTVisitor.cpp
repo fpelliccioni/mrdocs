@@ -2192,17 +2192,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        I.FullyQualifiedName = buildNameInfo(D);
-
-        // A NamedDecl nominated by a NamespaceAliasDecl
-        // will be one of the following:
-        // - NamespaceDecl
-        if(NamedDecl* ND = D->getAliasedNamespace())
-        {
-            SymbolID id;
-            getDependencyID(ND, id);
-            I.AliasedSymbol = id;
-        }
+        I.AliasedSymbol = buildNameInfo(D);
 
         getParentNamespaces(I, D);
     }
