@@ -581,7 +581,6 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UPD");
-            // usr_.append(UD->getNameAsString());
             usr_.append(UD->getQualifiedNameAsString());
             return false;
         }

@@ -233,7 +233,7 @@ operator()(
     if constexpr(T::isGuide())
         writeGuide(I);
     if constexpr(T::isAlias())
-        writeNamespaceAlias(I);
+        writeAlias(I);
     if constexpr(T::isUsing())
         writeUsing(I);
 }
@@ -387,7 +387,7 @@ writeGuide(
 
 void
 XMLWriter::
-writeNamespaceAlias(
+writeAlias(
     AliasInfo const& I)
 {
     tags_.open(aliasTagName, {
