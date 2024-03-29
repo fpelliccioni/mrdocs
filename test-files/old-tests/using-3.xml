@@ -28,15 +28,13 @@
     <base>
       <type id="3JsK1DO0O+wZhv+0meptQrbs3fY=" name="B"/>
     </base>
-    <using id="gYtMTvi6Y8IYub83GUwP4tNrNh8=">
+    <using id="gYtMTvi6Y8IYub83GUwP4tNrNh8=" class="using">
       <file path="using-3.cpp" line="13" class="def"/>
       <symbol id="7Bg4Ruo9NHdsGok6ICFQWW1MBuE="/>
-      <name id="YrPSaKAbmXgzCAX5WByx4eVoqBM=" name="A"/>
     </using>
-    <using id="Ok4Drv8j7QjZMYzH/iHOHoNf+YY=">
+    <using id="Ok4Drv8j7QjZMYzH/iHOHoNf+YY=" class="using">
       <file path="using-3.cpp" line="14" class="def"/>
       <symbol id="L8SG5UwdWbdrxlsWfl5qGz09wUw="/>
-      <name id="3JsK1DO0O+wZhv+0meptQrbs3fY=" name="B"/>
     </using>
   </struct>
 </namespace>
