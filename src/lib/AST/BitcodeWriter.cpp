@@ -279,7 +279,7 @@ RecordIDNameMap = []()
     // improvise
     static const std::vector<std::pair<RecordID, RecordIDDsc>> Inits = {
         {VERSION, {"Version", &Integer32Abbrev}},
-        {ALIAS_SYMBOL, {"AliasedSymbol", &SymbolIDAbbrev}},
+        // {ALIAS_SYMBOL, {"AliasedSymbol", &SymbolIDAbbrev}},
         {BASE_ACCESS, {"BaseAccess", &Integer32Abbrev}},
         {BASE_IS_VIRTUAL, {"BaseIsVirtual", &BoolAbbrev}},
         {ENUM_SCOPED, {"Scoped", &BoolAbbrev}},
