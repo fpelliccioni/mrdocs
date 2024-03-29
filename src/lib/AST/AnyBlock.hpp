@@ -1881,21 +1881,6 @@ public:
     using TopLevelBlock::TopLevelBlock;
 
     Error
-    parseRecord(
-        Record const& R,
-        unsigned ID,
-        llvm::StringRef Blob) override
-    {
-        switch(ID)
-        {
-        case ALIAS_SYMBOL:
-            return decodeRecord(R, I->AliasedSymbol, Blob);
-        default:
-            return TopLevelBlock::parseRecord(R, ID, Blob);
-        }
-    }
-
-    Error
     readSubBlock(
         unsigned ID) override
     {
@@ -1903,8 +1888,7 @@ public:
         {
         case BI_NAME_INFO_ID:
         {
-            I->FullyQualifiedName = std::make_unique<NameInfo>();
-            NameInfoBlock B(I->FullyQualifiedName, br_);
+            NameInfoBlock B(I->AliasedSymbol, br_);
             return br_.readBlock(B, ID);
         }
         default:
@@ -1946,7 +1930,6 @@ public:
         {
         case BI_NAME_INFO_ID:
         {
-            I->Qualifier = std::make_unique<NameInfo>();
             NameInfoBlock B(I->Qualifier, br_);
             return br_.readBlock(B, ID);
         }
