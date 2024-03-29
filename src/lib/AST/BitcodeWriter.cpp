@@ -429,9 +429,9 @@ RecordsByBlock{
     // FriendInfo
 
 
-    // AliasInfo
-    {BI_ALIAS_BLOCK_ID,
-        {ALIAS_SYMBOL}},
+    // // AliasInfo
+    // {BI_ALIAS_BLOCK_ID,
+    //     {ALIAS_SYMBOL}},
 
 
     // UsingInfo
@@ -1141,7 +1141,7 @@ emitBlock(
     StreamSubBlockGuard Block(Stream, BI_ALIAS_BLOCK_ID);
     emitInfoPart(I);
     emitSourceInfo(I);
-    emitRecord(I.AliasedSymbol, ALIAS_SYMBOL);
+    // emitRecord(I.AliasedSymbol, ALIAS_SYMBOL);
     if (I.FullyQualifiedName)
         emitBlock(*I.FullyQualifiedName);
 }
