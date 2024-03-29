@@ -314,8 +314,10 @@ void merge(UsingInfo& I, UsingInfo&& Other)
     MRDOCS_ASSERT(canMerge(I, Other));
 
     reduceSymbolIDs(I.UsingSymbols, std::move(Other.UsingSymbols));
-    I.Class = Other.Class;
-    I.Qualifier = std::move(Other.Qualifier);
+    if (I.Class != UsingClass::Normal)
+        I.Class = Other.Class;
+    if (I.Qualifier != nullptr)
+        I.Qualifier = std::move(Other.Qualifier);
     mergeSourceInfo(I, std::move(Other));
     mergeInfo(I, std::move(Other));
 }
