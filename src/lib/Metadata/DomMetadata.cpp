@@ -868,9 +868,9 @@ DomInfo<T>::construct() const
     }
     if constexpr(T::isAlias())
     {
-        auto aliased = domCorpus_.get(I_.AliasedSymbol);
-        entries.emplace_back("name", aliased.get("name"));
-        entries.emplace_back("symbol", aliased);
+        // auto aliased = domCorpus_.get(I_.AliasedSymbol);
+        // entries.emplace_back("name", aliased.get("name"));
+        // entries.emplace_back("symbol", aliased);
         if (I_.FullyQualifiedName)
         {
             entries.emplace_back("qualifier", domCreate(I_.FullyQualifiedName, domCorpus_));

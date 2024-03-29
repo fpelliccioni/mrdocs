@@ -26,8 +26,8 @@ struct AliasInfo
     : IsInfo<InfoKind::Alias>
     , SourceInfo
 {
-    /** Aliased symbol. */
-    SymbolID AliasedSymbol = SymbolID::invalid;
+    // /** Aliased symbol. */
+    // SymbolID AliasedSymbol = SymbolID::invalid;
 
     /** The fully qualified name of the alias. */
     std::unique_ptr<NameInfo> FullyQualifiedName;

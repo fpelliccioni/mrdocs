@@ -402,7 +402,7 @@ writeAlias(
 
     Attributes attrs = {};
 
-    attrs.push({"aliasedSymbol", toString(I.AliasedSymbol)});
+    // attrs.push({"aliasedSymbol", toString(I.AliasedSymbol)});
     tags_.write("aliased", {}, attrs);
     if (I.FullyQualifiedName)
     {
