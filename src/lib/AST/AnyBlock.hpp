@@ -1880,21 +1880,6 @@ class AliasBlock
 public:
     using TopLevelBlock::TopLevelBlock;
 
-    // Error
-    // parseRecord(
-    //     Record const& R,
-    //     unsigned ID,
-    //     llvm::StringRef Blob) override
-    // {
-    //     switch(ID)
-    //     {
-    //     case ALIAS_SYMBOL:
-    //         return decodeRecord(R, I->AliasedSymbol, Blob);
-    //     default:
-    //         return TopLevelBlock::parseRecord(R, ID, Blob);
-    //     }
-    // }
-
     Error
     readSubBlock(
         unsigned ID) override
