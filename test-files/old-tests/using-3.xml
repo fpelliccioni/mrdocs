@@ -28,7 +28,7 @@
     <base>
       <type id="3JsK1DO0O+wZhv+0meptQrbs3fY=" name="B"/>
     </base>
-    <using id="gYtMTvi6Y8IYub83GUwP4tNrNh8=" class="using">
+    <using id="gYtMTvi6Y8IYub83GUwP4tNrNh8=" class="using namespace">
       <file path="using-3.cpp" line="13" class="def"/>
       <symbol id="7Bg4Ruo9NHdsGok6ICFQWW1MBuE="/>
     </using>
