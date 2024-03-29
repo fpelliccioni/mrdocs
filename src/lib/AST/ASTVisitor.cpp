@@ -50,14 +50,6 @@ namespace mrdocs {
 
 namespace {
 
-llvm::StringRef getFullyQualifiedName(NamedDecl const* decl)
-{
-    llvm::SmallVector<char, 128> fullNameBuffer;
-    llvm::raw_svector_ostream fullNameStream(fullNameBuffer);
-    decl->printQualifiedName(fullNameStream);
-    return fullNameStream.str();
-}
-
 struct SymbolFilter
 {
     const FilterNode& root;
@@ -544,7 +536,7 @@ public:
                 return true;
             }
             usr_.append("@UD");
-            usr_.append(getFullyQualifiedName(UDD));
+            usr_.append(UDD->getQualifiedNameAsString());
             return false;
         }
 
@@ -557,7 +549,7 @@ public:
                     return true;
             }
             usr_.append("@UDec");
-            usr_.append(getFullyQualifiedName(UD));
+            usr_.append(UD->getQualifiedNameAsString());
             return false;
         }
 
@@ -567,7 +559,7 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUTDec");
-            usr_.append(getFullyQualifiedName(UD));
+            usr_.append(UD->getQualifiedNameAsString());
             return false;
         }
 
@@ -577,7 +569,7 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UUV");
-            usr_.append(getFullyQualifiedName(UD));
+            usr_.append(UD->getQualifiedNameAsString());
             return false;
         }
 
@@ -587,7 +579,7 @@ public:
             if (index::generateUSRForDecl(UD, usr_))
                 return true;
             usr_.append("@UPD");
-            usr_.append(UD->getNameAsString());
+            usr_.append(UD->getQualifiedNameAsString());
             return false;
         }
 
@@ -600,7 +592,7 @@ public:
             EnumDecl const* ED = UD->getEnumDecl();
             if (ED)
             {
-                usr_.append(getFullyQualifiedName(ED));
+                usr_.append(ED->getQualifiedNameAsString());
             }
             return false;
         }
@@ -2186,7 +2178,7 @@ public:
     //------------------------------------------------
 
     void
-    buildNamespaceAlias(
+    buildAlias(
         AliasInfo& I,
         bool created,
         NamespaceAliasDecl* D)
@@ -2615,7 +2607,7 @@ traverse(NamespaceAliasDecl* D)
     auto exp = getAsMrDocsInfo(D);
     if( ! exp) { return; }
     auto [I, created] = *exp;
-    buildNamespaceAlias(I, created, D);
+    buildAlias(I, created, D);
 }
 
 //------------------------------------------------
