@@ -1903,8 +1903,8 @@ public:
         {
         case BI_NAME_INFO_ID:
         {
-            I->FullyQualifiedName = std::make_unique<NameInfo>();
-            NameInfoBlock B(I->FullyQualifiedName, br_);
+            I->TempAliasedSymbol = std::make_unique<NameInfo>();
+            NameInfoBlock B(I->TempAliasedSymbol, br_);
             return br_.readBlock(B, ID);
         }
         default:

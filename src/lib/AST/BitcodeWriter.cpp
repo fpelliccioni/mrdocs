@@ -1142,8 +1142,8 @@ emitBlock(
     emitInfoPart(I);
     emitSourceInfo(I);
     // emitRecord(I.AliasedSymbol, ALIAS_SYMBOL);
-    if (I.FullyQualifiedName)
-        emitBlock(*I.FullyQualifiedName);
+    if (I.TempAliasedSymbol)
+        emitBlock(*I.TempAliasedSymbol);
 }
 
 void

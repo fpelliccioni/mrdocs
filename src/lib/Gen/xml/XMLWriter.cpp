@@ -404,14 +404,14 @@ writeAlias(
 
     // attrs.push({"aliasedSymbol", toString(I.AliasedSymbol)});
     tags_.write("aliased", {}, attrs);
-    if (I.FullyQualifiedName)
+    if (I.TempAliasedSymbol)
     {
         Attributes nameAttrs = {};
-        if (I.FullyQualifiedName->id != SymbolID::invalid)
+        if (I.TempAliasedSymbol->id != SymbolID::invalid)
         {
-            nameAttrs.push({"id", toString(I.FullyQualifiedName->id)});
+            nameAttrs.push({"id", toString(I.TempAliasedSymbol->id)});
         }
-        nameAttrs.push({"name", I.FullyQualifiedName->Name});
+        nameAttrs.push({"name", I.TempAliasedSymbol->Name});
         tags_.write("name", {}, nameAttrs);
     }
 

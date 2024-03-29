@@ -2192,7 +2192,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        I.FullyQualifiedName = buildNameInfo(D);
+        I.TempAliasedSymbol = buildNameInfo(D);
 
         // // A NamedDecl nominated by a NamespaceAliasDecl
         // // will be one of the following:

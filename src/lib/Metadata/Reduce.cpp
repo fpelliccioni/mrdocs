@@ -304,7 +304,8 @@ void merge(AliasInfo& I, AliasInfo&& Other)
     MRDOCS_ASSERT(canMerge(I, Other));
     // if(! I.AliasedSymbol)
     //     I.AliasedSymbol = std::move(Other.AliasedSymbol);
-    I.FullyQualifiedName = std::move(Other.FullyQualifiedName);
+    if (I.TempAliasedSymbol != nullptr)
+        I.TempAliasedSymbol = std::move(Other.TempAliasedSymbol);
     mergeSourceInfo(I, std::move(Other));
     mergeInfo(I, std::move(Other));
 }

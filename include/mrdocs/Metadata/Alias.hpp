@@ -30,7 +30,7 @@ struct AliasInfo
     // SymbolID AliasedSymbol = SymbolID::invalid;
 
     /** The fully qualified name of the alias. */
-    std::unique_ptr<NameInfo> FullyQualifiedName;
+    std::unique_ptr<NameInfo> TempAliasedSymbol;
 
     //--------------------------------------------
 
