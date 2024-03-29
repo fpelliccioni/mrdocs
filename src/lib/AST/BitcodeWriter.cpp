@@ -1141,10 +1141,8 @@ emitBlock(
     StreamSubBlockGuard Block(Stream, BI_ALIAS_BLOCK_ID);
     emitInfoPart(I);
     emitSourceInfo(I);
-    // emitRecord(I.AliasedSymbol, ALIAS_SYMBOL);
-    // if (I.TempAliasedSymbol)
-    //     emitBlock(*I.TempAliasedSymbol);
-    emitBlock(*I.TempAliasedSymbol);
+    if (I.AliasedSymbol)
+        emitBlock(*I.AliasedSymbol);
 }
 
 void

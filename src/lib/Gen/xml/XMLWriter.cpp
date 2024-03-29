@@ -400,18 +400,14 @@ writeAlias(
 
     writeJavadoc(I.javadoc);
 
-    Attributes attrs = {};
-
-    // attrs.push({"aliasedSymbol", toString(I.AliasedSymbol)});
-    tags_.write("aliased", {}, attrs);
-    if (I.TempAliasedSymbol)
+    if (I.AliasedSymbol)
     {
         Attributes nameAttrs = {};
-        if (I.TempAliasedSymbol->id != SymbolID::invalid)
+        if (I.AliasedSymbol->id != SymbolID::invalid)
         {
-            nameAttrs.push({"id", toString(I.TempAliasedSymbol->id)});
+            nameAttrs.push({"id", toString(I.AliasedSymbol->id)});
         }
-        nameAttrs.push({"name", I.TempAliasedSymbol->Name});
+        nameAttrs.push({"name", I.AliasedSymbol->Name});
         tags_.write("name", {}, nameAttrs);
     }
 

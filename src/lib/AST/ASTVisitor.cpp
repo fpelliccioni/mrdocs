@@ -2192,7 +2192,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        I.TempAliasedSymbol = buildNameInfo(D);
+        I.AliasedSymbol = buildNameInfo(D);
 
         getParentNamespaces(I, D);
     }

@@ -27,7 +27,7 @@ struct AliasInfo
     , SourceInfo
 {
     /** The aliased symbol. */
-    std::unique_ptr<NameInfo> TempAliasedSymbol;
+    std::unique_ptr<NameInfo> AliasedSymbol;
 
     //--------------------------------------------
 

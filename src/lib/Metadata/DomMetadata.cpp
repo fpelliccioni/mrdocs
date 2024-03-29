@@ -868,12 +868,9 @@ DomInfo<T>::construct() const
     }
     if constexpr(T::isAlias())
     {
-        // auto aliased = domCorpus_.get(I_.AliasedSymbol);
-        // entries.emplace_back("name", aliased.get("name"));
-        // entries.emplace_back("symbol", aliased);
-        if (I_.TempAliasedSymbol)
+        if (I_.AliasedSymbol)
         {
-            entries.emplace_back("aliasedSymbol", domCreate(I_.TempAliasedSymbol, domCorpus_));
+            entries.emplace_back("aliasedSymbol", domCreate(I_.AliasedSymbol, domCorpus_));
         }
     }
     if constexpr(T::isUsing())
