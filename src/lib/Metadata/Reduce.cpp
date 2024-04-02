@@ -14,7 +14,6 @@
 #include <mrdocs/Platform.hpp>
 #include <llvm/ADT/STLExtras.h>
 
-
 namespace clang {
 namespace mrdocs {
 
@@ -302,7 +301,7 @@ void merge(FriendInfo& I, FriendInfo&& Other)
 void merge(AliasInfo& I, AliasInfo&& Other)
 {
     MRDOCS_ASSERT(canMerge(I, Other));
-    if (I.AliasedSymbol != nullptr)
+    if (I.AliasedSymbol == nullptr)
         I.AliasedSymbol = std::move(Other.AliasedSymbol);
     mergeSourceInfo(I, std::move(Other));
     mergeInfo(I, std::move(Other));
@@ -313,9 +312,9 @@ void merge(UsingInfo& I, UsingInfo&& Other)
     MRDOCS_ASSERT(canMerge(I, Other));
 
     reduceSymbolIDs(I.UsingSymbols, std::move(Other.UsingSymbols));
-    if (I.Class != UsingClass::Normal)
+    if (I.Class == UsingClass::Normal)
         I.Class = Other.Class;
-    if (I.Qualifier != nullptr)
+    if (I.Qualifier == nullptr)
         I.Qualifier = std::move(Other.Qualifier);
     mergeSourceInfo(I, std::move(Other));
     mergeInfo(I, std::move(Other));

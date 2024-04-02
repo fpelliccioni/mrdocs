@@ -425,12 +425,12 @@ RecordsByBlock{
     // FriendInfo
     {BI_FRIEND_BLOCK_ID,
         {FRIEND_SYMBOL}},
-    // FriendInfo
-
+    // AliasInfo
+    {BI_ALIAS_BLOCK_ID,
+        {}},
     // UsingInfo
     {BI_USING_BLOCK_ID,
         {USING_SYMBOLS, USING_CLASS}},
-
     // EnumeratorInfo
     {BI_ENUMERATOR_BLOCK_ID,
         {}},
