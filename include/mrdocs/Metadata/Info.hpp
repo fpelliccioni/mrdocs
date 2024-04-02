@@ -27,6 +27,7 @@
 namespace clang {
 namespace mrdocs {
 
+struct AliasInfo;
 struct NamespaceInfo;
 struct RecordInfo;
 struct FunctionInfo;
@@ -38,7 +39,6 @@ struct SpecializationInfo;
 struct FriendInfo;
 struct EnumeratorInfo;
 struct GuideInfo;
-struct AliasInfo;
 struct UsingInfo;
 
 /** Info variant discriminator
