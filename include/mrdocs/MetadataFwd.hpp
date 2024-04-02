@@ -35,6 +35,7 @@ enum class OperatorKind;
 enum class ReferenceKind;
 enum class StorageClassKind;
 
+struct AliasInfo;
 struct BaseInfo;
 struct EnumInfo;
 struct EnumeratorInfo;
@@ -47,7 +48,6 @@ class Javadoc;
 struct Location;
 struct NamespaceInfo;
 struct NameInfo;
-struct AliasInfo;
 struct RecordInfo;
 struct Param;
 struct SpecializationInfo;
