@@ -447,7 +447,7 @@ XMLWriter::
     for (auto const& symbol : I.UsingSymbols)
     {
         Attributes attrs = {};
-        attrs.push({"id-pepe", symbol});
+        attrs.push({"id", toString(symbol)});
         tags_.write("symbol", {}, attrs);
     }
 
