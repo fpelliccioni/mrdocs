@@ -447,18 +447,19 @@ XMLWriter::
     for (auto const& symbol : I.UsingSymbols)
     {
         Attributes attrs = {};
-        attrs.push({"id", symbol});
+        attrs.push({"id-pepe", symbol});
         tags_.write("symbol", {}, attrs);
     }
 
     if (I.Qualifier)
     {
         Attributes nameAttrs = {};
-        if (I.Qualifier->id != SymbolID::invalid)
-        {
-            nameAttrs.push({"id", toString(I.Qualifier->id)});
-        }
-        nameAttrs.push({"name", I.Qualifier->Name});
+        // if (I.Qualifier->id != SymbolID::invalid)
+        // {
+        //     nameAttrs.push({"id", toString(I.Qualifier->id)});
+        // }
+        // nameAttrs.push({"name", I.Qualifier->Name});
+        nameAttrs.push({"name", toString(*I.Qualifier)});
         tags_.write("name", {}, nameAttrs);
     }
 
