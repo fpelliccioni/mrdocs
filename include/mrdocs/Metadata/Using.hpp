@@ -36,7 +36,7 @@ struct UsingInfo
     SourceInfo
 {
     /** The kind of using declaration/directive. */
-    UsingClass Class;
+    UsingClass Class = UsingClass::Normal;
 
     /** The symbols being "used". */
     std::vector<SymbolID> UsingSymbols;
