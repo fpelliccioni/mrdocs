@@ -403,7 +403,6 @@ writeAlias(
     if (I.AliasedSymbol)
     {
         Attributes nameAttrs = {};
-        nameAttrs.push({"id", I.AliasedSymbol->id});
         nameAttrs.push({"name", toString(*I.AliasedSymbol)});
         tags_.write("name", {}, nameAttrs);
     }
@@ -454,11 +453,6 @@ XMLWriter::
     if (I.Qualifier)
     {
         Attributes nameAttrs = {};
-        // if (I.Qualifier->id != SymbolID::invalid)
-        // {
-        //     nameAttrs.push({"id", toString(I.Qualifier->id)});
-        // }
-        // nameAttrs.push({"name", I.Qualifier->Name});
         nameAttrs.push({"name", toString(*I.Qualifier)});
         tags_.write("name", {}, nameAttrs);
     }
