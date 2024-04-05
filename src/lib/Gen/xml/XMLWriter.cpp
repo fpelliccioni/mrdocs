@@ -400,14 +400,10 @@ writeAlias(
 
     writeJavadoc(I.javadoc);
 
-    if (I.AliasedSymbol)
-    {
-        tags_.write("aliased", {}, {
-            {"name", toString(*I.AliasedSymbol)},
-            { I.AliasedSymbol->id }
-        });
-    }
-
+    tags_.write("aliased", {}, {
+        {"name", toString(*I.AliasedSymbol)},
+        { I.AliasedSymbol->id }
+    });
     tags_.close(aliasTagName);
 }
 
@@ -447,13 +443,10 @@ XMLWriter::
     for (auto const& id : I.UsingSymbols)
         tags_.write("named", {}, { id });
 
-    if (I.Qualifier)
-    {
-        Attributes nameAttrs = {};
-        nameAttrs.push({"name", toString(*I.Qualifier)});
-        tags_.write("name", {}, nameAttrs);
-    }
-
+    tags_.write("qualifier", {}, {
+            {"name", toString(*I.Qualifier)},
+            { I.Qualifier->id }
+        });
     tags_.close(usingTagName);
 }
 
