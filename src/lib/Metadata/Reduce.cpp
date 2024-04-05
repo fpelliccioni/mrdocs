@@ -301,7 +301,7 @@ void merge(FriendInfo& I, FriendInfo&& Other)
 void merge(AliasInfo& I, AliasInfo&& Other)
 {
     MRDOCS_ASSERT(canMerge(I, Other));
-    if (I.AliasedSymbol == nullptr)
+    if (! I.AliasedSymbol)
         I.AliasedSymbol = std::move(Other.AliasedSymbol);
     mergeSourceInfo(I, std::move(Other));
     mergeInfo(I, std::move(Other));
