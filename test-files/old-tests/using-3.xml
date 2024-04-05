@@ -30,12 +30,12 @@
     </base>
     <using id="gYtMTvi6Y8IYub83GUwP4tNrNh8=" class="using">
       <file path="using-3.cpp" line="13" class="def"/>
-      <symbol id="7Bg4Ruo9NHdsGok6ICFQWW1MBuE="/>
+      <named id="7Bg4Ruo9NHdsGok6ICFQWW1MBuE="/>
       <name name="A"/>
     </using>
     <using id="Ok4Drv8j7QjZMYzH/iHOHoNf+YY=" class="using">
       <file path="using-3.cpp" line="14" class="def"/>
-      <symbol id="L8SG5UwdWbdrxlsWfl5qGz09wUw="/>
+      <named id="L8SG5UwdWbdrxlsWfl5qGz09wUw="/>
       <name name="B"/>
     </using>
   </struct>

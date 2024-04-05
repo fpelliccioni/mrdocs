@@ -12,12 +12,12 @@
   </namespace>
   <using id="G92XaEqIwVs05hrwdNXMhpeFqkU=" class="using">
     <file path="using-2.cpp" line="6" class="def"/>
-    <symbol id="ZJXGFTX+0w4vyLiZBRJM4VP5/5Y="/>
+    <named id="ZJXGFTX+0w4vyLiZBRJM4VP5/5Y="/>
     <name name="LongName"/>
   </using>
   <using id="0Ljxy8EQ03btL9wIVt4SqbP1U2M=" class="using">
     <file path="using-2.cpp" line="7" class="def"/>
-    <symbol id="AsUl1L5PkCm5NvYpI3F7g6rfMlw="/>
+    <named id="AsUl1L5PkCm5NvYpI3F7g6rfMlw="/>
     <name name="LongName"/>
   </using>
 </namespace>
