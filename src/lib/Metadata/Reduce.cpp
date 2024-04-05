@@ -314,7 +314,7 @@ void merge(UsingInfo& I, UsingInfo&& Other)
     reduceSymbolIDs(I.UsingSymbols, std::move(Other.UsingSymbols));
     if (I.Class == UsingClass::Normal)
         I.Class = Other.Class;
-    if (I.Qualifier == nullptr)
+    if (! I.Qualifier)
         I.Qualifier = std::move(Other.Qualifier);
     mergeSourceInfo(I, std::move(Other));
     mergeInfo(I, std::move(Other));
