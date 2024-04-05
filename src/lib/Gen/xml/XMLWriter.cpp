@@ -402,9 +402,10 @@ writeAlias(
 
     if (I.AliasedSymbol)
     {
-        Attributes nameAttrs = {};
-        nameAttrs.push({"name", toString(*I.AliasedSymbol)});
-        tags_.write("name", {}, nameAttrs);
+        tags_.write("aliased", {}, {
+            {"name", toString(*I.AliasedSymbol)},
+            { I.AliasedSymbol->id }
+        });
     }
 
     tags_.close(aliasTagName);
