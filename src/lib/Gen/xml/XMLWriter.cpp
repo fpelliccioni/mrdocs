@@ -407,7 +407,6 @@ writeAlias(
             { I.AliasedSymbol->id }
         });
     }
-
     tags_.close(aliasTagName);
 }
 
@@ -434,10 +433,17 @@ XMLWriter::
         MRDOCS_UNREACHABLE();
     }
 
+    std::string qualifierStr;
+    if (I.Qualifier)
+    {
+        toString(*I.Qualifier);
+    }
+
     tags_.open(usingTagName, {
         { I.Access },
         { I.id },
-        { "class", classStr, ! classStr.empty() }
+        { "class", classStr, ! classStr.empty() },
+        { "qualifier", qualifierStr, !qualifierStr.empty() }
     });
 
     writeSourceInfo(I);
@@ -446,13 +452,6 @@ XMLWriter::
 
     for (auto const& id : I.UsingSymbols)
         tags_.write("named", {}, { id });
-
-    if (I.Qualifier)
-    {
-        Attributes nameAttrs = {};
-        nameAttrs.push({"name", toString(*I.Qualifier)});
-        tags_.write("name", {}, nameAttrs);
-    }
 
     tags_.close(usingTagName);
 }
