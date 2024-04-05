@@ -433,10 +433,17 @@ XMLWriter::
         MRDOCS_UNREACHABLE();
     }
 
+    std::string qualifierStr;
+    if (I.Qualifier)
+    {
+        toString(*I.Qualifier);
+    }
+
     tags_.open(usingTagName, {
         { I.Access },
         { I.id },
-        { "class", classStr, ! classStr.empty() }
+        { "class", classStr, ! classStr.empty() },
+        { "qualifier", qualifierStr, !qualifierStr.empty() }
     });
 
     writeSourceInfo(I);
@@ -446,13 +453,13 @@ XMLWriter::
     for (auto const& id : I.UsingSymbols)
         tags_.write("named", {}, { id });
 
-    if (I.Qualifier)
-    {
-        tags_.write("qualifier", {}, {
-                {"name", toString(*I.Qualifier)},
-                { I.Qualifier->id }
-            });
-    }
+    // if (I.Qualifier)
+    // {
+    //     tags_.write("qualifier", {}, {
+    //             {"name", toString(*I.Qualifier)},
+    //             { I.Qualifier->id }
+    //         });
+    // }
     tags_.close(usingTagName);
 }
 
