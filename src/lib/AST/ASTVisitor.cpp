@@ -592,10 +592,7 @@ public:
                 return true;
             usr_.append("@UED");
             EnumDecl const* ED = UD->getEnumDecl();
-            if (ED)
-            {
-                usr_.append(ED->getQualifiedNameAsString());
-            }
+            usr_.append(ED->getQualifiedNameAsString());
             return false;
         }
 
@@ -2592,7 +2589,7 @@ ASTVisitor::
 traverse(NamespaceAliasDecl* D)
 {
     auto exp = getAsMrDocsInfo(D);
-    if( ! exp) { return; }
+    if(! exp) { return; }
     auto [I, created] = *exp;
     buildAlias(I, created, D);
 }
@@ -2605,7 +2602,7 @@ ASTVisitor::
 traverse(UsingDirectiveDecl* D)
 {
     auto exp = getAsMrDocsInfo(D);
-    if( ! exp) { return; }
+    if(! exp) { return; }
     auto [I, created] = *exp;
     buildUsingDirective(I, created, D);
 }
@@ -2619,7 +2616,7 @@ ASTVisitor::
 traverse(UsingDecl* D)
 {
     auto const exp = getAsMrDocsInfo(D);
-    if( ! exp) { return; }
+    if(! exp) { return; }
     auto [I, created] = *exp;
     buildUsingDeclaration(I, created, D);
 }
