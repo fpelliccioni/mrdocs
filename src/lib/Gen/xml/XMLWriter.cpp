@@ -402,9 +402,10 @@ writeAlias(
 
     if (I.AliasedSymbol)
     {
-        Attributes nameAttrs = {};
-        nameAttrs.push({"name", toString(*I.AliasedSymbol)});
-        tags_.write("name", {}, nameAttrs);
+        tags_.write("aliased", {}, {
+            {"name", toString(*I.AliasedSymbol)},
+            { I.AliasedSymbol->id }
+        });
     }
 
     tags_.close(aliasTagName);
@@ -443,12 +444,8 @@ XMLWriter::
 
     writeJavadoc(I.javadoc);
 
-    for (auto const& symbol : I.UsingSymbols)
-    {
-        Attributes attrs = {};
-        attrs.push({"id", toString(symbol)});
-        tags_.write("symbol", {}, attrs);
-    }
+    for (auto const& id : I.UsingSymbols)
+        tags_.write("named", {}, { id });
 
     if (I.Qualifier)
     {
