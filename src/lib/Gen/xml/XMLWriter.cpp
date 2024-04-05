@@ -443,10 +443,13 @@ XMLWriter::
     for (auto const& id : I.UsingSymbols)
         tags_.write("named", {}, { id });
 
-    tags_.write("qualifier", {}, {
-            {"name", toString(*I.Qualifier)},
-            { I.Qualifier->id }
-        });
+    if (I.Qualifier)
+    {
+        tags_.write("qualifier", {}, {
+                {"name", toString(*I.Qualifier)},
+                { I.Qualifier->id }
+            });
+    }
     tags_.close(usingTagName);
 }
 
