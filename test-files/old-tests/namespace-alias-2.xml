@@ -6,9 +6,11 @@
   </namespace>
   <alias name="A" id="8bX9GsmeU9RHTU5qqahjfu5RFHw=">
     <file path="namespace-alias-2.cpp" line="3" class="def"/>
+    <aliased name="A" id="8bX9GsmeU9RHTU5qqahjfu5RFHw="/>
   </alias>
   <alias name="B" id="vr8SVrdB6byha64PErh7G+ti7GY=">
     <file path="namespace-alias-2.cpp" line="4" class="def"/>
+    <aliased name="B" id="vr8SVrdB6byha64PErh7G+ti7GY="/>
   </alias>
 </namespace>
 </mrdocs>
