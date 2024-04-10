@@ -400,13 +400,10 @@ writeAlias(
 
     writeJavadoc(I.javadoc);
 
-    if (I.AliasedSymbol)
-    {
-        tags_.write("aliased", {}, {
-            {"name", toString(*I.AliasedSymbol)},
-            { I.AliasedSymbol->id }
-        });
-    }
+    tags_.write("aliased", {}, {
+        {"name", toString(*I.AliasedSymbol)},
+        { I.AliasedSymbol->id }
+    });
     tags_.close(aliasTagName);
 }
 

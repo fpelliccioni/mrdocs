@@ -6,6 +6,7 @@
   </namespace>
   <alias name="A" id="8bX9GsmeU9RHTU5qqahjfu5RFHw=">
     <file path="namespace-alias-1.cpp" line="3" class="def"/>
+    <aliased name="A" id="8bX9GsmeU9RHTU5qqahjfu5RFHw="/>
   </alias>
 </namespace>
 </mrdocs>
