@@ -1134,8 +1134,8 @@ emitBlock(
     StreamSubBlockGuard Block(Stream, BI_ALIAS_BLOCK_ID);
     emitInfoPart(I);
     emitSourceInfo(I);
-    if (I.AliasedSymbol)
-        emitBlock(*I.AliasedSymbol);
+    MRDOCS_ASSERT(I.AliasedSymbol);
+    emitBlock(*I.AliasedSymbol);
 }
 
 void
