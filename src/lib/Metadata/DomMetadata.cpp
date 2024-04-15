@@ -868,10 +868,8 @@ DomInfo<T>::construct() const
     }
     if constexpr(T::isAlias())
     {
-        if (I_.AliasedSymbol)
-        {
-            entries.emplace_back("aliasedSymbol", domCreate(I_.AliasedSymbol, domCorpus_));
-        }
+        MRDOCS_ASSERT(I_.AliasedSymbol);
+        entries.emplace_back("aliasedSymbol", domCreate(I_.AliasedSymbol, domCorpus_));
     }
     if constexpr(T::isUsing())
     {

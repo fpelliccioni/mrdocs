@@ -2187,7 +2187,7 @@ public:
             return;
 
         I.Name = extractName(D);
-        I.AliasedSymbol = buildNameInfo(D);
+        I.AliasedSymbol = buildNameInfo(D->getAliasedNamespace());
 
         getParentNamespaces(I, D);
     }

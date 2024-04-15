@@ -433,7 +433,7 @@ XMLWriter::
     std::string qualifierStr;
     if (I.Qualifier)
     {
-        toString(*I.Qualifier);
+        qualifierStr = toString(*I.Qualifier);
     }
 
     tags_.open(usingTagName, {
