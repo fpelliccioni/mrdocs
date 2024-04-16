@@ -1,0 +1,24 @@
+{{!-- symbols/using.adoc.hbs --}}
+= {{#if symbol.isNamespace}}Using Namespace {{symbol.namespaceName}}{{else}}Using {{symbol.qualifier}}{{symbol.name}}{{/if}}
+
+{{symbol.doc.brief}}
+
+== Synopsis
+
+{{>source dcl=(primary_location symbol)}}
+
+[source,cpp,subs="verbatim,macros,-callouts"]
+----
+{{#if symbol.isNamespace}}
+using namespace {{symbol.namespaceName}};
+{{else}}
+using {{#if symbol.isTypename}}typename {{/if}}{{symbol.qualifier}}{{symbol.name}}{{#if symbol.type}} = {{>declarator symbol.type}}{{/if}};
+{{/if}}
+----
+
+{{#if symbol.doc.description}}
+== Description
+
+{{symbol.doc.description}}
+
+{{/if}}

@@ -1,0 +1,5 @@
+{{!-- alias.adoc.hbs --}}
+alias {{symbol.name}} = {{>declarator symbol.aliasedType}}
+{{#if symbol.javadoc}}
+{{>javadoc symbol.javadoc}}
+{{/if}}

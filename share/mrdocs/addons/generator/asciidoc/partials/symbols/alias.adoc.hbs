@@ -1,0 +1,20 @@
+{{!-- symbols/alias.adoc.hbs --}}
+= Alias {{symbol.name}}
+
+{{symbol.doc.brief}}
+
+== Synopsis
+
+{{>source dcl=(primary_location symbol)}}
+
+[source,cpp,subs="verbatim,macros,-callouts"]
+----
+alias {{symbol.name}} = {{>declarator symbol.aliasedType}};
+----
+
+{{#if symbol.doc.description}}
+== Description
+
+{{symbol.doc.description}}
+
+{{/if}}

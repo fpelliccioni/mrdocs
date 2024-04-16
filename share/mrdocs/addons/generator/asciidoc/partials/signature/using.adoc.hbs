@@ -1,0 +1,9 @@
+{{!-- using.adoc.hbs --}}
+{{#if symbol.isNamespace}}
+using namespace {{symbol.namespaceName}}
+{{else}}
+using {{#if symbol.isTypename}}typename {{/if}}{{symbol.name}} = {{>declarator symbol.type}}
+{{/if}}
+{{#if symbol.javadoc}}
+{{>javadoc symbol.javadoc}}
+{{/if}}

@@ -5,6 +5,7 @@
 #
 # Copyright (c) 2023 Klemens Morgenstern (klemens.morgenstern@gmx.net)
 # Copyright (c) 2023 Krystian Stasiowski (sdkrystian@gmail.com)
+# Copyright (c) 2024 Fernando Pelliccioni (fpelliccioni@gmail.com)
 #
 # Official repository: https://github.com/cppalliance/mrdocs
 #
@@ -208,6 +209,37 @@ grammar
                     attribute type { text }
                 }
             )
+        }
+
+    #---------------------------------------------
+
+    Alias =
+        element alias
+        {
+            Name,
+            Access ?,
+            ID,
+            Location *,
+            Javadoc ?,
+            element aliased
+            {
+                attribute name { text },
+                attribute id { text }
+            },
+        }
+
+    #---------------------------------------------
+
+    Using =
+        element using
+        {
+            Access ?,
+            ID,
+            Location *,
+            Javadoc ?,
+            attribute class { "using" | "using typename" | "using enum" | "using namespace" },
+            attribute qualifier { text } ?,
+            element named { ID } *
         }
 
     #---------------------------------------------
