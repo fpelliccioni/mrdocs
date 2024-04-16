@@ -10,11 +10,11 @@
       <file path="using-2.cpp" line="3" class="def"/>
     </struct>
   </namespace>
-  <using id="G92XaEqIwVs05hrwdNXMhpeFqkU=" class="using">
+  <using id="G92XaEqIwVs05hrwdNXMhpeFqkU=" class="using" qualifier="LongName">
     <file path="using-2.cpp" line="6" class="def"/>
     <named id="ZJXGFTX+0w4vyLiZBRJM4VP5/5Y="/>
   </using>
-  <using id="0Ljxy8EQ03btL9wIVt4SqbP1U2M=" class="using">
+  <using id="0Ljxy8EQ03btL9wIVt4SqbP1U2M=" class="using" qualifier="LongName">
     <file path="using-2.cpp" line="7" class="def"/>
     <named id="AsUl1L5PkCm5NvYpI3F7g6rfMlw="/>
   </using>
