@@ -10,6 +10,7 @@
 [source,cpp,subs="verbatim,macros,-callouts"]
 ----
 alias {{symbol.name}} = {{>declarator symbol.aliasedType}};
+namespace {{symbol.name}} = {{>name-info symbol.aliasedSymbol}}
 ----
 
 {{#if symbol.doc.description}}
