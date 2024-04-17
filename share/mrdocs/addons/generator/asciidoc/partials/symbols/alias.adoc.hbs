@@ -1,5 +1,5 @@
-{{!-- symbols/alias.adoc.hbs --}}
-= Alias {{symbol.name}}
+{{!-- alias --}}
+= {{>nested-name-specifier symbol=symbol.parent}}{{symbol.name}}
 
 {{symbol.doc.brief}}
 
@@ -9,8 +9,7 @@
 
 [source,cpp,subs="verbatim,macros,-callouts"]
 ----
-alias {{symbol.name}} = {{>declarator symbol.aliasedType}};
-namespace {{symbol.name}} = {{>name-info symbol.aliasedSymbol}}
+{{>signature/alias symbol=symbol}};
 ----
 
 {{#if symbol.doc.description}}
