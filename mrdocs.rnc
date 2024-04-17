@@ -225,7 +225,7 @@ grammar
             {
                 attribute name { text },
                 attribute id { text }
-            },
+            }
         }
 
     #---------------------------------------------
