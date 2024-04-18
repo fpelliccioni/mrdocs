@@ -76,7 +76,8 @@ class SafeNames::Impl
             "08friend",
             "09enumeration",
             "10guide",
-            "11using",
+            "11alias",
+            "12using",
         };
         std::cout << "getReserved - 2\n";
         if(I.isFunction())
