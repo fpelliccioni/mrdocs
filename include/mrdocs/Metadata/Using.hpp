@@ -29,6 +29,20 @@ enum class UsingClass
     Namespace       // using namespace (using directive)
 };
 
+static constexpr
+std::string_view
+toString(UsingClass const& value)
+{
+    switch (value)
+    {
+    case UsingClass::Normal:    return "normal";
+    case UsingClass::Typename:  return "typename";
+    case UsingClass::Enum:      return "enum";
+    case UsingClass::Namespace: return "namespace";
+    }
+    return "unknown";
+}
+
 /** Info for using declarations and directives.
  */
 struct UsingInfo
