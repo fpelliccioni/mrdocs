@@ -2221,6 +2221,11 @@ public:
 
         if (NamedDecl* ND = D->getNominatedNamespace())
         {
+            I.Name = extractName(ND);
+            std::cout << "UsingDirectiveDecl: " << I.Name << "\n";
+            std::cout << "extractName(ND):     " << extractName(ND) << "\n";
+
+
             SymbolID id;
             getDependencyID(ND, id);
             I.UsingSymbols.emplace_back(id);
