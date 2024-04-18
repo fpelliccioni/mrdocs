@@ -1,9 +1,6 @@
 {{!-- using.adoc.hbs --}}
-{{#if symbol.isNamespace}}
-using namespace {{symbol.namespaceName}}
+{{#if (eq symbol.class "namespace")}}
+using namespace {{symbol.qualifier.name}};
 {{else}}
-using {{#if symbol.isTypename}}typename {{/if}}{{symbol.name}} = {{>declarator symbol.type}}
-{{/if}}
-{{#if symbol.javadoc}}
-{{>javadoc symbol.javadoc}}
+using {{#if (eq symbol.class "typename")}}typename {{/if}}{{#if (eq symbol.class "enum")}}enum {{/if}}{{symbol.qualifier.name}}{{#if symbol.type}} = {{>declarator symbol.type}}{{/if}};
 {{/if}}

@@ -1,5 +1,2 @@
 {{!-- alias.adoc.hbs --}}
-alias {{symbol.name}} = {{>declarator symbol.aliasedType}}
-{{#if symbol.javadoc}}
-{{>javadoc symbol.javadoc}}
-{{/if}}
+namespace {{symbol.name}} = {{>name-info symbol.aliasedSymbol}}

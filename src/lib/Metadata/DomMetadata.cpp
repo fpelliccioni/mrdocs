@@ -873,6 +873,7 @@ DomInfo<T>::construct() const
     }
     if constexpr(T::isUsing())
     {
+        entries.emplace_back("class", toString(I_.Class));
         entries.emplace_back("symbols", dom::newArray<DomSymbolArray>(I_.UsingSymbols, domCorpus_));
         if (I_.Qualifier)
         {

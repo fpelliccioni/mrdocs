@@ -1,5 +1,5 @@
 {{!-- symbols/using.adoc.hbs --}}
-= {{#if symbol.isNamespace}}Using Namespace {{symbol.namespaceName}}{{else}}Using {{symbol.qualifier}}{{symbol.name}}{{/if}}
+= Using {{#if (eq symbol.class "namespace")}}Directive: namespace {{symbol.qualifier.name}}{{else}}Declaration: {{symbol.name}}{{/if}}
 
 {{symbol.doc.brief}}
 
@@ -9,11 +9,7 @@
 
 [source,cpp,subs="verbatim,macros,-callouts"]
 ----
-{{#if symbol.isNamespace}}
-using namespace {{symbol.namespaceName}};
-{{else}}
-using {{#if symbol.isTypename}}typename {{/if}}{{symbol.qualifier}}{{symbol.name}}{{#if symbol.type}} = {{>declarator symbol.type}}{{/if}};
-{{/if}}
+{{>signature/using symbol=symbol}};
 ----
 
 {{#if symbol.doc.description}}
@@ -22,3 +18,15 @@ using {{#if symbol.isTypename}}typename {{/if}}{{symbol.qualifier}}{{symbol.name
 {{symbol.doc.description}}
 
 {{/if}}
+
+{{#unless (eq symbol.class "namespace")}}
+== Introduced Symbols
+
+[options="header"]
+|===
+| Name | Original Location
+{{#each symbol.UsingSymbols}}
+| {{this.name}} | {{this.location}}
+{{/each}}
+|===
+{{/unless}}
