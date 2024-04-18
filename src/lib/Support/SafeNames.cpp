@@ -72,6 +72,8 @@ class SafeNames::Impl
             "08friend",
             "09enumeration",
             "10guide",
+            "11alias",
+            "12using",
         };
         if(I.isFunction())
         {
@@ -208,7 +210,7 @@ public:
 
                 if constexpr(T::isUsing()) {
                     MRDOCS_ASSERT(! t.Name.empty());
-                    return t.Name;
+                    return getReserved(t);
                 }
 
                 if constexpr(T::isEnumerator())
