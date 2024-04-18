@@ -1,6 +1,5 @@
-{{!-- using.adoc.hbs --}}
 {{#if (eq symbol.class "namespace")}}
-using namespace {{symbol.qualifier.name}};
+using namespace {{symbol.name}};
 {{else}}
 using {{#if (eq symbol.class "typename")}}typename {{/if}}{{#if (eq symbol.class "enum")}}enum {{/if}}{{symbol.qualifier.name}}{{#if symbol.type}} = {{>declarator symbol.type}}{{/if}};
 {{/if}}
