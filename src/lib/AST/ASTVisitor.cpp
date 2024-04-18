@@ -2207,7 +2207,6 @@ public:
         if(! created)
             return;
 
-        I.Name = extractName(D);
         I.Class = UsingClass::Namespace;
 
         if (D->getQualifier())
@@ -2217,6 +2216,7 @@ public:
 
         if (NamedDecl* ND = D->getNominatedNamespace())
         {
+            I.Name = extractName(ND);
             SymbolID id;
             getDependencyID(ND, id);
             I.UsingSymbols.emplace_back(id);
