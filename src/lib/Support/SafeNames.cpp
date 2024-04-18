@@ -72,6 +72,7 @@ class SafeNames::Impl
             "08friend",
             "09enumeration",
             "10guide",
+            "11using",
         };
         if(I.isFunction())
         {
