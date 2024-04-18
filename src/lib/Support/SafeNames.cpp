@@ -210,7 +210,10 @@ public:
 
                 if constexpr(T::isUsing()) {
                     MRDOCS_ASSERT(! t.Name.empty());
-                    return getReserved(t);
+                    if (t.Class == UsingClass::Namespace) {
+                        return getReserved(t);
+                    }
+                    return t.Name;
                 }
 
                 if constexpr(T::isEnumerator())
