@@ -55,6 +55,7 @@ class SafeNames::Impl
     std::string_view
     getReserved(const Info& I)
     {
+        std::cout << "getReserved - 1\n";
         // all valid c++ identifiers begin with
         // an underscore or alphabetic character,
         // so a numeric prefix ensures no conflicts
@@ -74,8 +75,10 @@ class SafeNames::Impl
             "10guide",
             "11using",
         };
+        std::cout << "getReserved - 2\n";
         if(I.isFunction())
         {
+            std::cout << "getReserved - 3\n";
             static
             std::string_view
             func_reserved[] = {
@@ -84,6 +87,7 @@ class SafeNames::Impl
                 "2conversion",
                 "2destructor"
             };
+            std::cout << "getReserved - 4\n";
             const auto& FI = static_cast<
                 const FunctionInfo&>(I);
             // don't use the reserved prefix for overloaded operators
@@ -91,11 +95,17 @@ class SafeNames::Impl
                 FI.specs0.overloadedOperator.get() !=
                     OperatorKind::None)
             {
+                std::cout << "getReserved - 5\n";
                 return getSafeOperatorName(
                     FI.specs0.overloadedOperator.get(), true);
             }
+            std::cout << "getReserved - 6\n";
             std::size_t func_idx = to_underlying(FI.Class);
+            std::cout << "getReserved - 7\n";
+            std::cout << "getReserved - func_idx: " << func_idx << "\n";
+            std::cout << "getReserved - std::size(func_reserved): " << std::size(func_reserved) << "\n";
             MRDOCS_ASSERT(func_idx < std::size(func_reserved));
+            std::cout << "getReserved - 8\n";
             return func_reserved[func_idx];
         }
 
