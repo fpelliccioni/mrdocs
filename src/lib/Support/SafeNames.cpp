@@ -208,7 +208,7 @@ public:
                 }
 
                 if constexpr(T::isUsing()) {
-                    // MRDOCS_ASSERT(! t.Name.empty());
+                    MRDOCS_ASSERT(! t.Name.empty());
                     // return t.Name;
                     return getReserved(t);
                 }
