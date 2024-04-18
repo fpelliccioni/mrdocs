@@ -208,8 +208,9 @@ public:
                 }
 
                 if constexpr(T::isUsing()) {
-                    MRDOCS_ASSERT(! t.Name.empty());
-                    return t.Name;
+                    // MRDOCS_ASSERT(! t.Name.empty());
+                    // return t.Name;
+                    return getReserved(t);
                 }
 
                 if constexpr(T::isEnumerator())
