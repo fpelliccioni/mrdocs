@@ -52,8 +52,6 @@ class SafeNames::Impl
     std::unordered_multimap<std::string_view,
         SafeNameInfo*> disambiguation_map_;
 
-
-
     std::string_view
     getReserved(const Info& I)
     {
@@ -212,7 +210,6 @@ public:
 
                 if constexpr(T::isUsing()) {
                     MRDOCS_ASSERT(! t.Name.empty());
-                    // return t.Name;
                     return getReserved(t);
                 }
 
