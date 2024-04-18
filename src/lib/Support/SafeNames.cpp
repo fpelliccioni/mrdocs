@@ -112,8 +112,13 @@ class SafeNames::Impl
             return func_reserved[func_idx];
         }
 
+        std::cout << "getReserved - 9\n";
         std::size_t idx = to_underlying(I.Kind) - 1;
+        std::cout << "getReserved - 10\n";
+        std::cout << "getReserved - idx: " << idx << "\n";
+        std::cout << "getReserved - std::size(reserved): " << std::size(reserved) << "\n";
         MRDOCS_ASSERT(idx < std::size(reserved));
+        std::cout << "getReserved - 11\n";
         return reserved[idx];
     }
 
