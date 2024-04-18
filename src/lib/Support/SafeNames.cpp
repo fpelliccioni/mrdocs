@@ -22,7 +22,6 @@
 #include <ranges>
 #include <string_view>
 #include <unordered_map>
-#include <iostream>
 
 namespace clang {
 namespace mrdocs {
@@ -58,7 +57,6 @@ class SafeNames::Impl
     std::string_view
     getReserved(const Info& I)
     {
-        std::cout << "getReserved - 1\n";
         // all valid c++ identifiers begin with
         // an underscore or alphabetic character,
         // so a numeric prefix ensures no conflicts
@@ -79,10 +77,8 @@ class SafeNames::Impl
             "11alias",
             "12using",
         };
-        std::cout << "getReserved - 2\n";
         if(I.isFunction())
         {
-            std::cout << "getReserved - 3\n";
             static
             std::string_view
             func_reserved[] = {
@@ -91,7 +87,6 @@ class SafeNames::Impl
                 "2conversion",
                 "2destructor"
             };
-            std::cout << "getReserved - 4\n";
             const auto& FI = static_cast<
                 const FunctionInfo&>(I);
             // don't use the reserved prefix for overloaded operators
@@ -99,27 +94,16 @@ class SafeNames::Impl
                 FI.specs0.overloadedOperator.get() !=
                     OperatorKind::None)
             {
-                std::cout << "getReserved - 5\n";
                 return getSafeOperatorName(
                     FI.specs0.overloadedOperator.get(), true);
             }
-            std::cout << "getReserved - 6\n";
             std::size_t func_idx = to_underlying(FI.Class);
-            std::cout << "getReserved - 7\n";
-            std::cout << "getReserved - func_idx: " << func_idx << "\n";
-            std::cout << "getReserved - std::size(func_reserved): " << std::size(func_reserved) << "\n";
             MRDOCS_ASSERT(func_idx < std::size(func_reserved));
-            std::cout << "getReserved - 8\n";
             return func_reserved[func_idx];
         }
 
-        std::cout << "getReserved - 9\n";
         std::size_t idx = to_underlying(I.Kind) - 1;
-        std::cout << "getReserved - 10\n";
-        std::cout << "getReserved - idx: " << idx << "\n";
-        std::cout << "getReserved - std::size(reserved): " << std::size(reserved) << "\n";
         MRDOCS_ASSERT(idx < std::size(reserved));
-        std::cout << "getReserved - 11\n";
         return reserved[idx];
     }
 
