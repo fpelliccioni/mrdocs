@@ -2208,6 +2208,9 @@ public:
             return;
 
         I.Name = extractName(D);
+        std::cout << "UsingDirectiveDecl: " << I.Name << "\n";
+        std::cout << "extractName(D):     " << extractName(D) << "\n";
+
         I.Class = UsingClass::Namespace;
 
         if (D->getQualifier())
