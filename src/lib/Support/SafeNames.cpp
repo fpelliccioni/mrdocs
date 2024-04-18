@@ -22,6 +22,7 @@
 #include <ranges>
 #include <string_view>
 #include <unordered_map>
+#include <iostream>
 
 namespace clang {
 namespace mrdocs {
@@ -51,6 +52,8 @@ class SafeNames::Impl
     // with that name within the current scope
     std::unordered_multimap<std::string_view,
         SafeNameInfo*> disambiguation_map_;
+
+
 
     std::string_view
     getReserved(const Info& I)
