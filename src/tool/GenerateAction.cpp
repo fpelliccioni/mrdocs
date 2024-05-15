@@ -22,9 +22,8 @@
 #include <mrdocs/Support/Path.hpp>
 #include <clang/Tooling/JSONCompilationDatabase.h>
 
-#include <clang/Basic/SourceManager.h>
-
 #include <cstdlib>
+#include <filesystem>
 
 namespace clang {
 namespace mrdocs {
@@ -211,7 +210,7 @@ DoGenerateAction()
     auto const absolute = files::makeAbsolute(toolArgs.outputPath, (*config)->workingDir);
     // SourceManager& source = Context.getSourceManager();
     // auto& cwd = source.getFileManager().getFileSystemOpts().WorkingDir;
-    report::error("cwd: {}\n", cwd);
+    // report::error("cwd: {}\n", cwd);
 
 
     report::error("workingDir: {}\n", (*config)->workingDir);
