@@ -22,6 +22,7 @@
 #include <mrdocs/Support/Path.hpp>
 #include <clang/Tooling/JSONCompilationDatabase.h>
 
+#include <clang/Basic/SourceManager.h>
 
 #include <cstdlib>
 
