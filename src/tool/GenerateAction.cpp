@@ -207,12 +207,7 @@ DoGenerateAction()
     toolArgs.outputPath = files::normalizePath(
         files::makeAbsolute(
             toolArgs.outputPath,
-            currentPath));
-
-    // toolArgs.outputPath = files::normalizePath(
-    //     files::makeAbsolute(
-    //         toolArgs.outputPath,
-    //         (*config)->workingDir));
+            currentPath.string()));
 
     auto const absolute = files::makeAbsolute(toolArgs.outputPath, (*config)->workingDir);
     // SourceManager& source = Context.getSourceManager();
