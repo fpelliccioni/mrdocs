@@ -38,20 +38,13 @@ print_version(llvm::raw_ostream& os)
        << "\n    built with LLVM " << LLVM_VERSION_STRING;
 }
 
-void
-customFatalErrorHandler(void *userData, const std::string &reason, bool genCrashDiag)
-{
-    llvm::sys::PrintStackTrace(llvm::errs());
-}
-
-
 int
 mrdocs_main(int argc, char const** argv)
 {
     // Enable stack traces
     llvm::EnablePrettyStackTrace();
-    llvm::sys::SetFatalErrorHandler(customFatalErrorHandler);
     llvm::sys::PrintStackTraceOnErrorSignal(argv[0], true);
+    llvm::setBugReportMsg("PLEASE submit a bug report to https://github.com/cppalliance/mrdocs/issues/ and include the crash backtrace.")
 
     // Parse command line options
     llvm::cl::SetVersionPrinter(&print_version);
