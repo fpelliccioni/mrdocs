@@ -22,6 +22,7 @@
 #include <mrdocs/Support/Path.hpp>
 #include <clang/Tooling/JSONCompilationDatabase.h>
 
+
 #include <cstdlib>
 #include <filesystem>
 
@@ -201,25 +202,17 @@ DoGenerateAction()
     // --------------------------------------------------------------
     // Normalize outputPath path
     MRDOCS_CHECK(toolArgs.outputPath, "The output path argument is missing");
-    report::error("outputPath: {}\n", toolArgs.outputPath.getValue());
-    std::filesystem::path currentPath = std::filesystem::current_path();
+
+    // std::filesystem::path currentPath = std::filesystem::current_path();
+    // toolArgs.outputPath = files::normalizePath(
+    //     files::makeAbsolute(
+    //         toolArgs.outputPath,
+    //         currentPath.string()));
 
     toolArgs.outputPath = files::normalizePath(
         files::makeAbsolute(
             toolArgs.outputPath,
-            currentPath.string()));
-
-    auto const absolute = files::makeAbsolute(toolArgs.outputPath, (*config)->workingDir);
-    // SourceManager& source = Context.getSourceManager();
-    // auto& cwd = source.getFileManager().getFileSystemOpts().WorkingDir;
-    // report::error("cwd: {}\n", cwd);
-
-
-    report::error("workingDir: {}\n", (*config)->workingDir);
-    report::error("absolute: {}\n", absolute);
-    report::error("outputPath: {}\n", toolArgs.outputPath.getValue());
-
-    report::error("currentPath: {}\n", currentPath.string());
+            std::filesystem::current_path().string()));
 
     report::info("Generating docs\n");
     MRDOCS_TRY(generator.build(toolArgs.outputPath.getValue(), *corpus));
