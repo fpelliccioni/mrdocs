@@ -208,6 +208,10 @@ DoGenerateAction()
             (*config)->workingDir));
 
     auto const absolute = files::makeAbsolute(toolArgs.outputPath, (*config)->workingDir);
+    SourceManager& source = Context.getSourceManager();
+    auto& cwd = source.getFileManager().getFileSystemOpts().WorkingDir;
+    report::error("cwd: {}\n", cwd);
+
     report::error("workingDir: {}\n", (*config)->workingDir);
     report::error("absolute: {}\n", absolute);
     report::error("outputPath: {}\n", toolArgs.outputPath.getValue());
