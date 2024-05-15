@@ -43,7 +43,7 @@ mrdocs_main(int argc, char const** argv)
 {
     // Enable stack traces
     llvm::EnablePrettyStackTrace();
-    llvm::sys::PrintStackTraceOnErrorSignal(argv[0], true);
+    llvm::sys::PrintStackTraceOnErrorSignal(argv[0]);
     llvm::setBugReportMsg("PLEASE submit a bug report to https://github.com/cppalliance/mrdocs/issues/ and include the crash backtrace.\n");
 
     // Parse command line options
