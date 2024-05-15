@@ -43,7 +43,7 @@ mrdocs_main(int argc, char const** argv)
 {
     // Enable stack traces
     llvm::EnablePrettyStackTrace();
-    llvm::sys::PrintStackTraceOnErrorSignal(argv[0]);
+    llvm::sys::PrintStackTraceOnErrorSignal(argv[0], true);
 
     // Parse command line options
     llvm::cl::SetVersionPrinter(&print_version);
