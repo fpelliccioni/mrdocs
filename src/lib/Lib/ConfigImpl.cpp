@@ -170,6 +170,10 @@ ConfigImpl(
     }
     settings_.workingDir = files::makeDirsy(files::normalizePath(workingDir));
 
+    report::error("ConfigImpl() workingDir:           {}", workingDir);
+    report::error("ConfigImpl() settings_.workingDir: {}", settings_.workingDir);
+
+
     // Addons directory
     {
         settings_.addonsDir = files::makeAbsolute(addonsDir).value();
