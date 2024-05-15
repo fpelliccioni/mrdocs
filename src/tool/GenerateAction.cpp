@@ -206,10 +206,6 @@ DoGenerateAction()
             toolArgs.outputPath,
             (*config)->workingDir));
     report::info("Generating docs\n");
-    int *p = nullptr;
-    // std::cout << *p << std::endl;
-    report::info("p: %d\n", *p);
-
     MRDOCS_TRY(generator.build(toolArgs.outputPath.getValue(), *corpus));
     return {};
 }
