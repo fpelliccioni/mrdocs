@@ -40,7 +40,7 @@ namespace {
  *
  * @param inputPath The path to the project, which can be a directory, a `compile_commands.json` file, or a `CMakeLists.txt` file.
  * @param cmakeArgs The arguments to pass to CMake when generating the compilation database.
- * @return An `Expected` object containing the path to the `compile_commands.json` file if the database is generated, or the provided path if it is already the `compile_commands.json` file. 
+ * @return An `Expected` object containing the path to the `compile_commands.json` file if the database is generated, or the provided path if it is already the `compile_commands.json` file.
  * Returns an `Unexpected` object in case of failure (e.g., file not found, CMake execution failure).
  */
 Expected<std::string>
@@ -201,10 +201,17 @@ DoGenerateAction()
     // --------------------------------------------------------------
     // Normalize outputPath path
     MRDOCS_CHECK(toolArgs.outputPath, "The output path argument is missing");
+    report::error("outputPath: {}\n", toolArgs.outputPath.getValue());
     toolArgs.outputPath = files::normalizePath(
         files::makeAbsolute(
             toolArgs.outputPath,
             (*config)->workingDir));
+
+    auto const absolute = files::makeAbsolute(toolArgs.outputPath, (*config)->workingDir);
+    report::error("workingDir: {}\n", (*config)->workingDir);
+    report::error("absolute: {}\n", absolute);
+    report::error("outputPath: {}\n", toolArgs.outputPath.getValue());
+
     report::info("Generating docs\n");
     MRDOCS_TRY(generator.build(toolArgs.outputPath.getValue(), *corpus));
     return {};
