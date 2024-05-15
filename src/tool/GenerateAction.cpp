@@ -202,10 +202,17 @@ DoGenerateAction()
     // Normalize outputPath path
     MRDOCS_CHECK(toolArgs.outputPath, "The output path argument is missing");
     report::error("outputPath: {}\n", toolArgs.outputPath.getValue());
+    std::filesystem::path currentPath = std::filesystem::current_path();
+
     toolArgs.outputPath = files::normalizePath(
         files::makeAbsolute(
             toolArgs.outputPath,
-            (*config)->workingDir));
+            currentPath));
+
+    // toolArgs.outputPath = files::normalizePath(
+    //     files::makeAbsolute(
+    //         toolArgs.outputPath,
+    //         (*config)->workingDir));
 
     auto const absolute = files::makeAbsolute(toolArgs.outputPath, (*config)->workingDir);
     // SourceManager& source = Context.getSourceManager();
@@ -217,8 +224,7 @@ DoGenerateAction()
     report::error("absolute: {}\n", absolute);
     report::error("outputPath: {}\n", toolArgs.outputPath.getValue());
 
-    std::filesystem::path current_path = std::filesystem::current_path();
-    report::error("current_path: {}\n", current_path.string());
+    report::error("currentPath: {}\n", currentPath.string());
 
     report::info("Generating docs\n");
     MRDOCS_TRY(generator.build(toolArgs.outputPath.getValue(), *corpus));
