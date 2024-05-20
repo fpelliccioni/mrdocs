@@ -1458,12 +1458,7 @@ try_render_to_impl(
         // ==============================================================
         // Render tag
         // ==============================================================
-        auto renderTagRes = renderTag(tag, out, context, opt, state);
-        if (!renderTagRes)
-        {
-            report::error("try_render_to_impl() - tagStr: {} - error: {}", tagStr, renderTagRes.error()
-        }
-        MRDOCS_TRY(renderTagRes);
+        MRDOCS_TRY(renderTag(tag, out, context, opt, state));
 
         // ==============================================================
         // Advance template text
