@@ -95,9 +95,8 @@ buildOne(
             os.write(pageText.data(), pageText.size());
         });
     errors = ex->wait();
-    if(! errors.empty()) {
+    if(! errors.empty())
         return Error(errors);
-    }
 
     SinglePageVisitor visitor(*ex, corpus, os);
     visitor(corpus.globalNamespace());
@@ -112,9 +111,8 @@ buildOne(
             os.write(pageText.data(), pageText.size());
         });
     errors = ex->wait();
-    if(! errors.empty()) {
+    if(! errors.empty())
         return Error(errors);
-    }
 
     return Error::success();
 }
