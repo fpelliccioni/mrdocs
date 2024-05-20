@@ -1412,7 +1412,6 @@ try_render_to_impl(
     HandlebarsOptions const& opt,
     detail::RenderState& state) const
 {
-    report::info("try_render_to_impl() - 1");
     while (!state.templateText.empty()) {
         // ==============================================================
         // Find next tag
@@ -1459,7 +1458,12 @@ try_render_to_impl(
         // ==============================================================
         // Render tag
         // ==============================================================
-        MRDOCS_TRY(renderTag(tag, out, context, opt, state));
+        auto renderTagRes = renderTag(tag, out, context, opt, state);
+        if (!renderTagRes)
+        {
+            report::error("try_render_to_impl() - tagStr: {} - error: {}", tagStr, renderTagRes.error()
+        }
+        MRDOCS_TRY(renderTagRes);
 
         // ==============================================================
         // Advance template text

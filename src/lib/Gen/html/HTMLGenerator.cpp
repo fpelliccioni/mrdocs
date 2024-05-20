@@ -91,42 +91,36 @@ buildOne(
     ex->async(
         [&os](Builder& builder)
         {
-            auto pageEx = builder.renderSinglePageHeader();
-            if ( ! pageEx) {
-                report::error("renderSinglePageHeader() returned an error: {}", pageEx.error());
-            }
-            auto pageText = pageEx.value();
+            auto pageText = builder.renderSinglePageHeader().value();
             os.write(pageText.data(), pageText.size());
-
-            // auto pageText = builder.renderSinglePageHeader().value();
-            // os.write(pageText.data(), pageText.size());
         });
+    report::info("HTMLGenerator::buildOne() - before wait header");
     errors = ex->wait();
-    if(! errors.empty())
+    report::info("HTMLGenerator::buildOne() - after wait header");
+    if(! errors.empty()) {
         return Error(errors);
+    }
 
     SinglePageVisitor visitor(*ex, corpus, os);
     visitor(corpus.globalNamespace());
+    report::info("HTMLGenerator::buildOne() - before wait body");
     errors = ex->wait();
+    report::info("HTMLGenerator::buildOne() - after wait body");
     if(! errors.empty())
         return Error(errors);
 
     ex->async(
         [&os](Builder& builder)
         {
-            auto pageEx = builder.renderSinglePageFooter();
-            if ( ! pageEx) {
-                report::error("renderSinglePageFooter() returned an error: {}", pageEx.error());
-            }
-            auto pageText = pageEx.value();
+            auto pageText = builder.renderSinglePageFooter().value();
             os.write(pageText.data(), pageText.size());
-
-            // auto pageText = builder.renderSinglePageFooter().value();
-            // os.write(pageText.data(), pageText.size());
         });
+    report::info("HTMLGenerator::buildOne() - before wait footer");
     errors = ex->wait();
-    if(! errors.empty())
+    report::info("HTMLGenerator::buildOne() - after wait footer");
+    if(! errors.empty()) {
         return Error(errors);
+    }
 
     return Error::success();
 }

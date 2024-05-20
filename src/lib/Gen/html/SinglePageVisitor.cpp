@@ -41,12 +41,7 @@ renderPage(
     ex_.async(
         [this, &I, pageNumber](Builder& builder)
         {
-            auto const& r = builder(I);
-            if (!r) {
-                report::error("Failed to render page: {}", r.error());
-            }
-            // endPage(builder(I).value(), pageNumber);
-            endPage(r.value(), pageNumber);
+            endPage(builder(I).value(), pageNumber);
         });
 }
 

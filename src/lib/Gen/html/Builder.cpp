@@ -93,7 +93,6 @@ callTemplate(
     std::string_view name,
     dom::Value const& context)
 {
-    report::error("callTemplate: {}", name);
     Config const& config = corpus_.config;
 
     js::Scope scope(ctx_);
