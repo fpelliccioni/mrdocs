@@ -169,7 +169,6 @@ renderSinglePageFooter()
 
 //------------------------------------------------
 
-
 std::string
 Builder::
 getRelPrefix(std::size_t depth)
